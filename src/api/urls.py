@@ -18,10 +18,11 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    # 'api:<name>'
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='swagger'),
     path('sign_up/', views.SignUpView.as_view(), name='sign_up'),
     path('sign_in/', views.SignInView.as_view(), name='sign_in'),
-    path('refresh', refresh_jwt_token, name='refresh'),
+    path('refresh/', refresh_jwt_token, name='refresh'),
 
     path('posts/', views.PostView.as_view(), name='posts'),  # list/create
     path('posts/<int:id>/', views.PostDetailView.as_view(), name='posts_detail'),  # read/update/delete
@@ -34,7 +35,7 @@ urlpatterns = [
     path('tags/<int:id>/posts/', views.TagPostsView.as_view(), name='tags_detail_posts'),  # list
 
     path('profiles/', views.ProfileView.as_view(), name='profiles'),  # list
-    path('profiles/<int:id>/', views.ProfileDetailView.as_view(), name='profile_detail'),  # read
+    path('profiles/<int:id>/', views.ProfileDetailView.as_view(), name='profiles_detail'),  # read
     path('profiles/<int:id>/posts/', views.ProfilePostView.as_view(), name='profile_detail_posts'),  # list
     path('profiles/self/', views.ProfileSelfView.as_view(), name='self'),  # update
 ]

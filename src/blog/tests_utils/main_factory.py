@@ -2,7 +2,7 @@ from random import choice
 from string import ascii_lowercase, ascii_letters, digits
 
 from blog.tests_utils.utils import patch_storage
-from main.models import User, Profile
+from main.models import User, Profile, Tag, Post, Comment
 
 
 class MainFactory:
@@ -44,3 +44,30 @@ class MainFactory:
         kwargs.setdefault('avatar', self.primitive_factory.get_image_file())
 
         return Profile.objects.create(**kwargs)
+
+    @patch_storage
+    def get_post(self, **kwargs):
+        if 'author' not in kwargs:
+            kwargs['author'] = self.get_profile()
+        kwargs.setdefault('title', self.primitive_factory.get_title())
+        kwargs.setdefault('image', self.primitive_factory.get_image_file())
+        kwargs.setdefault('text', self.primitive_factory.get_text(7))
+
+        tags = [self.get_tag() for _ in range(kwargs.pop('tags_count'))] if 'tags_count' in kwargs else []
+
+        post = Post.objects.create(**kwargs)
+        post.tags.set(tags)
+        return post
+
+    def get_comment(self, **kwargs):
+        if 'author' not in kwargs:
+            kwargs['author'] = self.get_profile()
+        if 'post' not in kwargs:
+            kwargs['post'] = self.get_post()
+
+        kwargs.setdefault('message', self.primitive_factory.get_text(10))
+        return Comment.objects.create(**kwargs)
+
+    def get_tag(self, **kwargs):
+        kwargs.setdefault('title', self.primitive_factory.get_title())
+        return Tag.objects.create(**kwargs)

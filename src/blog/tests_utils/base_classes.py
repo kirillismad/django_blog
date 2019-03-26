@@ -6,11 +6,12 @@ from rest_framework.test import APITestCase
 
 from blog.tests_utils.main_factory import MainFactory
 from blog.tests_utils.primitive_factory import PrimitiveFactory
+from pprint import pformat
 
 
 class BaseTestCase(APITestCase):
     regexp = re.compile(r'^assert(?P<code>\d{3})$')
-    codes = (200, 201, 204)
+    codes = (200, 201, 204) + (403,)
     VIEW = None
 
     @classmethod
@@ -19,7 +20,8 @@ class BaseTestCase(APITestCase):
         cls.primitive_factory = PrimitiveFactory()
         cls.main_factory = MainFactory(cls.primitive_factory)
 
-    def assertStatus(self, status_code, response, message=None):
+    def assertStatus(self, status_code, response):
+        message = None if response.content is None else pformat(response.json())
         self.assertEqual(status_code, response.status_code, message)
 
     def __getattr__(self, item):
@@ -28,6 +30,8 @@ class BaseTestCase(APITestCase):
             code = int(match.group('code'))
             if code in self.codes:
                 return partial(self.assertStatus, code)
+            msg = 'Invalid status code. Available status_codes: {}'.format(', '.join(map(str, self.codes)))
+            raise ValueError(msg)
 
         msg = f'{self.__class__.__name__} object has no attribute {item}'
         raise AttributeError(msg)

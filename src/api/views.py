@@ -32,14 +32,14 @@ class SignInView(JSONWebTokenAPIView):
 
 
 class PostView(MultipartMixin, ListCreateAPIView):
-    queryset = Post.objects.annotate(comments_count=Count('comments'))
+    queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('pk')
     serializer_class = serializers.PostSerializer
 
     def perform_create(self, serializer):
         serializer.save(author_id=self.request.user.pk)
 
 
-class PostDetailView(RetrieveUpdateDestroyAPIView):
+class PostDetailView(MultipartMixin, RetrieveUpdateDestroyAPIView):
     permission_classes = DEFAULT_PERMS + [PostDetailPermission]
     queryset = Post.objects.all()
     serializer_class = serializers.PostDetailSerializer
@@ -60,7 +60,6 @@ class CommentView(FilterQuerysetMixin, ListCreateAPIView):
     #     return super().filter_queryset(queryset).filter(post_id=self.kwargs['id'])
 
 
-# TODO perms
 class CommentDetailView(FilterQuerysetMixin, RetrieveUpdateDestroyAPIView):
     permission_classes = DEFAULT_PERMS + [CommentDetailPermission]
     queryset = Comment.objects.all()
