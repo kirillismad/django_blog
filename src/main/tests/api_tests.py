@@ -1,6 +1,6 @@
-from blog.tests_utils import BaseTestCase, patch_storage, ProfileAPITestCase
 from pprint import pprint
-from random import sample
+
+from blog.tests_utils import BaseTestCase, patch_storage, ProfileAPITestCase
 
 print = pprint
 
@@ -48,10 +48,6 @@ class TestSignInView(BaseTestCase):
 class TestPostView(ProfileAPITestCase):
     VIEW = 'api:posts'
 
-    # def get_tags(self):
-    #     TAGS = 5
-    #     return [self.main_factory.get_tag() for _ in range(TAGS)]
-
     def arrange(self):
         # tags = self.get_tags()
         AUTHORS = 2
@@ -61,7 +57,6 @@ class TestPostView(ProfileAPITestCase):
             author = self.main_factory.get_profile()
             for _p in range(self.POSTS):
                 post = self.main_factory.get_post(author=author, tags_count=2)
-                # post.tags.set(sample(tags, k=2))
                 for _c in range(COMMENTS):
                     self.main_factory.get_comment(post=post)
 

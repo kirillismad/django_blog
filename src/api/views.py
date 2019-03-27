@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.db.models import Count, Max
+from django.db.models import Count
 from django.utils.decorators import method_decorator
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404, \
     ListAPIView, RetrieveAPIView
