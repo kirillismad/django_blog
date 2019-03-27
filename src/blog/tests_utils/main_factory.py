@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, sample
 from string import ascii_lowercase, ascii_letters, digits
 
 from blog.tests_utils.utils import patch_storage
@@ -53,10 +53,18 @@ class MainFactory:
         kwargs.setdefault('image', self.primitive_factory.get_image_file())
         kwargs.setdefault('text', self.primitive_factory.get_text(7))
 
-        tags = [self.get_tag() for _ in range(kwargs.pop('tags_count'))] if 'tags_count' in kwargs else []
+        tags_count = kwargs.pop('tags_count', None)
 
         post = Post.objects.create(**kwargs)
-        post.tags.set(tags)
+
+        if tags_count:
+            MAX_TAG = tags_count * 2
+            tags_len = Tag.objects.count()
+            if tags_len < MAX_TAG:
+                for _ in range(MAX_TAG - tags_len):
+                    self.get_tag()
+            post.tags.set(sample(list(Tag.objects.all()), tags_count))
+
         return post
 
     def get_comment(self, **kwargs):

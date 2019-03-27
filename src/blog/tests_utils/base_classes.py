@@ -2,6 +2,7 @@ import re
 from functools import partial
 
 from django.urls import reverse
+from django.utils.functional import cached_property
 from rest_framework.test import APITestCase
 
 from blog.tests_utils.main_factory import MainFactory
@@ -21,7 +22,7 @@ class BaseTestCase(APITestCase):
         cls.main_factory = MainFactory(cls.primitive_factory)
 
     def assertStatus(self, status_code, response):
-        message = None if response.content is None else pformat(response.json())
+        message = None if not response.content else pformat(response.json())
         self.assertEqual(status_code, response.status_code, message)
 
     def __getattr__(self, item):
@@ -39,7 +40,7 @@ class BaseTestCase(APITestCase):
     def get_reverse_kwargs(self):
         return {}
 
-    @property
+    @cached_property
     def url(self):
         return reverse(self.VIEW, kwargs=self.get_reverse_kwargs())
 

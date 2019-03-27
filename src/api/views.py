@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.db.models import Count
+from django.db.models import Count, Max
 from django.utils.decorators import method_decorator
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404, \
     ListAPIView, RetrieveAPIView
@@ -32,7 +32,7 @@ class SignInView(JSONWebTokenAPIView):
 
 
 class PostView(MultipartMixin, ListCreateAPIView):
-    queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('pk')
+    queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('-created_at')
     serializer_class = serializers.PostSerializer
 
     def perform_create(self, serializer):
@@ -47,7 +47,7 @@ class PostDetailView(MultipartMixin, RetrieveUpdateDestroyAPIView):
 
 
 class CommentView(FilterQuerysetMixin, ListCreateAPIView):
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.order_by('pk')
     serializer_class = serializers.CommentSerializer
 
     filter_kwargs = {'post_id': 'id'}
@@ -73,12 +73,12 @@ class CommentDetailView(FilterQuerysetMixin, RetrieveUpdateDestroyAPIView):
 
 
 class TagView(ListAPIView):
-    queryset = Tag.objects.annotate(posts_count=Count('posts'))
+    queryset = Tag.objects.annotate(posts_count=Count('posts')).order_by('pk')
     serializer_class = serializers.TagSerializer
 
 
 class TagPostsView(FilterQuerysetMixin, ListAPIView):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by('pk')
     serializer_class = serializers.PostSerializer
 
     filter_kwargs = {'tags__pk': 'id'}
@@ -88,8 +88,15 @@ class TagPostsView(FilterQuerysetMixin, ListAPIView):
 
 
 class ProfileView(ExcludeSelfMixin, ListAPIView):
-    queryset = Profile.objects.all()
     serializer_class = serializers.ProfileSerializer
+
+    def get_queryset(self):
+        # TODO
+        return Profile.objects.annotate(
+            posts_count=Count('posts'),
+            comments_count=Count('comments'),
+            # favorite_tag= . . .
+        ).order_by('user__email')
 
     # def filter_queryset(self, queryset):
     #     return super().filter_queryset(queryset).exclude(pk=self.request.user.pk)
@@ -105,12 +112,12 @@ class ProfileDetailView(ExcludeSelfMixin, RetrieveAPIView):
 
 
 class ProfilePostView(FilterQuerysetMixin, ListAPIView):
-    queryset = Post.objects.annotate(comments_count=Count('comments'))
+    queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('-created_at')
     serializer_class = serializers.ProfilePostSerializer
     filter_kwargs = {'author_id': 'id'}
 
 
-class ProfileSelfView(RetrieveUpdateDestroyAPIView):
+class ProfileSelfView(MultipartMixin, RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.ProfileSelfSerializer
 
     def get_object(self):

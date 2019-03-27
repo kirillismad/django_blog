@@ -86,12 +86,15 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    posts_count = serializers.IntegerField(read_only=True)
+    comments_count = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Profile
-        fields = ('id', 'email', 'first_name', 'last_name', 'avatar')
+        fields = ('id', 'email', 'first_name', 'last_name', 'avatar', 'posts_count', 'comments_count')
         extra_kwargs = {
             'id': {'source': 'pk'},
-            'email': {'source': 'user.email', 'read_only': True}
+            'email': {'read_only': True}
         }
 
 
@@ -100,17 +103,17 @@ class ProfileDetailSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ('email', 'first_name', 'last_name', 'avatar', 'wallpaper')
         extra_kwargs = {
-            'email': {'source': 'user.email'}
+            'email': {'read_only': True}
         }
 
 
 class ProfileSelfSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ('id', 'email' 'first_name', 'last_name', 'avatar', 'wallpaper')
+        fields = ('id', 'email', 'first_name', 'last_name', 'avatar', 'wallpaper')
         extra_kwargs = {
-            'id': {'source': 'pk'},
-            'email': {'source': 'user.email', 'read_only': True}
+            'id': {'source': 'pk', 'read_only': True},
+            'email': {'read_only': True}
         }
 
 

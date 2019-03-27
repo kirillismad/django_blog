@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.db.models import CASCADE
+from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
 from blog.utils import UploadToFactory
@@ -27,6 +28,10 @@ class Profile(models.Model):
     last_name = models.CharField(_('last_name'), max_length=32, blank=True)
     wallpaper = models.ImageField(_('wallpaper'), upload_to=UploadToFactory('main/profile/wallpaper'), null=True)
     avatar = models.ImageField(_('avatar'), upload_to=UploadToFactory('main/profile/avatar'), null=True)
+
+    @cached_property
+    def email(self):
+        return self.user.email
 
 
 class Post(models.Model):
