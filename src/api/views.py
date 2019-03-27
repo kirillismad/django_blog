@@ -31,9 +31,25 @@ class SignInView(JSONWebTokenAPIView):
     serializer_class = JSONWebTokenSerializer
 
 
+from django_filters import rest_framework as filters
+
+
+class PostFilter(filters.FilterSet):
+    # min_price = filters.NumberFilter(field_name="price", lookup_expr='gte')
+    # max_price = filters.NumberFilter(field_name="price", lookup_expr='lte')
+
+    title = filters.CharFilter(field_name='title', lookup_expr='icontains')
+
+    class Meta:
+        model = Post
+        fields = ['title']
+
+
 class PostView(MultipartMixin, ListCreateAPIView):
     queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('-created_at')
     serializer_class = serializers.PostSerializer
+
+    filterset_class = PostFilter
 
     def perform_create(self, serializer):
         serializer.save(author_id=self.request.user.pk)

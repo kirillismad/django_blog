@@ -1,4 +1,5 @@
 from pprint import pprint
+from random import choice
 
 from blog.tests_utils import BaseTestCase, patch_storage, ProfileAPITestCase
 
@@ -53,18 +54,21 @@ class TestPostView(ProfileAPITestCase):
         AUTHORS = 2
         self.POSTS = 2
         COMMENTS = 2
+        result = list()
         for _a in range(AUTHORS):
             author = self.main_factory.get_profile()
             for _p in range(self.POSTS):
                 post = self.main_factory.get_post(author=author, tags_count=2)
+                result.append(post)
                 for _c in range(COMMENTS):
                     self.main_factory.get_comment(post=post)
+
+        return result
 
     def test_get(self):
         self.arrange()
         r = self.client.get(self.url)
         self.assert200(r)
-        print(r.json())
         self.assertEqual(len(r.json()['results']), self.POSTS)
 
     def test_get_page_2(self):
@@ -72,6 +76,16 @@ class TestPostView(ProfileAPITestCase):
         r = self.client.get(self.url, {'page': 2})
         self.assert200(r)
         self.assertEqual(len(r.json()['results']), self.POSTS)
+
+    def test_get_query_param_title(self):
+        self.main_factory.get_post(title='abc')
+        self.main_factory.get_post(title='zxc')
+
+        r = self.client.get(self.url, data={'title': 'x'})
+        self.assert200(r)
+        self.assertEqual(len(r.json()['results']), 1)
+        self.assertEqual(r.json()['results'][0]['title'], 'zxc')
+        print(r.json())
 
     @patch_storage
     def test_post(self):

@@ -20,6 +20,7 @@ INSTALLED_APPS = [
 
     # packages
     'rest_framework',
+    'django_filters',
     'drf_yasg',
 
     # apps
@@ -45,9 +46,7 @@ REST_FRAMEWORK = {
 
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ),
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
     'SEARCH_PARAM': 'query',
 }
 
