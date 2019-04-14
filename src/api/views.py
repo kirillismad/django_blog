@@ -3,7 +3,6 @@ from django.db.models import Count
 from django.utils.decorators import method_decorator
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404, \
     ListAPIView, RetrieveAPIView
-from rest_framework.permissions import AllowAny
 from rest_framework.settings import api_settings
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
 from rest_framework_jwt.views import JSONWebTokenAPIView
@@ -96,6 +95,7 @@ class TagPostsView(FilterQuerysetMixin, ListAPIView):
 
 class ProfileView(ExcludeSelfMixin, ListAPIView):
     serializer_class = serializers.ProfileSerializer
+    permission_classes = ()
 
     def get_queryset(self):
         return Profile.objects.annotate(
@@ -111,6 +111,7 @@ class ProfileDetailView(ExcludeSelfMixin, RetrieveAPIView):
     queryset = Profile.objects.all()
     serializer_class = serializers.ProfileDetailSerializer
     lookup_url_kwarg = 'id'
+    permission_classes = ()
 
     # def filter_queryset(self, queryset):
     #     return super().filter_queryset(queryset).exclude(pk=self.request.user.pk)
