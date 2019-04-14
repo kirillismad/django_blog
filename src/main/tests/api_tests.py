@@ -64,8 +64,14 @@ class TestPostView(ProfileAPITestCase):
         self.arrange()
         r = self.client.get(self.url)
         self.assert200(r)
-        print(r.json())
         self.assertEqual(len(r.json()['results']), self.POSTS)
+
+    def test_get_as_anon(self):
+        self.arrange()
+        self.client.logout()
+
+        r = self.client.get(self.url)
+        self.assert200(r)
 
     def test_get_page_2(self):
         self.arrange()

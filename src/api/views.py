@@ -12,13 +12,15 @@ from api import serializers
 from blog.utils import MultipartMixin, FilterQuerysetMixin, ExcludeSelfMixin
 from main.models import Post, Comment, Tag, Profile
 from main.permissions import CommentDetailPermission, PostDetailPermission
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 DEFAULT_PERMS = api_settings.DEFAULT_PERMISSION_CLASSES
 
 
 @method_decorator(transaction.atomic, 'post')
 class SignUpView(MultipartMixin, CreateAPIView):
-    permission_classes = (AllowAny,)
+    authentication_classes = ()
+    permission_classes = ()
     serializer_class = serializers.SingUpSerializer
 
     # @transaction.atomic
@@ -27,20 +29,22 @@ class SignUpView(MultipartMixin, CreateAPIView):
 
 
 class SignInView(JSONWebTokenAPIView):
-    permission_classes = (AllowAny,)
+    authentication_classes = ()
+    permission_classes = ()
     serializer_class = JSONWebTokenSerializer
 
 
 class PostView(MultipartMixin, ListCreateAPIView):
     queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('-created_at')
     serializer_class = serializers.PostSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def perform_create(self, serializer):
         serializer.save(author_id=self.request.user.pk)
 
 
 class PostDetailView(MultipartMixin, RetrieveUpdateDestroyAPIView):
-    permission_classes = DEFAULT_PERMS + [PostDetailPermission]
+    permission_classes = (IsAuthenticatedOrReadOnly, PostDetailPermission)
     queryset = Post.objects.all()
     serializer_class = serializers.PostDetailSerializer
     lookup_url_kwarg = 'id'
@@ -49,6 +53,7 @@ class PostDetailView(MultipartMixin, RetrieveUpdateDestroyAPIView):
 class CommentView(FilterQuerysetMixin, ListCreateAPIView):
     queryset = Comment.objects.order_by('pk')
     serializer_class = serializers.CommentSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     filter_kwargs = {'post_id': 'id'}
 
@@ -61,7 +66,7 @@ class CommentView(FilterQuerysetMixin, ListCreateAPIView):
 
 
 class CommentDetailView(FilterQuerysetMixin, RetrieveUpdateDestroyAPIView):
-    permission_classes = DEFAULT_PERMS + [CommentDetailPermission]
+    permission_classes = (IsAuthenticatedOrReadOnly, CommentDetailPermission)
     queryset = Comment.objects.all()
     serializer_class = serializers.CommentDetailSerializer
     lookup_url_kwarg = 'comment_id'
@@ -75,11 +80,13 @@ class CommentDetailView(FilterQuerysetMixin, RetrieveUpdateDestroyAPIView):
 class TagView(ListAPIView):
     queryset = Tag.objects.annotate(posts_count=Count('posts')).order_by('pk')
     serializer_class = serializers.TagSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class TagPostsView(FilterQuerysetMixin, ListAPIView):
     queryset = Post.objects.all().order_by('pk')
     serializer_class = serializers.PostSerializer
+    permission_classes = ()
 
     filter_kwargs = {'tags__pk': 'id'}
 
@@ -91,11 +98,9 @@ class ProfileView(ExcludeSelfMixin, ListAPIView):
     serializer_class = serializers.ProfileSerializer
 
     def get_queryset(self):
-        # TODO
         return Profile.objects.annotate(
             posts_count=Count('posts'),
             comments_count=Count('comments'),
-            # favorite_tag= . . .
         ).order_by('user__email')
 
     # def filter_queryset(self, queryset):
