@@ -1,10 +1,10 @@
 from django.contrib.admin import ModelAdmin, register
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
 
 from main.models import Post, Tag, Comment, User, Profile
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
 
 
 class UserChangeForm(BaseUserChangeForm):
