@@ -25,6 +25,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
+    def __str__(self):
+        return self.email
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, CASCADE, primary_key=True, verbose_name=_('user'))
@@ -37,6 +40,9 @@ class Profile(models.Model):
     class Meta:
         verbose_name = _('profile')
         verbose_name_plural = _('profiles')
+
+    def __str__(self):
+        return self.full_name
 
     @cached_property
     def email(self):
@@ -68,6 +74,9 @@ class Post(models.Model):
         verbose_name = _('post')
         verbose_name_plural = _('posts')
 
+    def __str__(self):
+        return self.title
+
 
 class Comment(models.Model):
     author = models.ForeignKey(Profile, CASCADE, related_name='comments', verbose_name=_('author'))
@@ -79,6 +88,9 @@ class Comment(models.Model):
         verbose_name = _('comment')
         verbose_name_plural = _('comments')
 
+    def __str__(self):
+        return f'{self.author} / {self.post}'
+
 
 class Tag(models.Model):
     title = models.CharField(_('title'), max_length=16, unique=True)
@@ -86,3 +98,6 @@ class Tag(models.Model):
     class Meta:
         verbose_name = _('tag')
         verbose_name_plural = _('tags')
+
+    def __str__(self):
+        return self.title

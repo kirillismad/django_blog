@@ -50,7 +50,7 @@ class ProfileAdmin(ModelAdmin):
 
 @register(Post)
 class PostAdmin(ModelAdmin):
-    list_display = ('pk', 'author', 'title', 'created_at', 'tags_join', 'comments')
+    list_display = ('pk', 'author', 'title', 'created_at', 'tags_join', 'comments_count')
     list_display_links = list_display
 
     ordering = ('title',)
@@ -69,7 +69,12 @@ class PostAdmin(ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
 
-        return qs.annotate(comments=Count('comments'))
+        return qs.annotate(comments_count=Count('comments'))
+
+    def comments_count(self, post):
+        return post.comments_count
+
+    comments_count.short_description = _('comments')
 
 
 @register(Tag)
