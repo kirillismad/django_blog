@@ -21,6 +21,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
+    class Meta:
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, CASCADE, primary_key=True, verbose_name=_('user'))
@@ -30,9 +34,25 @@ class Profile(models.Model):
     avatar = models.ImageField(_('avatar'), upload_to=UploadToFactory('main/profile/avatar'), null=True)
     birthday = models.DateField(_('birthday date'))
 
+    class Meta:
+        verbose_name = _('profile')
+        verbose_name_plural = _('profiles')
+
     @cached_property
     def email(self):
         return self.user.email
+
+    @property
+    def short_name(self):
+        return f'{self.last_name} {self.first_name[0]}.'
+
+    @property
+    def full_name(self):
+        return f'{self.last_name} {self.first_name}'
+
+    def clean(self):
+        self.first_name = self.first_name.capitalize()
+        self.last_name = self.last_name.capitalize()
 
 
 class Post(models.Model):
@@ -44,12 +64,25 @@ class Post(models.Model):
     text = models.TextField(_('text'))
     created_at = models.IntegerField(_('created at timestamp'), default=time, editable=False, db_index=True)
 
+    class Meta:
+        verbose_name = _('post')
+        verbose_name_plural = _('posts')
+
 
 class Comment(models.Model):
     author = models.ForeignKey(Profile, CASCADE, related_name='comments', verbose_name=_('author'))
     post = models.ForeignKey(Post, CASCADE, related_name='comments', verbose_name=_('post'))
     message = models.CharField(_('message'), max_length=256)
+    created_at = models.DateTimeField(_('created at datetime'), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('comment')
+        verbose_name_plural = _('comments')
 
 
 class Tag(models.Model):
     title = models.CharField(_('title'), max_length=16, unique=True)
+
+    class Meta:
+        verbose_name = _('tag')
+        verbose_name_plural = _('tags')
