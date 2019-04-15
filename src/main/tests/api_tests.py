@@ -21,6 +21,7 @@ class TestSignUpView(BaseTestCase):
             'last_name': self.main_factory.get_name(),
             'avatar': self.primitive_factory.get_image(),
             'wallpaper': self.primitive_factory.get_image(),
+            'birthday': self.primitive_factory.get_date()
         }
 
         r = self.client.post(self.url, data, format=MULTIPART)

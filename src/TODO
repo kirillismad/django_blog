@@ -5,14 +5,17 @@ TODO
   + main
   + sign in
   + sign up
+  + profiles
+  + profiles detail
+  + self
+2.2) Написать фронт
+  - main
+  - sign in
+  - sign up
   - profiles
   - profiles detail
-  - profiles/ posts
-  - tags
-  - tags/detail/posts
   - self
-  
-2.2) Написать фронт
+
 3) Добавить админку
 4) Написать заполнить чем-то
 5) сделать dumpdata

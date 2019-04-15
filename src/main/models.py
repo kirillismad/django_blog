@@ -28,6 +28,7 @@ class Profile(models.Model):
     last_name = models.CharField(_('last_name'), max_length=32, blank=True, db_index=True)
     wallpaper = models.ImageField(_('wallpaper'), upload_to=UploadToFactory('main/profile/wallpaper'), null=True)
     avatar = models.ImageField(_('avatar'), upload_to=UploadToFactory('main/profile/avatar'), null=True)
+    birthday = models.DateField(_('birthday date'))
 
     @cached_property
     def email(self):

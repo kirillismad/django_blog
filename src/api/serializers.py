@@ -22,7 +22,7 @@ class SingUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'avatar', 'email', 'password', 'confirm_password', 'wallpaper')
+        fields = ('first_name', 'last_name', 'avatar', 'email', 'password', 'confirm_password', 'wallpaper', 'birthday')
 
     def validate(self, attrs):
         user_kwargs = attrs.pop('user')
