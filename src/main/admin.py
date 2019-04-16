@@ -1,10 +1,13 @@
-from django.contrib.admin import ModelAdmin, register
+from django.contrib.admin import ModelAdmin, register, site
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
+from django.contrib.auth.models import Group
 from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
 
 from main.models import Post, Tag, Comment, User, Profile
+
+site.unregister(Group)
 
 
 class UserChangeForm(BaseUserChangeForm):
@@ -50,7 +53,7 @@ class ProfileAdmin(ModelAdmin):
 
 @register(Post)
 class PostAdmin(ModelAdmin):
-    list_display = ('pk', 'author', 'title', 'created_at', 'tags_join', 'comments_count')
+    list_display = ('pk', 'author', 'title', 'created_at_as_datetime', 'tags_join', 'comments_count')
     list_display_links = list_display
 
     ordering = ('title',)

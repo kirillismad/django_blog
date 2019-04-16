@@ -9,7 +9,8 @@ from django.utils.translation import gettext_lazy as _
 
 from blog.utils import UploadToFactory
 from main.user_manager import UserManager
-
+from datetime import datetime, timezone
+from django.utils.timezone import localtime
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email'), unique=True)
@@ -68,7 +69,7 @@ class Post(models.Model):
     title = models.CharField(_('title'), max_length=64, db_index=True)
     image = models.ImageField(_('image'), upload_to=UploadToFactory('main/post/image'))
     text = models.TextField(_('text'))
-    created_at = models.IntegerField(_('created at timestamp'), default=time, editable=False, db_index=True)
+    created_at = models.IntegerField(_('created at datetime'), default=time, editable=False, db_index=True)
 
     class Meta:
         verbose_name = _('post')
@@ -76,6 +77,12 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def created_at_as_datetime(self):
+        utc_value = datetime.fromtimestamp(self.created_at, timezone.utc)
+        return localtime(utc_value)
+
+    created_at_as_datetime.short_description = _('created at datetime')
 
 
 class Comment(models.Model):
