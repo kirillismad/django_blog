@@ -12,6 +12,7 @@ from main.user_manager import UserManager
 from datetime import datetime, timezone
 from django.utils.timezone import localtime
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email'), unique=True)
 
@@ -83,6 +84,9 @@ class Post(models.Model):
         return localtime(utc_value)
 
     created_at_as_datetime.short_description = _('created at datetime')
+
+    def tags_join(self):
+        return ', '.join(tag.title for tag in self.tags.only('title'))
 
 
 class Comment(models.Model):
