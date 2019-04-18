@@ -35,9 +35,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User, CASCADE, primary_key=True, verbose_name=_('user'))
     first_name = models.CharField(_('first_name'), max_length=16, blank=True, db_index=True)
     last_name = models.CharField(_('last_name'), max_length=32, blank=True, db_index=True)
-    wallpaper = models.ImageField(_('wallpaper'), upload_to=UploadToFactory('main/profile/wallpaper'), null=True)
-    avatar = models.ImageField(_('avatar'), upload_to=UploadToFactory('main/profile/avatar'), null=True)
-    birthday = models.DateField(_('birthday date'))
+    wallpaper = models.ImageField(_('wallpaper'), upload_to=UploadToFactory('main/profile/wallpaper'), null=True, blank=True)
+    avatar = models.ImageField(_('avatar'), upload_to=UploadToFactory('main/profile/avatar'), null=True, blank=True)
+    birthday = models.DateField(_('birthday date'), null=True, blank=True)
 
     class Meta:
         verbose_name = _('profile')

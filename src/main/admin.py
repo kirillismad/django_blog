@@ -36,8 +36,8 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('id', 'email',)
     ordering = ('email',)
 
-    def get_model_perms(self, request):
-        return {}
+    # def get_model_perms(self, request):
+    #     return {}
 
 
 @register(Profile)

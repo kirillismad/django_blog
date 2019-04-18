@@ -27,8 +27,8 @@ class SingUpSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         user_kwargs = attrs.pop('user')
 
-        password_confirmation = user_kwargs.pop('confirm_password')
-        validate_password_pair(user_kwargs['password'], password_confirmation)
+        confirm_password = user_kwargs.pop('confirm_password')
+        validate_password_pair(user_kwargs['password'], confirm_password)
 
         user = User.objects.create_user(commit=False, **user_kwargs)
         try:

@@ -52,7 +52,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sign up</a>
+                        <a class="nav-link" href="{% url 'main:sign_up' %}">Sign up</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Sign in</a>
@@ -75,6 +75,11 @@
         </span>
     </div>
 </footer>
+
+{% block extra_js %}
+{% endblock %}
+
+
 </body>
 
 </html>
