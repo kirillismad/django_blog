@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Profiles
+{% endblock %}
+
+{% block extra_styles %}
+    <style>
+        .card .card-footer img {
+            width: 20px;
+            margin-right: 5px;
+        }
+
+        form {
+            width: 60%;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="row my-2">
+        <div class="col d-flex justify-content-center">
+            <form class="form-inline">
+                <input class="form-control mr-sm-2 mb-1 flex-grow-1" type="text" placeholder="Search"
+                       aria-label="Search">
+                <button class="btn btn-outline-success mb-1" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        {% for profile in profiles %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card mb-3">
+                    <img src="{{ profile.avatar.url }}" class="card-img-top" alt="card image">
+
+                    <div class="card-body">
+                        <h5 class="text-center">{{ profile.birthday }}</h5>
+                        <h5 class="text-center">{{ profile.full_name }}</h5>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-end flex-wrap">
+                            <div class="d-flex align-items-center">
+                                <img src="{% static 'img/post.svg' %}" alt="post icon">
+                                <span>{{ profile.posts_count }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

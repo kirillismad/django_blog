@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import password_validators_help_text_html, validate_password
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -7,16 +8,14 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class SignUpForm(forms.ModelForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField()
     password = forms.CharField(
         label=_("Password"),
         widget=forms.PasswordInput,
-        help_text=password_validators_help_text_html(),
     )
     confirm_password = forms.CharField(
         label=_("Password confirmation"),
         widget=forms.PasswordInput,
-        help_text=_("Enter the same password as before, for verification."),
     )
 
     class Meta:
@@ -24,12 +23,8 @@ class SignUpForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'avatar', 'email', 'password', 'confirm_password', 'wallpaper', 'birthday')
 
     def clean(self):
-        # data = self.cleaned_data
         user_fields = ('email', 'password', 'confirm_password')
-        user_data = {k: v for k, v in self.cleaned_data.items() if k in user_fields}
-
-        for f in user_fields:
-            self.cleaned_data.pop(f)
+        user_data = {f: self.cleaned_data.pop(f) for f in user_fields}
 
         try:
             validate_password(user_data['password'])
@@ -54,7 +49,6 @@ class SignUpForm(forms.ModelForm):
         pass
 
     def save(self, commit=True):
-        print('called', commit)
         user = self.cleaned_data.pop('user')
         self.instance = Profile(user=user, **self.cleaned_data)
 
@@ -64,3 +58,23 @@ class SignUpForm(forms.ModelForm):
             self.instance.save()
 
         return self.instance
+
+
+class SignInForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(
+        label=_("Password"),
+        widget=forms.PasswordInput,
+    )
+
+    def clean(self):
+        email = self.cleaned_data['email']
+        password = self.cleaned_data['password']
+
+        user = authenticate(email=email, password=password)
+
+        if user is None:
+            raise ValidationError(_('There is no user with such credentials'), 'invalid credentials')
+
+        return {'user': user}
+

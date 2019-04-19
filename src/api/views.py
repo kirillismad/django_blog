@@ -83,8 +83,9 @@ class TagView(ListAPIView):
 
 
 class TagPostsView(FilterQuerysetMixin, ListAPIView):
-    queryset = Post.objects.all().order_by('pk')
-    serializer_class = serializers.PostSerializer
+    pagination_class = None
+    queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('pk')
+    serializer_class = serializers.TagPostsSerializer
     permission_classes = ()
 
     filter_kwargs = {'tags__pk': 'id'}

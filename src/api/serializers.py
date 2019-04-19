@@ -123,3 +123,24 @@ class ProfilePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'created_at', 'tags', 'comments_count')
+
+
+class TagPostAuthorSerializer(serializers.ModelSerializer):
+    full_name = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ('id', 'avatar', 'full_name')
+        extra_kwargs = {
+            'id': {'source': 'pk'}
+        }
+
+
+class TagPostsSerializer(serializers.ModelSerializer):
+    comments_count = serializers.IntegerField(read_only=True)
+    author = TagPostAuthorSerializer(read_only=True)
+    tags = serializers.SlugRelatedField('title', many=True, read_only=True)
+
+    class Meta:
+        model = Post
+        fields = ('id', 'title', 'created_at', 'tags', 'comments_count', 'author', 'image')
