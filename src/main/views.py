@@ -111,7 +111,7 @@ class ProfileView(View):
 
         q = request.GET.get('q')
         if q is not None:
-            profiles = profiles.filter(Q(first_name__icontains=q) | Q(first_name__icontains=q))
+            profiles = profiles.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q))
         return render(request, 'main/profiles.html', context={'profiles': profiles, 'user': request.user})
 
 
