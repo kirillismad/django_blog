@@ -61,12 +61,12 @@
 
                 $row.append(`<div class="col-lg-4 col-md-6 mb-3">
                 <div class="card">
-                    <img src="${this.image}" class="card-img-top" alt="card image">
+                    <a href="${this.source_url}"><img src="${this.image}" class="card-img-top" alt="card image"></a>
                     <div class="card-body">
                         <h5 class="text-center">${this.title}</h5>
                         <div class="post-info">
                             <div class="d-flex justify-content-center">
-                                <img src="${author.avatar}" class="img-thumbnail mr-2" alt="author avatar">
+                                <a href="${author.source_url}"><img src="${author.avatar}" class="img-thumbnail mr-2" alt="author avatar"></a>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <span>${author.full_name}</span>
@@ -81,7 +81,7 @@
                             </div>
                             <div class="d-flex align-items-center">
                                 <img src="${comment_icon}" alt="comment image">
-                                <span>42</span>
+                                <span>${this.comments_count}</span>
                             </div>
                             <div class="d-flex align-items-center">${created_at}</div>
                         </div>
@@ -91,17 +91,16 @@
             })
         }
 
-        function chooseRandomTag() {
-            ids = [];
+        function chooseTag() {
+            let ids = [];
             $("#tag_select option").each(function () {
                 ids.push(this.value)
             });
-
-            let rnd_id = ids[Math.floor(Math.random() * ids.length)];
+            let tag_id = ids[Math.floor(Math.random() * ids.length)];
 
             let $select = $('#tag_select');
 
-            $select.val(rnd_id);
+            $select.val(tag_id);
             $select.change();
 
         }
@@ -111,7 +110,7 @@
         });
 
 
-        document.addEventListener("DOMContentLoaded", chooseRandomTag);
+        document.addEventListener("DOMContentLoaded", chooseTag);
 
 
     </script>

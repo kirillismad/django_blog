@@ -13,11 +13,15 @@
 {% block content %}
     <div class="row my-3 mx-sm-2">
         <div class="col-sm-4 col-md-6 mb-1 d-flex justify-content-start">
-            <a href="#" class="btn btn-primary" role="button">+ Add post</a>
+            {% if user.is_authenticated %}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#postCreateModal">+ Add
+                    post
+                </button>
+            {% endif %}
         </div>
         <div class="col-sm-8 col-md-6 d-sm-flex justify-content-end d-none">
-            <form class="form-inline">
-                <input class="form-control mr-sm-2 mb-1" type="text" placeholder="Search" aria-label="Search">
+            <form action="{% url 'main:root' %}" method="get" class="form-inline">
+                <input class="form-control mr-sm-2 mb-1" type="text" name="q" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success mb-1" type="submit">Search</button>
             </form>
         </div>
@@ -26,12 +30,16 @@
         {% for post in posts %}
             <div class="col-lg-4 col-md-6 mb-3">
                 <div class="card">
-                    <img src="{{ post.image.url }}" class="card-img-top" alt="card image">
+                    <a href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" class="card-img-top"
+                                                               alt="card image"></a>
                     <div class="card-body">
                         <h5 class="text-center">{{ post.title }}</h5>
                         <div class="post-info">
                             <div class="d-flex justify-content-center">
-                                <img src="{{ post.author.avatar.url }}" class="img-thumbnail mr-2" alt="author avatar">
+                                <a href="{{ post.author.get_absolute_url }}">
+                                    <img src="{{ post.author.avatar.url }}" class="img-thumbnail mr-2"
+                                         alt="author avatar">
+                                </a>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <span>{{ post.author.full_name }}</span>
@@ -55,4 +63,58 @@
             </div>
         {% endfor %}
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="postCreateModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form enctype="multipart/form-data" method="post" action="{% url 'main:root' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{ form.title.id_for_label }}" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="{{ form.title.id_for_label }}"
+                                   name="{{ form.title.name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.text.id_for_label }}" class="col-form-label">Text:</label>
+                            <textarea rows="10" class="form-control" id="{{ form.text.id_for_label }}"
+                                      name="{{ form.text.name }}"></textarea>
+                        </div>
+                        <div class="custom-file mb-3">
+                            <input type="file" class="custom-file-input" id="{{ form.image.id_for_label }}"
+                                   name="{{ form.image.name }}">
+                            <label class="custom-file-label" for="{{ form.image.id_for_label }}">Avatar</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.tags.id_for_label }}">Tags:</label>
+                            <select id="{{ form.tags.id_for_label }}" name="{{ form.tags.name }}"
+                                    class="custom-select" multiple>
+                                {% for choice in form.tags %}
+                                    {{ choice }}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary mx-auto d-block">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
 {% endblock %}

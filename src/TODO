@@ -13,10 +13,16 @@ TODO
   + sign in
   + sign up
   + profiles
-  - profiles detail
-  - self
+  + profiles detail
+  + self
 
 3) + Добавить админку
 4) + Написать заполнить чем-то
 5) + сделать dumpdata
 6) добавить в bootstrap.sh заполнение из дампа (loaddata)
+
+7) + Добавить функцию добавления поста с main-page
+8) + Добавить поиск на main-page
+9) + Добавить поиск на profiles
+10) Реализовать /profile
+11) add required in templates

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ profile.full_name }}
+{% endblock %}
+
+{% block extra_styles %}
+    <style>
+        img.avatar {
+            width: 60%;
+            height: 60%;
+        }
+
+        .card .card-footer {
+            font-size: 14px;
+        }
+
+        .card .card-footer img {
+            width: 20px;
+            margin-right: 5px;
+        }
+
+        main {
+            background-image: url("{{ profile.wallpaper.url }}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="mt-sm-3 mt-1">
+                <img class="img-rounded d-block mx-auto avatar" src="{{ profile.avatar.url }}" alt="author avatar">
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="mt-sm-3 mt-1 h-100 pt-3 d-flex justify-content-center align-items-center">
+                <div>
+                    <p>Email: <span>{{ profile.email }}</span></p>
+                    <p>First name: <span>{{ profile.first_name }}</span></p>
+                    <p>Last name: <span>{{ profile.last_name }}</span></p>
+                    <p>Birthday: <span>{{ profile.birthday }}</span></p>
+                    {% if user.pk == profile.pk %}
+                        <div class="text-center mt-3">
+                            <a href="{{ profile.get_update_url }}" class="btn btn-primary">Update</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid mx-2">
+        <div class="row mt-4">
+            {% for post in profile.posts.all %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                        <a href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" class="card-img-top"
+                                                                   alt="card image"></a>
+
+                        <div class="card-body">
+                            <h5 class="text-center">{{ post.title }}</h5>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between flex-wrap">
+                                <div class="d-flex align-items-center">
+                                    <img src="{% static "img/tag.svg" %}" alt="tag image">
+                                    <span>python, Flask</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <img src="{% static "img/comment.svg" %}" alt="comment image">
+                                    <span>{{ post.comments_count }}</span>
+                                </div>
+                                <div class="d-flex align-items-center">{{ post.created_at_as_datetime|date }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

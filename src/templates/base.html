@@ -45,7 +45,7 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
+                        <a class="nav-link" href="{% url 'main:self' %}">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'main:sign_out' %}">Sign out</a>
@@ -63,12 +63,12 @@
         </div>
     </nav>
 </header>
-<main class="container-fluid m-1 flex-grow-1">
+<main class="container-fluid flex-grow-1">
     {% block content %}
     {% endblock %}
 </main>
 
-<footer class="footer bg-light py-3 mt-3">
+<footer class="footer bg-light py-3">
     <div class="container text-center">
         <span class="text-muted">
             <a href="https://github.com/kirillismad/django_blog">https://github.com/kirillismad/django_blog</a>

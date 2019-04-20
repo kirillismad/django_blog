@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.db.models import CASCADE
+from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 
@@ -35,7 +36,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, CASCADE, primary_key=True, verbose_name=_('user'))
     first_name = models.CharField(_('first_name'), max_length=16, blank=True, db_index=True)
     last_name = models.CharField(_('last_name'), max_length=32, blank=True, db_index=True)
-    wallpaper = models.ImageField(_('wallpaper'), upload_to=UploadToFactory('main/profile/wallpaper'), null=True, blank=True)
+    wallpaper = models.ImageField(_('wallpaper'), upload_to=UploadToFactory('main/profile/wallpaper'), null=True,
+                                  blank=True)
     avatar = models.ImageField(_('avatar'), upload_to=UploadToFactory('main/profile/avatar'), null=True, blank=True)
     birthday = models.DateField(_('birthday date'), null=True, blank=True)
 
@@ -57,6 +59,12 @@ class Profile(models.Model):
     @property
     def full_name(self):
         return f'{self.last_name} {self.first_name}'
+
+    def get_absolute_url(self):
+        return reverse('main:profiles_detail', kwargs={'id': self.pk})
+
+    def get_update_url(self):
+        return reverse('main:profiles_update', kwargs={'id': self.pk})
 
     def clean(self):
         self.first_name = self.first_name.capitalize()
@@ -86,7 +94,15 @@ class Post(models.Model):
     created_at_as_datetime.short_description = _('created at datetime')
 
     def tags_join(self):
-        return ', '.join(tag.title for tag in self.tags.only('title'))
+        return ', '.join(self.tags.values_list('title', flat=True))
+
+    tags_join.short_description = _('tags')
+
+    def get_absolute_url(self):
+        return reverse('main:posts_detail', kwargs={'id': self.pk})
+
+    def get_comment_url(self):
+        return reverse('main:posts_detail_comment', kwargs={'id': self.pk})
 
 
 class Comment(models.Model):

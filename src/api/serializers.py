@@ -127,20 +127,28 @@ class ProfilePostSerializer(serializers.ModelSerializer):
 
 class TagPostAuthorSerializer(serializers.ModelSerializer):
     full_name = serializers.CharField(read_only=True)
+    source_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Profile
-        fields = ('id', 'avatar', 'full_name')
+        fields = ('id', 'avatar', 'full_name', 'source_url')
         extra_kwargs = {
             'id': {'source': 'pk'}
         }
+
+    def get_source_url(self, profile):
+        return profile.get_absolute_url()
 
 
 class TagPostsSerializer(serializers.ModelSerializer):
     comments_count = serializers.IntegerField(read_only=True)
     author = TagPostAuthorSerializer(read_only=True)
     tags = serializers.SlugRelatedField('title', many=True, read_only=True)
+    source_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'created_at', 'tags', 'comments_count', 'author', 'image')
+        fields = ('id', 'title', 'created_at', 'tags', 'comments_count', 'author', 'image', 'source_url')
+
+    def get_source_url(self, post):
+        return post.get_absolute_url()

@@ -64,11 +64,6 @@ class PostAdmin(ModelAdmin):
     list_select_related = ('author',)
     autocomplete_fields = ('author',)
 
-    def tags_join(self, post):
-        return ', '.join(post.tags.values_list('title', flat=True))
-
-    tags_join.short_description = _('tags')
-
     def get_queryset(self, request):
         qs = super().get_queryset(request)
 
@@ -97,6 +92,7 @@ class CommentAdmin(ModelAdmin):
     list_select_related = ('author',)
 
     autocomplete_fields = ('author', 'post')
+    search_fields = ('post__title', 'message')
 
     def short_name(self, comment):
         return comment.author.short_name

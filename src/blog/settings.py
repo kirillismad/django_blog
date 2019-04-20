@@ -12,6 +12,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'blog.admin.AdminConfig',
+    'django.contrib.postgres',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

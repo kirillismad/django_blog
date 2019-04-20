@@ -31,7 +31,9 @@
         {% for profile in profiles %}
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card mb-3">
-                    <img src="{{ profile.avatar.url }}" class="card-img-top" alt="card image">
+                    <a href="{{ profile.get_absolute_url }}">
+                        <img src="{{ profile.avatar.url }}" class="card-img-top" alt="card image">
+                    </a>
 
                     <div class="card-body">
                         <h5 class="text-center">{{ profile.birthday }}</h5>
