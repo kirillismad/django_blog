@@ -26,7 +26,7 @@ def method_login_required(method):
 class MainView(View):
     def get(self, request):
         queryset = Post.objects.select_related('author').prefetch_related('tags') \
-            .annotate(comments_count=Count('comments'))
+            .annotate(comments_count=Count('comments')).order_by('-created_at')
 
         q = request.GET.get('q')
         if q is not None:
