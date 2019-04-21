@@ -7,8 +7,7 @@ from django.db.models import Count, Prefetch, Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
-from django.views import View
-from django.views import generic
+from django.views import View, generic
 from main.forms import SignUpForm, SignInForm, CommentForm, PostForm, ProfileUpdateForm
 from main.models import Post, Profile, Tag, Comment
 

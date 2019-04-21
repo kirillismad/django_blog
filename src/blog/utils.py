@@ -64,6 +64,13 @@ class FilterQuerysetMixin:
         return super().filter_queryset(queryset).filter(**filter_kwargs)
 
 
+class OrderingMixin:
+    ordering_fields = ()
+
+    def get_queryset(self):
+        return super().get_queryset().order_by(*self.ordering_fields)
+
+
 def jwt_response_payload_handler(token, user=None, request=None):
     return {
         'token': token,

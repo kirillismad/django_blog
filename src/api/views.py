@@ -10,7 +10,7 @@ from rest_framework_jwt.views import JSONWebTokenAPIView
 
 from api import schemas
 from api import serializers
-from blog.utils import MultipartMixin, FilterQuerysetMixin, schema_method_decorator as smd
+from blog.utils import MultipartMixin, FilterQuerysetMixin, schema_method_decorator as smd, OrderingMixin
 from main.models import Post, Comment, Tag, Profile
 from main.permissions import CommentDetailPermission, PostDetailPermission, ProfileUpdatePermission
 
@@ -52,11 +52,12 @@ class PostDetailView(MultipartMixin, RetrieveUpdateDestroyAPIView):
     lookup_url_kwarg = 'id'
 
 
-class CommentView(FilterQuerysetMixin, ListCreateAPIView):
-    queryset = Comment.objects.order_by('pk')
+class CommentView(FilterQuerysetMixin, OrderingMixin, ListCreateAPIView):
+    queryset = Comment.objects.all()
     serializer_class = serializers.CommentSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
+    ordering_fields = ('pk',)
     filter_kwargs = {'post_id': 'id'}
 
     def perform_create(self, serializer):
@@ -79,19 +80,22 @@ class CommentDetailView(FilterQuerysetMixin, RetrieveUpdateDestroyAPIView):
     #     return super().filter_queryset(queryset).filter(post_id=self.kwargs['id'])
 
 
-class TagView(ListAPIView):
-    queryset = Tag.objects.annotate(posts_count=Count('posts')).order_by('pk')
+class TagView(OrderingMixin, ListAPIView):
+    queryset = Tag.objects.annotate(posts_count=Count('posts'))
     serializer_class = serializers.TagSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
+    ordering_fields = ('pk',)
 
-class TagPostsView(FilterQuerysetMixin, ListAPIView):
+
+class TagPostsView(FilterQuerysetMixin, OrderingMixin, ListAPIView):
     pagination_class = None
-    queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('pk')
+    queryset = Post.objects.annotate(comments_count=Count('comments'))
     serializer_class = serializers.TagPostsSerializer
     permission_classes = ()
 
     filter_kwargs = {'tags__pk': 'id'}
+    ordering_fields = ('pk',)
 
     # def filter_queryset(self, queryset):
     #     return super().filter_queryset(queryset).filter(tags__pk=self.kwargs['id'])
@@ -118,7 +122,9 @@ class ProfileDetailView(MultipartMixin, RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, ProfileUpdatePermission)
 
 
-class ProfilePostView(FilterQuerysetMixin, ListAPIView):
-    queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('-created_at')
+class ProfilePostView(FilterQuerysetMixin, OrderingMixin, ListAPIView):
+    queryset = Post.objects.annotate(comments_count=Count('comments'))
     serializer_class = serializers.ProfilePostSerializer
+
     filter_kwargs = {'author_id': 'id'}
+    ordering_fields = ('-created_at',)

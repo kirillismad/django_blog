@@ -44,7 +44,6 @@ class TestSignInView(BaseTestCase):
         r = self.client.post(self.url, data=data)
 
         self.assert200(r)
-        print(r.json())
 
 
 class TestPostView(ProfileAPITestCase):
