@@ -88,7 +88,8 @@
 
 {% block content %}
     <div class="author-info mx-auto text-center my-3">
-        <a href="{{ post.author.get_absolute_url }}"><img class="w-100" src="{{ post.author.avatar.url }}" alt="post author avatar"></a>
+        <a href="{{ post.author.get_absolute_url }}"><img class="w-100" src="{{ post.author.avatar.url }}"
+                                                          alt="post author avatar"></a>
         <h4>{{ post.author.full_name }}</h4>
     </div>
     <div class="post-info d-flex flex-column mx-auto text-center mb-3">
@@ -112,7 +113,8 @@
                         <img class="rounded author-avatar mr-2 h-100" src="{{ user.profile.avatar.url }}"
                              alt="user avatar">
                         <label class="sr-only" for="{{ form.message.id_for_label }}">Text</label>
-                        <input type="text" class="form-control flex-grow-1" id="{{ form.message.id_for_label }}" name="{{ form.message.html_name }}" placeholder="Text">
+                        <input type="text" class="form-control flex-grow-1" id="{{ form.message.id_for_label }}"
+                               name="{{ form.message.name }}" placeholder="Text" required>
                         <button type="submit" class="btn btn-primary ml-1">Send</button>
                     </form>
                 {% endif %}
@@ -122,8 +124,9 @@
                 {% for comment in post.comments.all %}
                     <div class="comment mb-2 d-flex">
                         <div class="image-wrapper h-50px">
-                            <a href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar.url }}" class="rounded author-avatar h-100"
-                                 alt="author comment"></a>
+                            <a href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar.url }}"
+                                                                                 class="rounded author-avatar h-100"
+                                                                                 alt="author comment"></a>
                         </div>
                         <div class="comment-info-wrapper">
                             <div class="comment-meta-info ml-2">

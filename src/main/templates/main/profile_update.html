@@ -20,7 +20,7 @@
                     <div class="col">
                         <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}"
                                name="{{ form.first_name.name }}"
-                               value="{{ form.first_name.value }}" placeholder="First name" autofocus>
+                               value="{{ form.first_name.value }}" placeholder="First name" autofocus required>
                         {% for error in form.first_name.errors %}
                             <p class="error">{{ error|escape }}</p>
                         {% endfor %}
@@ -33,7 +33,7 @@
                     <div class="col">
                         <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}"
                                name="{{ form.last_name.name }}"
-                               value="{{ form.last_name.value }}" placeholder="Last name" autofocus>
+                               value="{{ form.last_name.value }}" placeholder="Last name" required>
                         {% for error in form.last_name.errors %}
                             <p class="error">{{ error|escape }}</p>
                         {% endfor %}
@@ -46,7 +46,7 @@
                     <div class="col">
                         <input type="date" class="form-control" id="{{ form.birthday.id_for_label }}"
                                name="{{ form.birthday.name }}"
-                               value="{{ form.birthday.value|date:"Y-m-d" }}" placeholder="Birthday" autofocus>
+                               value="{{ form.birthday.value|date:"Y-m-d" }}" placeholder="Birthday" required>
                         {% for error in form.birthday.errors %}
                             <p class="error">{{ error|escape }}</p>
                         {% endfor %}
