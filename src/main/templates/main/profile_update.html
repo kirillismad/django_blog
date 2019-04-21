@@ -1,53 +1,87 @@
 {% extends 'base.html' %}
 
+{% block extra_styles %}
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
-    <form action="{% url 'main:profiles_update' user.pk %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="{{ form.first_name.id_for_label }}">First name</label>
-            <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}"
-                   name="{{ form.first_name.name }}"
-                   value="{{ form.first_name.value }}" placeholder="First name" autofocus>
-        </div>
-        <div class="form-group">
-            <label for="{{ form.last_name.id_for_label }}">Last name</label>
-            <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}"
-                   name="{{ form.last_name.name }}"
-                   value="{{ form.last_name.value }}" placeholder="Last name">
-        </div>
-        <div class="form-group">
-            <label for="{{ form.birthday.id_for_label }}">Birthday</label>
-            <input type="date" class="form-control" id="{{ form.birthday.id_for_label }}"
-                   name="{{ form.birthday.name }}"
-                   value="{{ form.birthday.value|date:"Y-m-d" }}" placeholder="Birthday">
-        </div>
+    <div class="wrapper d-flex align-items-center h-100">
+        <div class="container">
+            <form enctype="multipart/form-data" action="{% url 'main:profiles_update' user.pk %}" method="post">
+                {% csrf_token %}
+                <div class="form-group row no-gutters">
+                    <div class="col-sm-3 text-sm-right pr-3">
+                        <label for="{{ form.first_name.id_for_label }}" class="col-form-label">First name:</label>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}"
+                               name="{{ form.first_name.name }}"
+                               value="{{ form.first_name.value }}" placeholder="First name" autofocus>
+                        {% for error in form.first_name.errors %}
+                            <p class="error">{{ error|escape }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group row no-gutters">
+                    <div class="col-sm-3 text-sm-right pr-3">
+                        <label for="{{ form.last_name.id_for_label }}" class="col-form-label">Last name:</label>
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}"
+                               name="{{ form.last_name.name }}"
+                               value="{{ form.last_name.value }}" placeholder="Last name" autofocus>
+                        {% for error in form.last_name.errors %}
+                            <p class="error">{{ error|escape }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group row no-gutters">
+                    <div class="col-sm-3 text-sm-right pr-3">
+                        <label for="{{ form.birthday.id_for_label }}" class="col-form-label">Birthday:</label>
+                    </div>
+                    <div class="col">
+                        <input type="date" class="form-control" id="{{ form.birthday.id_for_label }}"
+                               name="{{ form.birthday.name }}"
+                               value="{{ form.birthday.value|date:"Y-m-d" }}" placeholder="Birthday" autofocus>
+                        {% for error in form.birthday.errors %}
+                            <p class="error">{{ error|escape }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
 
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="{{ form.avatar.id_for_label }}"
-                   name="{{ form.avatar.name }}">
-            <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">Avatar</label>
-            {% if form.avatar.errors %}
-                {% for error in form.avatar.errors %}
-                    <p class="error">{{ error|escape }}</p>
-                {% endfor %}
-            {% endif %}
+                <div class="custom-file">
+                    <div class="col-9 offset-3">
+                        <input type="file" class="custom-file-input" id="{{ form.avatar.id_for_label }}"
+                               name="{{ form.avatar.name }}">
+                        <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">Avatar</label>
+                        {% if form.avatar.errors %}
+                            {% for error in form.avatar.errors %}
+                                <p class="error">{{ error|escape }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="custom-file mt-3">
+                    <div class="col-9 offset-3">
+                        <input type="file" class="custom-file-input" id="{{ form.wallpaper.id_for_label }}"
+                               name="{{ form.wallpaper.name }}">
+                        <label class="custom-file-label" for="{{ form.wallpaper.id_for_label }}">Wallpaper</label>
+                        {% for error in form.wallpaper.errors %}
+                            <p class="error">{{ error|escape }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-9 offset-3 text-center mt-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
-
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="{{ form.wallpaper.id_for_label }}"
-                   name="{{ form.wallpaper.name }}">
-            <label class="custom-file-label" for="{{ form.wallpaper.id_for_label }}">Wallpaper</label>
-            {% if form.wallpaper.errors %}
-                {% for error in form.wallpaper.errors %}
-                    <p class="error">{{ error|escape }}</p>
-                {% endfor %}
-            {% endif %}
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-
-
-    </form>
+    </div>
 {% endblock %}
 
 

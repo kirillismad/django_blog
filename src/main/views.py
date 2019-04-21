@@ -133,7 +133,16 @@ class ProfileUpdateView(View):
 
         return render(request, 'main/profile_update.html', context={'form': form, 'user': request.user})
 
-        # return redirect(profile)
+    def post(self, request, id):
+        profile = get_object_or_404(Profile, pk=id)
+        if request.user.pk != profile.pk:
+            raise PermissionDenied()
+
+        form = ProfileUpdateForm(instance=profile, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(profile)
+        return render(request, 'main/profile_update.html', context={'form': form, 'user': request.user})
 
 
 class TagsView(View):
