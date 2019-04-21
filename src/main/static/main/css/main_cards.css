@@ -1,0 +1,13 @@
+.card .card-body a {
+    width: 20%;
+    min-width: 3.5rem;
+}
+
+.card .card-footer {
+    font-size: 14px;
+}
+
+.card .card-footer img {
+    width: 20px;
+    margin-right: 5px;
+}
