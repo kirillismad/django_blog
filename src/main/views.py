@@ -123,6 +123,7 @@ class ProfileDetailView(View):
         return render(request, 'main/profile_detail.html', context={'profile': profile, 'user': request.user})
 
 
+@method_decorator(login_required, 'dispatch')
 class ProfileUpdateView(View):
     def get(self, request, id):
         profile = get_object_or_404(Profile, pk=id)

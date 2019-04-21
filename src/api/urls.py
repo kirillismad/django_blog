@@ -37,5 +37,4 @@ urlpatterns = [
     path('profiles/', views.ProfileView.as_view(), name='profiles'),  # list
     path('profiles/<int:id>/', views.ProfileDetailView.as_view(), name='profiles_detail'),  # read
     path('profiles/<int:id>/posts/', views.ProfilePostView.as_view(), name='profiles_detail_posts'),  # list
-    path('profiles/self/', views.ProfileSelfView.as_view(), name='self'),  # update
 ]

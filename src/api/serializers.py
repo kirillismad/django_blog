@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError as DjangoValidationError
+from drf_yasg.utils import swagger_serializer_method
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import get_error_detail
@@ -136,6 +137,7 @@ class TagPostAuthorSerializer(serializers.ModelSerializer):
             'id': {'source': 'pk'}
         }
 
+    @swagger_serializer_method(serializer_or_field=serializers.CharField)
     def get_source_url(self, profile):
         return profile.get_absolute_url()
 
@@ -150,5 +152,6 @@ class TagPostsSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'title', 'created_at', 'tags', 'comments_count', 'author', 'image', 'source_url')
 
+    @swagger_serializer_method(serializer_or_field=serializers.CharField)
     def get_source_url(self, post):
         return post.get_absolute_url()

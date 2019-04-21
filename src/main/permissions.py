@@ -13,17 +13,6 @@ class PostDetailPermission(BasePermission):
         return True
 
 
-# class CommentDetailPermission(BasePermission):
-#     def has_object_permission(self, request, view, comment):
-#         if request.method not in SAFE_METHODS:
-#             user = request.user
-#             if request.method == DELETE:
-#                 return comment.author_id == user.pk or comment.post.author_id == user.pk
-#             # PUT / PATCH
-#             return comment.author_id == user.pk
-#         return True
-
-
 class CommentUpdatePermission(BasePermission):
     message = _('You must be author of comment')
 
@@ -43,3 +32,10 @@ class CommentDeletePermission(BasePermission):
 
 
 CommentDetailPermission = CommentUpdatePermission & CommentDeletePermission
+
+
+class ProfileUpdatePermission(BasePermission):
+    def has_object_permission(self, request, view, profile):
+        if request.method in {'PUT', 'PATCH'}:
+            return profile.pk == request.user.pk
+        return True

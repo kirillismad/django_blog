@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.auth import authenticate
-from django.contrib.auth.password_validation import password_validators_help_text_html, validate_password
+from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+
 from main.models import Profile, User, Comment, Post, Tag
-from django.contrib.auth.forms import UserCreationForm
 
 
 class SignUpForm(forms.ModelForm):

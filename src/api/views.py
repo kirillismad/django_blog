@@ -2,20 +2,22 @@ from django.db import transaction
 from django.db.models import Count
 from django.utils.decorators import method_decorator
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404, \
-    ListAPIView, RetrieveAPIView
+    ListAPIView, RetrieveUpdateAPIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.settings import api_settings
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
 from rest_framework_jwt.views import JSONWebTokenAPIView
 
+from api import schemas
 from api import serializers
-from blog.utils import MultipartMixin, FilterQuerysetMixin, ExcludeSelfMixin
+from blog.utils import MultipartMixin, FilterQuerysetMixin, schema_method_decorator as smd
 from main.models import Post, Comment, Tag, Profile
-from main.permissions import CommentDetailPermission, PostDetailPermission
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from main.permissions import CommentDetailPermission, PostDetailPermission, ProfileUpdatePermission
 
 DEFAULT_PERMS = api_settings.DEFAULT_PERMISSION_CLASSES
 
 
+@smd('post', operation_summary='Sign up')
 @method_decorator(transaction.atomic, 'post')
 class SignUpView(MultipartMixin, CreateAPIView):
     authentication_classes = ()
@@ -27,6 +29,7 @@ class SignUpView(MultipartMixin, CreateAPIView):
     #     return super().post(request, *args, **kwargs)
 
 
+@smd('post', operation_summary='Sign in', responses=schemas.sign_in)
 class SignInView(JSONWebTokenAPIView):
     authentication_classes = ()
     permission_classes = ()
@@ -94,7 +97,7 @@ class TagPostsView(FilterQuerysetMixin, ListAPIView):
     #     return super().filter_queryset(queryset).filter(tags__pk=self.kwargs['id'])
 
 
-class ProfileView(ExcludeSelfMixin, ListAPIView):
+class ProfileView(ListAPIView):
     serializer_class = serializers.ProfileSerializer
     permission_classes = ()
 
@@ -108,24 +111,14 @@ class ProfileView(ExcludeSelfMixin, ListAPIView):
     #     return super().filter_queryset(queryset).exclude(pk=self.request.user.pk)
 
 
-class ProfileDetailView(ExcludeSelfMixin, RetrieveAPIView):
+class ProfileDetailView(MultipartMixin, RetrieveUpdateAPIView):
     queryset = Profile.objects.all()
     serializer_class = serializers.ProfileDetailSerializer
     lookup_url_kwarg = 'id'
-    permission_classes = ()
-
-    # def filter_queryset(self, queryset):
-    #     return super().filter_queryset(queryset).exclude(pk=self.request.user.pk)
+    permission_classes = (IsAuthenticatedOrReadOnly, ProfileUpdatePermission)
 
 
 class ProfilePostView(FilterQuerysetMixin, ListAPIView):
     queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('-created_at')
     serializer_class = serializers.ProfilePostSerializer
     filter_kwargs = {'author_id': 'id'}
-
-
-class ProfileSelfView(MultipartMixin, RetrieveUpdateDestroyAPIView):
-    serializer_class = serializers.ProfileSelfSerializer
-
-    def get_object(self):
-        return self.request.user.profile
