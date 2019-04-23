@@ -10,7 +10,7 @@ idea/
 *.log
 .vagrant
 __pycache__/
-media/
+# media/
 src/static/
 # Sensitive or high-churn files:
 .idea/**/dataSources/

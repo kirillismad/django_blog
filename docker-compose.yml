@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  postgres:
+    build: ./psql
+  web:
+    build: .
+    environment:
+      WAIT_HOSTS: postgres:5432
+      ENV: DEV
+    volumes:
+      - ./src:/src
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
