@@ -108,8 +108,8 @@ DATABASES = {
         'NAME': 'django_blog',
         'USER': 'django_blog_user',
         'PASSWORD': 'password123',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', ''),
     }
 }
 

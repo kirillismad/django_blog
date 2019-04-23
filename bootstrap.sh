@@ -22,7 +22,7 @@ apt install -y postgresql postgresql-contrib
 
 while IFS='' read -r line || [[ -n "$line" ]]; do
 	su postgres -c "psql -c \"$line\" "
-done < /vagrant/db_init.sql
+done < /vagrant/psql/docker-entrypoint-initdb.d/db_init.sql
 
 python -m venv /home/vagrant/v_env
 chown -R vagrant:vagrant /home/vagrant/v_env
