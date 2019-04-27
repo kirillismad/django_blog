@@ -69,10 +69,16 @@ JWT_AUTH = {
 # Custom settings
 AUTH_USER_MODEL = 'main.User'
 
+# Celery settings
+CELERY_BROKER_URL = 'amqp://django_blog_user:password123@localhost:5672/'
+# CELERY_TASK_IGNORE_RESULT = True
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',  # cache
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',  # cache
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -80,6 +86,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'blog.urls'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        'LOCATION': f'{os.getenv("CACHE_HOST", "localhost")}:{os.getenv("CACHE_PORT", "11211")}',
+    }
+}
 
 TEMPLATES = [
     {
@@ -148,7 +161,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticr')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticx')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View, generic
+
 from main.forms import SignUpForm, SignInForm, CommentForm, PostForm, ProfileUpdateForm
 from main.models import Post, Profile, Tag, Comment
 
@@ -24,14 +25,14 @@ def method_login_required(method):
 
 class MainView(View):
     def get(self, request):
-        queryset = Post.objects.select_related('author').prefetch_related('tags') \
+        posts = Post.objects.select_related('author').prefetch_related('tags') \
             .annotate(comments_count=Count('comments')).order_by('-created_at')
 
         q = request.GET.get('q')
         if q is not None:
-            queryset = queryset.filter(Q(text__search=q) | Q(title__icontains=q))
+            posts = posts.filter(Q(text__search=q) | Q(title__icontains=q))
 
-        return render(request, 'main/main.html', {'posts': queryset, 'user': request.user, 'form': PostForm()})
+        return render(request, 'main/main.html', {'posts': posts, 'user': request.user, 'form': PostForm()})
 
     @method_login_required
     def post(self, request):
@@ -119,17 +120,18 @@ class SingOut(View):
         return redirect(reverse('main:root'))
 
 
+# @method_decorator(cache_page(60 * 3), 'get')
 class ProfileView(generic.ListView):
     queryset = Profile.objects.annotate(posts_count=Count('posts'))
     template_name = 'main/profiles.html'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        profiles = super().get_queryset()
         q = self.request.GET.get('q')
         if q is not None:
-            queryset = queryset.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q))
+            profiles = profiles.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q))
 
-        return queryset
+        return profiles
 
     def get_context_data(self, *args, **kwargs):
         return {

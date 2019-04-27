@@ -1,6 +1,9 @@
+import os
 import re
 from functools import partial
 
+from django.conf import settings
+from django.test import override_settings
 from django.urls import reverse
 from django.utils.functional import cached_property
 from rest_framework.test import APITestCase
@@ -10,7 +13,13 @@ from blog.tests_utils.primitive_factory import PrimitiveFactory
 from pprint import pformat
 
 
-class BaseTestCase(APITestCase):
+class TestCaseMeta(type):
+    def __new__(mcs, name, bases, attrs):
+        result = super().__new__(name, bases, attrs)
+        return override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR, 'test_media'))(result)
+
+
+class BaseTestCase(APITestCase, metaclass=TestCaseMeta):
     regexp = re.compile(r'^assert(?P<code>\d{3})$')
     codes = (200, 201, 204) + (403,)
     VIEW = None
