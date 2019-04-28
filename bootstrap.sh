@@ -24,28 +24,28 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
     su postgres -c "psql -c \"$line\" "
 done < /vagrant/psql/docker-entrypoint-initdb.d/1step_db_init.sql
 
-psql django_blog < /vagran/psql/dump.sql
+printf "localhost:*:django_blog:django_blog_user:password123" > /root/.pgpass
+
+chmod 0600 /root/.pgpass
+psql -U django_blog_user -h localhost django_blog -w < /vagrant/psql/dump.sql
+
 
 # memcached
 apt install -y memcached
 
 
 # rabbitmq
-wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
-dpkg -i erlang-solutions_1.0_all.deb
-apt -y update
-apt install -y erlang erlang-nox
-echo 'deb http://www.rabbitmq.com/debian/ testing main' | sudo tee /etc/apt/sources.list.d/rabbitmq.list
-wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
-apt -y update
 apt install -y rabbitmq-server
 sudo rabbitmqctl add_user django_blog_user password123
 sudo rabbitmqctl set_user_tags django_blog_user administrator
 sudo rabbitmqctl set_permissions -p / django_blog_user ".*" ".*" ".*"
 sudo systemctl restart rabbitmq-server
-rm ~/erlang-solutions_1.0_all.deb
 
 
-
+# install dependencies
 python -m venv /home/vagrant/v_env
 chown -R vagrant:vagrant /home/vagrant/v_env
+
+ACTIVATE_ENV="/home/vagrant/v_env/bin/activate"
+source $ACTIVATE_ENV
+pip install -r /vagrant/src/requirements.txt
