@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from time import time
 
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -6,12 +7,11 @@ from django.db import models
 from django.db.models import CASCADE
 from django.urls import reverse
 from django.utils.functional import cached_property
+from django.utils.timezone import localtime
 from django.utils.translation import gettext_lazy as _
 
 from blog.utils import UploadToFactory
 from main.user_manager import UserManager
-from datetime import datetime, timezone
-from django.utils.timezone import localtime
 
 
 class User(AbstractBaseUser, PermissionsMixin):

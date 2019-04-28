@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+-- Dumped from database version 10.7 (Ubuntu 10.7-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.7 (Ubuntu 10.7-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -812,6 +812,11 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 118	2019-04-20 20:06:09.970384+00	6	Никифоров Олег	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
 119	2019-04-21 12:38:53.843557+00	12	asdf	3		8	1
 120	2019-04-21 12:38:53.84935+00	11	sdf	3		8	1
+121	2019-04-24 07:25:08.365884+00	36	Рогов Аркадий / Быстрое и модное API (django, react.js)	1	[{"added": {}}]	7	1
+122	2019-04-24 07:25:23.534462+00	36	Рогов Аркадий / Быстрое и модное API (django, react.js)	3		7	1
+123	2019-04-28 10:28:11.615663+00	5	Язык C# и платформа .NET	2	[{"changed": {"fields": ["myimage"]}}]	8	1
+124	2019-04-28 10:31:35.058736+00	9	Будущее за asyncio	2	[{"changed": {"fields": ["myimage"]}}]	8	1
+125	2019-04-28 10:34:49.346175+00	9	Будущее за asyncio	2	[{"changed": {"fields": ["myimage"]}}]	8	1
 \.
 
 
@@ -874,6 +879,10 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 34	main	0019_auto_20190418_1154	2019-04-18 08:54:18.078659+00
 35	auth	0010_alter_group_name_max_length	2019-04-21 14:01:46.204639+00
 36	auth	0011_update_proxy_permissions	2019-04-21 14:01:46.22552+00
+37	main	0020_post_myimage	2019-04-28 10:09:15.676223+00
+38	main	0021_remove_post_myimage	2019-04-28 10:29:20.610489+00
+39	main	0022_post_myimage	2019-04-28 10:30:37.510845+00
+40	main	0023_remove_post_myimage	2019-04-28 10:35:23.303912+00
 \.
 
 
@@ -887,6 +896,8 @@ jdvvtmpdz1c0bd86u29zmf1nwrlugfwh	ZmExOTU5OTQ3NzQ5ZjU1YjVlNDgxYTI3NGYwNmRmNDI1NjZ
 u0sy197afij62evlp5kpiqeek63hc6iu	YTM2OTg0ZjAyNTgzZTk5MzI3MjkzM2NjYTExMzhlOTQ4ZGJjMmZkNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzNDE4YTRhYTgwNzEyNjZlZTgwZDE4ZDYzZjE3MTFlYzBkODUzZjliIn0=	2019-05-04 16:22:36.840953+00
 hw9vwmiufaceazjj4m0h7ixouor7qqs4	YTM2OTg0ZjAyNTgzZTk5MzI3MjkzM2NjYTExMzhlOTQ4ZGJjMmZkNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzNDE4YTRhYTgwNzEyNjZlZTgwZDE4ZDYzZjE3MTFlYzBkODUzZjliIn0=	2019-05-04 16:26:33.032603+00
 8jelrrbpw0ana8kojtxv7zz0mgs3ermn	YTM2OTg0ZjAyNTgzZTk5MzI3MjkzM2NjYTExMzhlOTQ4ZGJjMmZkNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzNDE4YTRhYTgwNzEyNjZlZTgwZDE4ZDYzZjE3MTFlYzBkODUzZjliIn0=	2019-05-05 12:38:45.391234+00
+5lktlko9r9e0ct6oh3k4orm2t8vb1omc	Mjg3ZTRlM2QzOTViZDYwYWY0NWZmNTMyNGU1MDliZmM2NmJmOGRhZjp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJlM2Q2ZGYyYmI1NDJmMTQ2NjhhNGIwNzFmMzg1OTIyYWU4OTk3MDg5In0=	2019-05-11 11:09:27.280395+00
+4y5bkbduwxua8wdfts00h1rupj62olut	NWY5Njk3MGY5MjhhNGEyMzRiMGJhN2YyYjAxZDlkMGNhOTUzNzhhNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJhZDYzZjRkMWNmMjA1ODIyYjljOGEzNjMzYzM3MDNmZDY1MzJhODk1In0=	2019-05-12 10:10:03.287304+00
 \.
 
 
@@ -994,10 +1005,10 @@ COPY public.main_user (id, password, last_login, is_superuser, email, is_active,
 5	pbkdf2_sha256$120000$enG9rm1zijCT$aUqRKIwu2+1xfSE1Pri4ay6EZQ+Y/DSFWCVZbTi5/B4=	\N	f	thispersondoesnotexist3@mail.ru	t	f
 7	pbkdf2_sha256$120000$pTtAExsW26vk$QqQ6EFdPcbVO0jYM6RT3maIyr8WkUuhrOOIHIm6NXpE=	\N	f	thispersondoesnotexist5@mail.ru	t	f
 11	pbkdf2_sha256$120000$gW6EuibsPHOR$FmeSYT+C4EH5YeWF5ss6g0nGlUoc+5VXtOH/1h34Thc=	2019-04-18 09:37:33.130763+00	f	thispersondoesnotexist6@mail.ru	t	f
-4	pbkdf2_sha256$120000$sq0YdL0J1rcs$1DlKoBmREKELjnPP7zDmSf1tUQgkbTaAIEtPajtlFAo=	2019-04-20 16:28:24.621501+00	f	thispersondoesnotexist2@mail.ru	t	f
-3	pbkdf2_sha256$120000$irNJDWms6EEw$2lk9NakQj6MXpunfDL5BD3vWvmsxfvR5F52PKzYeafI=	2019-04-20 17:21:41.115178+00	f	thispersondoesnotexist1@mail.ru	t	f
 6	pbkdf2_sha256$120000$fcNAmUN3rnuJ$nG/k64oivY9QphxLmKgGC5jUm27Rb6NX5c4vglcdy6I=	2019-04-21 09:56:53.818824+00	f	thispersondoesnotexist4@mail.ru	t	f
-1	pbkdf2_sha256$120000$36cxwLsVpFR2$y5SThH7aFYGuSsqYrhH4zloRJb/OwQPh2PYwMUSSL/Y=	2019-04-21 12:38:45.38918+00	t	pechkirill@mail.ru	t	t
+3	pbkdf2_sha256$150000$gzIQ1CIXf2f1$GPZVgnpyZxhNYOvw5EaKEdoV+98GXi3+nZM0zQn855Y=	2019-04-27 11:08:47.503875+00	f	thispersondoesnotexist1@mail.ru	t	f
+4	pbkdf2_sha256$150000$DVjpavHJi8st$FGLXWFTufnaWnAxaMp3K7ap+NQIbBLmcmTXL//49uKM=	2019-04-27 11:09:27.276287+00	f	thispersondoesnotexist2@mail.ru	t	f
+1	pbkdf2_sha256$150000$7r8jTZcXXx9D$QMt2OVhKQ7ufOA8FXpLzYCyS+x5c2RT+0LI3NjfMF2k=	2019-04-28 10:10:03.283414+00	t	pechkirill@mail.ru	t	t
 \.
 
 
@@ -1042,7 +1053,7 @@ SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 120, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 125, true);
 
 
 --
@@ -1056,14 +1067,14 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 10, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 36, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 40, true);
 
 
 --
 -- Name: main_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
 --
 
-SELECT pg_catalog.setval('public.main_comment_id_seq', 35, true);
+SELECT pg_catalog.setval('public.main_comment_id_seq', 36, true);
 
 
 --

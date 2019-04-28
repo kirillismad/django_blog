@@ -22,7 +22,9 @@ apt install -y postgresql postgresql-contrib
 
 while IFS='' read -r line || [[ -n "$line" ]]; do
     su postgres -c "psql -c \"$line\" "
-done < /vagrant/psql/docker-entrypoint-initdb.d/db_init.sql
+done < /vagrant/psql/docker-entrypoint-initdb.d/1step_db_init.sql
+
+psql django_blog < /vagran/psql/dump.sql
 
 # memcached
 apt install -y memcached
@@ -41,6 +43,7 @@ sudo rabbitmqctl add_user django_blog_user password123
 sudo rabbitmqctl set_user_tags django_blog_user administrator
 sudo rabbitmqctl set_permissions -p / django_blog_user ".*" ".*" ".*"
 sudo systemctl restart rabbitmq-server
+rm ~/erlang-solutions_1.0_all.deb
 
 
 
