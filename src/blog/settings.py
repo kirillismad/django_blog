@@ -70,8 +70,9 @@ JWT_AUTH = {
 AUTH_USER_MODEL = 'main.User'
 
 # Celery settings
-CELERY_BROKER_URL = 'amqp://django_blog_user:password123@localhost:5672/'
-# CELERY_TASK_IGNORE_RESULT = True
+BROKER_HOST = os.getenv("BROKER_HOST", "localhost")
+CELERY_BROKER_URL = f'amqp://django_blog_user:password123@{BROKER_HOST}:5672/'
+CELERY_TASK_IGNORE_RESULT = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

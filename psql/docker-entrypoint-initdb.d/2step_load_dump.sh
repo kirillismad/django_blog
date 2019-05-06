@@ -2,4 +2,4 @@
 
 set -e
 
-psql django_blog < /dump.sql
+psql -f /dump.sql django_blog > /dev/null
