@@ -1,0 +1,5 @@
+.vagrant
+.git
+/Vagrantfile
+/bootstrap.sh
+psql/

@@ -14,5 +14,5 @@ def validate_password_pair(password, confirm_password):
     if password != confirm_password:
         raise ValidationError(
             {'confirm_password': _('Password and confirm_password are not equal')},
-            'invalid_confirmation'
+            'password_mismatch'
         )

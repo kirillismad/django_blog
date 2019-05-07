@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError as DjangoValidationError
+from drf_yasg.utils import swagger_serializer_method
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import get_error_detail
@@ -22,13 +23,13 @@ class SingUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'avatar', 'email', 'password', 'confirm_password', 'wallpaper')
+        fields = ('first_name', 'last_name', 'avatar', 'email', 'password', 'confirm_password', 'wallpaper', 'birthday')
 
     def validate(self, attrs):
         user_kwargs = attrs.pop('user')
 
-        password_confirmation = user_kwargs.pop('confirm_password')
-        validate_password_pair(user_kwargs['password'], password_confirmation)
+        confirm_password = user_kwargs.pop('confirm_password')
+        validate_password_pair(user_kwargs['password'], confirm_password)
 
         user = User.objects.create_user(commit=False, **user_kwargs)
         try:
@@ -68,7 +69,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('id', 'author_id', 'message')
+        fields = ('id', 'author_id', 'message', 'created_at')
 
 
 class CommentDetailSerializer(serializers.ModelSerializer):
@@ -123,3 +124,34 @@ class ProfilePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'created_at', 'tags', 'comments_count')
+
+
+class TagPostAuthorSerializer(serializers.ModelSerializer):
+    full_name = serializers.CharField(read_only=True)
+    source_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Profile
+        fields = ('id', 'avatar', 'full_name', 'source_url')
+        extra_kwargs = {
+            'id': {'source': 'pk'}
+        }
+
+    @swagger_serializer_method(serializer_or_field=serializers.CharField)
+    def get_source_url(self, profile):
+        return profile.get_absolute_url()
+
+
+class TagPostsSerializer(serializers.ModelSerializer):
+    comments_count = serializers.IntegerField(read_only=True)
+    author = TagPostAuthorSerializer(read_only=True)
+    tags = serializers.SlugRelatedField('title', many=True, read_only=True)
+    source_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = ('id', 'title', 'created_at', 'tags', 'comments_count', 'author', 'image', 'source_url')
+
+    @swagger_serializer_method(serializer_or_field=serializers.CharField)
+    def get_source_url(self, post):
+        return post.get_absolute_url()

@@ -1,0 +1,117 @@
+{% extends  'base.html' %}
+{% load static %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" href="{% static 'main/css/main_cards.css' %}">
+{% endblock %}
+
+{% block title %}
+    Tags
+{% endblock %}
+
+{% block content %}
+    <div class="d-none">
+        <span id="comment_icon">{% static 'img/comment.svg' %}</span>
+        <span id="tag_icon">{% static 'img/tag.svg' %}</span>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col">
+            <form class="form-inline w-100">
+                <div class="row">
+                    <div class="col">
+                        <select id="tag_select" class="custom-select mr-2">
+                            {% for tag in tags %}
+                                <option value="{{ tag.pk }}">{{ tag.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col d-flex justify-content-center align-items-center">
+                        <span class="d-block" id="postCount"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="row" class="row mb-4">
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        tag_icon = $('#tag_icon').text();
+        comment_icon = $('#comment_icon').text();
+        $row = $('#row');
+
+        function success(data) {
+            console.log(data);
+            $('#postCount').text(`Posts: ${data.length}`);
+            $row.empty();
+            $(data).each(function () {
+                tags = this.tags;
+                author = this.author;
+
+                let created_at = new Date(this.created_at * 1000).toLocaleString('ru', {
+                    day: 'numeric',
+                    month: 'numeric',
+                    year: 'numeric'
+                });
+
+                $row.append(`<div class="col-lg-4 col-md-6 mb-3">
+                <div class="card">
+                    <a href="${this.source_url}"><img src="${this.image}" class="card-img-top" alt="card image"></a>
+                    <div class="card-body">
+                        <h5 class="text-center">${this.title}</h5>
+                        <div class="post-info">
+                            <div class="d-flex justify-content-center">
+                                <a href="${author.source_url}"><img src="${author.avatar}" class="img-thumbnail mr-2" alt="author avatar"></a>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <span>${author.full_name}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between flex-wrap">
+                            <div class="d-flex align-items-center">
+                                <img src="${tag_icon}" alt="tag image">
+                                <span>${this.tags.join(', ')}</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <img src="${comment_icon}" alt="comment image">
+                                <span>${this.comments_count}</span>
+                            </div>
+                            <div class="d-flex align-items-center">${created_at}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>`);
+            })
+        }
+
+        function chooseTag() {
+            let ids = [];
+            $("#tag_select option").each(function () {
+                ids.push(this.value)
+            });
+            let tag_id = ids[Math.floor(Math.random() * ids.length)];
+
+            let $select = $('#tag_select');
+
+            $select.val(tag_id);
+            $select.change();
+
+        }
+
+        $('#tag_select').on('change', function () {
+            $.getJSON(`/api/tags/${this.value}/posts/`, success);
+        });
+
+
+        document.addEventListener("DOMContentLoaded", chooseTag);
+
+
+    </script>
+{% endblock %}

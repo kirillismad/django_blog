@@ -1,12 +1,10 @@
-from functools import partial
 from uuid import uuid4
 
-from django.test import TestCase
 from django.utils.deconstruct import deconstructible
+from django.utils.decorators import method_decorator
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.parsers import MultiPartParser
 from rest_framework.settings import api_settings
-from rest_framework import status
-import re
 
 
 @deconstructible
@@ -66,6 +64,22 @@ class FilterQuerysetMixin:
         return super().filter_queryset(queryset).filter(**filter_kwargs)
 
 
-class ExcludeSelfMixin:
-    def filter_queryset(self, queryset):
-        return super().filter_queryset(queryset).exclude(pk=self.request.user.pk)
+class OrderingMixin:
+    ordering_fields = ()
+
+    def get_queryset(self):
+        return super().get_queryset().order_by(*self.ordering_fields)
+
+
+def jwt_response_payload_handler(token, user=None, request=None):
+    return {
+        'token': token,
+        'id': user.pk
+    }
+
+
+def schema_method_decorator(name, **kwargs):
+    def wrapper(cls):
+        return method_decorator(decorator=swagger_auto_schema(**kwargs), name=name)(cls)
+
+    return wrapper

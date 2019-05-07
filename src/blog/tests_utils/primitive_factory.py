@@ -1,3 +1,4 @@
+import math
 from string import digits, ascii_letters, ascii_lowercase
 
 import io
@@ -7,6 +8,7 @@ from random import randint, choices
 from django.core.files import File
 
 from blog.tests_utils.utils import patch_file
+from datetime import date
 
 digits_letters = digits + ascii_letters
 
@@ -39,3 +41,18 @@ class PrimitiveFactory:
     @patch_file
     def get_image_file(self, image_stream=None) -> File:
         return File(image_stream or self.get_image())
+
+    def _days_in_month(self, m_index):
+        return 28 + (m_index + math.floor(m_index / 8)) % 2 + 2 % m_index + 2 * math.floor(1 / m_index)
+
+    def get_date(self, day=None, month=None, year=None):
+        if month is None:
+            month = self.get_int(1, 12)
+
+        if day is None:
+            day = self.get_int(1, self._days_in_month(month))
+
+        if year is None:
+            year = self.get_int(1970, 2000)
+
+        return date(year, month, day)

@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+  postgres:
+    build: ./psql
+
+  web:
+    build: .
+    environment:
+      WAIT_HOSTS: postgres:5432, memcached:11211, rabbitmq:5672
+      ENV: DEV
+      DB_HOST: postgres
+      DB_PORT: 5432
+      CACHE_HOST: memcached
+      CACHE_PORT: 11211
+    volumes:
+      - ./src:/src
+    ports:
+      - "8080:8000"
+    depends_on:
+      - postgres
+      - memcached
+      - rabbitmq
+  
+  memcached:
+    image: memcached:1.5
+    command: -m 128
+
+  rabbitmq:
+    image: rabbitmq:3.7
+    environment:
+      RABBITMQ_DEFAULT_USER: django_blog_user
+      RABBITMQ_DEFAULT_PASS: password123
+
+  celery:
+    build: .
+    environment:
+      WAIT_HOSTS: postgres:5432, rabbitmq:5672
+      BROKER_HOST: rabbitmq
+      DB_HOST: postgres
+      DB_PORT: 5432
+
+    volumes:
+      - ./src:/src
+    entrypoint: /entrypoints/celery.sh
+    depends_on:
+      - rabbitmq
+      - postgres
+
+  celeryb:
+    build: .
+    environment:
+      WAIT_HOSTS: postgres:5432, rabbitmq:5672
+      BROKER_HOST: rabbitmq
+    volumes:
+      - ./src:/src
+    entrypoint: /entrypoints/celeryb.sh
+    depends_on:
+      - rabbitmq
+      - postgres
+      - celery
+    
+    

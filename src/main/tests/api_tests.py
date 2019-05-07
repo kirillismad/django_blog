@@ -22,6 +22,7 @@ class TestSignUpView(BaseTestCase):
             'last_name': self.main_factory.get_name(),
             'avatar': self.primitive_factory.get_image(),
             'wallpaper': self.primitive_factory.get_image(),
+            'birthday': self.primitive_factory.get_date()
         }
 
         r = self.client.post(self.url, data, format=MULTIPART)
@@ -50,7 +51,6 @@ class TestPostView(ProfileAPITestCase):
     VIEW = 'api:posts'
 
     def arrange(self):
-        # tags = self.get_tags()
         AUTHORS = 2
         self.POSTS = 2
         COMMENTS = 2
@@ -70,6 +70,13 @@ class TestPostView(ProfileAPITestCase):
         r = self.client.get(self.url)
         self.assert200(r)
         self.assertEqual(len(r.json()['results']), self.POSTS)
+
+    def test_get_as_anon(self):
+        self.arrange()
+        self.client.logout()
+
+        r = self.client.get(self.url)
+        self.assert200(r)
 
     def test_get_page_2(self):
         self.arrange()
@@ -342,6 +349,61 @@ class TestProfileDetailView(ProfileAPITestCase):
         r = self.client.get(self.url)
         self.assert200(r)
 
+    @patch_storage
+    def test_put(self):
+        data = {
+            'first_name': self.primitive_factory.get_title(),
+            'last_name': self.primitive_factory.get_title(),
+            'avatar': self.primitive_factory.get_image(),
+            'wallpaper': self.primitive_factory.get_image(),
+        }
+
+        r = self.client.put(self.url, data, format=MULTIPART)
+        self.assert403(r)
+
+    @patch_storage
+    def test_patch(self):
+        data = {
+            'first_name': self.primitive_factory.get_title(),
+            'avatar': self.primitive_factory.get_image(),
+        }
+
+        r = self.client.patch(self.url, data, format=MULTIPART)
+        self.assert403(r)
+
+
+class TestTestProfileDetailViewAsSelf(ProfileAPITestCase):
+    VIEW = 'api:profiles_detail'
+
+    def get_reverse_kwargs(self):
+        return {'id': self.profile.pk}
+
+    def test_get(self):
+        r = self.client.get(self.url)
+        self.assert200(r)
+
+    @patch_storage
+    def test_put(self):
+        data = {
+            'first_name': self.primitive_factory.get_title(),
+            'last_name': self.primitive_factory.get_title(),
+            'avatar': self.primitive_factory.get_image(),
+            'wallpaper': self.primitive_factory.get_image(),
+        }
+
+        r = self.client.put(self.url, data, format=MULTIPART)
+        self.assert200(r)
+
+    @patch_storage
+    def test_patch(self):
+        data = {
+            'first_name': self.primitive_factory.get_title(),
+            'avatar': self.primitive_factory.get_image(),
+        }
+
+        r = self.client.patch(self.url, data, format=MULTIPART)
+        self.assert200(r)
+
 
 class TestProfilePostView(ProfileAPITestCase):
     VIEW = 'api:profiles_detail_posts'
@@ -360,35 +422,3 @@ class TestProfilePostView(ProfileAPITestCase):
 
         r = self.client.get(self.url)
         self.assert200(r)
-
-
-class TestProfileSelfView(ProfileAPITestCase):
-    VIEW = 'api:self'
-
-    def test_get(self):
-        r = self.client.get(self.url)
-        self.assert200(r)
-
-    @patch_storage
-    def test_put(self):
-        data = {
-            'first_name': self.primitive_factory.get_title(),
-            'last_name': self.primitive_factory.get_title(),
-            'avatar': self.primitive_factory.get_image(),
-            'wallpaper': self.primitive_factory.get_image(),
-        }
-        r = self.client.put(self.url, data, format=MULTIPART)
-        self.assert200(r)
-
-    @patch_storage
-    def test_patch(self):
-        data = {
-            'first_name': self.primitive_factory.get_title(),
-            'avatar': self.primitive_factory.get_image(),
-        }
-        r = self.client.put(self.url, data, format=MULTIPART)
-        self.assert200(r)
-
-    def test_delete(self):
-        r = self.client.delete(self.url)
-        self.assert204(r)
