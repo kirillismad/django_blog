@@ -71,7 +71,9 @@ AUTH_USER_MODEL = 'main.User'
 # Celery settings
 BROKER_HOST = os.getenv('BROKER_HOST', 'localhost')
 BROKER_PORT = os.getenv('BROKER_PORT', '5672')
-CELERY_BROKER_URL = f'amqp://django_blog_user:password123@{BROKER_HOST}:{BROKER_PORT}/'
+BROKER_USER = os.getenv('BROKER_USER', 'django_blog_user')
+BROKER_PASSWORD = os.getenv('BROKER_PASSWORD', 'password123')
+CELERY_BROKER_URL = f'amqp://{BROKER_USER}:{BROKER_PASSWORD}@{BROKER_HOST}:{BROKER_PORT}/'
 CELERY_TASK_IGNORE_RESULT = True
 
 MIDDLEWARE = [

@@ -38,6 +38,8 @@ services:
       WAIT_HOSTS: postgres:5432, rabbitmq:5672
       BROKER_HOST: rabbitmq
       BROKER_PORT: 5672
+      BROKER_USER: django_blog_user
+      BROKER_PASSWORD: password123
       DB_HOST: postgres
       DB_PORT: 5432
 
@@ -54,6 +56,8 @@ services:
       WAIT_HOSTS: postgres:5432, rabbitmq:5672
       BROKER_HOST: rabbitmq
       BROKER_PORT: 5672
+      BROKER_USER: django_blog_user
+      BROKER_PASSWORD: password123
     volumes:
       - ./src:/src
     entrypoint: /entrypoints/celeryb.sh
