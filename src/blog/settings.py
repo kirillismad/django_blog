@@ -69,8 +69,9 @@ JWT_AUTH = {
 AUTH_USER_MODEL = 'main.User'
 
 # Celery settings
-BROKER_HOST = os.getenv("BROKER_HOST", "localhost")
-CELERY_BROKER_URL = f'amqp://django_blog_user:password123@{BROKER_HOST}:5672/'
+BROKER_HOST = os.getenv('BROKER_HOST', 'localhost')
+BROKER_PORT = os.getenv('BROKER_PORT', '5672')
+CELERY_BROKER_URL = f'amqp://django_blog_user:password123@{BROKER_HOST}:{BROKER_PORT}/'
 CELERY_TASK_IGNORE_RESULT = True
 
 MIDDLEWARE = [
@@ -86,11 +87,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'blog.urls'
-
+MEMCACHE_HOST = os.getenv('CACHE_HOST', 'localhost')
+MEMCACHE_PORT = os.getenv('CACHE_PORT', '11211')
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-        'LOCATION': f'{os.getenv("CACHE_HOST", "localhost")}:{os.getenv("CACHE_PORT", "11211")}',
+        'LOCATION': f'{MEMCACHE_HOST}:{MEMCACHE_PORT}',
     }
 }
 
@@ -114,6 +116,7 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+
 
 DATABASES = {
     'default': {

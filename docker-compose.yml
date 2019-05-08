@@ -37,6 +37,7 @@ services:
     environment:
       WAIT_HOSTS: postgres:5432, rabbitmq:5672
       BROKER_HOST: rabbitmq
+      BROKER_PORT: 5672
       DB_HOST: postgres
       DB_PORT: 5432
 
@@ -52,12 +53,12 @@ services:
     environment:
       WAIT_HOSTS: postgres:5432, rabbitmq:5672
       BROKER_HOST: rabbitmq
+      BROKER_PORT: 5672
     volumes:
       - ./src:/src
     entrypoint: /entrypoints/celeryb.sh
     depends_on:
       - rabbitmq
       - postgres
-      - celery
     
     
