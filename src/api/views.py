@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.db.models import Count
 from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404, \
     ListAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -13,6 +14,7 @@ from api import serializers
 from blog.utils import MultipartMixin, FilterQuerysetMixin, schema_method_decorator as smd, OrderingMixin
 from main.models import Post, Comment, Tag, Profile
 from main.permissions import CommentDetailPermission, PostDetailPermission, ProfileUpdatePermission
+from django_filters import rest_framework as filters
 
 DEFAULT_PERMS = api_settings.DEFAULT_PERMISSION_CLASSES
 
@@ -34,9 +36,6 @@ class SignInView(JSONWebTokenAPIView):
     authentication_classes = ()
     permission_classes = ()
     serializer_class = JSONWebTokenSerializer
-
-
-from django_filters import rest_framework as filters
 
 
 class PostFilter(filters.FilterSet):
@@ -104,6 +103,7 @@ class TagView(OrderingMixin, ListAPIView):
     ordering_fields = ('pk',)
 
 
+@method_decorator(never_cache, 'get')
 class TagPostsView(FilterQuerysetMixin, OrderingMixin, ListAPIView):
     pagination_class = None
     queryset = Post.objects.annotate(comments_count=Count('comments'))

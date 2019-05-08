@@ -28,8 +28,6 @@ printf "localhost:*:django_blog:django_blog_user:password123" > /root/.pgpass
 chmod 0600 /root/.pgpass
 
 psql -U django_blog_user -h localhost django_blog -w < /vagrant/psql/dump.sql
-rm /vagrant/psql/dump.sql
-
 
 # memcached
 apt install -y memcached

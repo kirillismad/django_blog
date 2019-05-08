@@ -692,137 +692,6 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
-1	2019-04-15 07:34:22.095299+00	2	pechkirill2@mail.ru	1	[{"added": {}}]	6	1
-2	2019-04-15 07:34:50.499907+00	2	pechkirill2@mail.ru	2	[{"changed": {"fields": ["password"]}}]	6	1
-3	2019-04-15 07:35:00.567621+00	2	pechkirill2@mail.ru	3		6	1
-4	2019-04-15 07:42:17.861713+00	3	someprofile1@mail.ru	1	[{"added": {}}]	6	1
-5	2019-04-15 07:45:49.508626+00	3	Profile object (3)	1	[{"added": {}}]	9	1
-6	2019-04-15 07:54:54.760694+00	1	Tag object (1)	1	[{"added": {}}]	10	1
-7	2019-04-15 07:56:16.821218+00	1	Post object (1)	1	[{"added": {}}]	8	1
-8	2019-04-15 08:03:51.625716+00	1	Some_last_name Some_first_name / post_title1	1	[{"added": {}}]	7	1
-9	2019-04-15 08:23:52.712795+00	2	sdf	1	[{"added": {}}]	8	1
-10	2019-04-16 05:23:33.701613+00	1	python	2	[{"changed": {"fields": ["title"]}}]	10	1
-11	2019-04-16 05:23:40.102945+00	2	javascript	1	[{"added": {}}]	10	1
-12	2019-04-16 05:23:44.050645+00	3	django	1	[{"added": {}}]	10	1
-13	2019-04-16 05:23:48.705765+00	4	.net	1	[{"added": {}}]	10	1
-14	2019-04-16 05:23:55.631866+00	5	asp	1	[{"added": {}}]	10	1
-15	2019-04-16 05:24:05.776157+00	5	asp	3		10	1
-16	2019-04-16 05:24:20.197294+00	4	asp .net	2	[{"changed": {"fields": ["title"]}}]	10	1
-17	2019-04-16 05:24:27.204723+00	6	.net core	1	[{"added": {}}]	10	1
-18	2019-04-16 05:24:37.064576+00	7	vue.js	1	[{"added": {}}]	10	1
-19	2019-04-16 05:24:43.876804+00	8	Flask	1	[{"added": {}}]	10	1
-20	2019-04-16 05:24:52.192875+00	8	flask	2	[{"changed": {"fields": ["title"]}}]	10	1
-21	2019-04-16 05:25:37.238666+00	4	someprofile2@mail.ru	1	[{"added": {}}]	6	1
-22	2019-04-16 05:26:45.212027+00	4	Афанасьев Максим	1	[{"added": {}}]	9	1
-23	2019-04-16 05:27:05.929338+00	3	Егоров Вячеслав	2	[{"changed": {"fields": ["first_name", "last_name"]}}]	9	1
-24	2019-04-16 05:27:08.715355+00	3	Егоров Вячеслав	2	[]	9	1
-25	2019-04-16 05:27:34.976135+00	5	somepriofile3@mail.ru	1	[{"added": {}}]	6	1
-26	2019-04-16 05:27:54.884326+00	5	Рогов Аркадий	1	[{"added": {}}]	9	1
-27	2019-04-16 05:28:38.946026+00	6	someprofile4@mail.ru	1	[{"added": {}}]	6	1
-28	2019-04-16 05:28:55.918847+00	6	Никифоров Олег	1	[{"added": {}}]	9	1
-29	2019-04-16 05:29:22.837003+00	7	someprofile5@mail.ru	1	[{"added": {}}]	6	1
-30	2019-04-16 05:29:37.928795+00	7	Лаврентьев Ростислав	1	[{"added": {}}]	9	1
-31	2019-04-16 05:34:40.695532+00	3	asdfasdfasdf	1	[{"added": {}}]	8	1
-32	2019-04-16 05:43:11.624559+00	3	asdfasdfasdf	3		8	1
-33	2019-04-16 05:43:11.627183+00	1	post_title1	3		8	1
-34	2019-04-16 05:43:11.629118+00	2	sdf	3		8	1
-35	2019-04-16 05:43:37.345391+00	9	c#	1	[{"added": {}}]	10	1
-36	2019-04-16 05:44:58.025646+00	4	Введение в ASP.NET Core	1	[{"added": {}}]	8	1
-37	2019-04-16 05:46:02.971723+00	5	Язык C# и платформа .NET	1	[{"added": {}}]	8	1
-38	2019-04-16 05:46:41.655602+00	6	Введение в JavaScript	1	[{"added": {}}]	8	1
-39	2019-04-16 05:47:26.623604+00	7	Пример простого API (Flask, JS)	1	[{"added": {}}]	8	1
-40	2019-04-16 05:48:19.884188+00	8	Быстрое и модное API (django, vue.js)	1	[{"added": {}}]	8	1
-41	2019-04-16 05:49:00.196899+00	9	Будущее за asyncio	1	[{"added": {}}]	8	1
-42	2019-04-16 05:50:05.252759+00	2	Рогов Аркадий / Будущее за asyncio	1	[{"added": {}}]	7	1
-43	2019-04-16 05:50:23.294761+00	3	Рогов Аркадий / Быстрое и модное API (django, vue.js)	1	[{"added": {}}]	7	1
-44	2019-04-16 05:50:32.635905+00	4	Рогов Аркадий / Введение в ASP.NET Core	1	[{"added": {}}]	7	1
-45	2019-04-16 05:50:48.615534+00	5	Рогов Аркадий / Введение в JavaScript	1	[{"added": {}}]	7	1
-46	2019-04-16 05:51:05.140412+00	6	Рогов Аркадий / Пример простого API (Flask, JS)	1	[{"added": {}}]	7	1
-47	2019-04-16 05:51:28.478858+00	7	Рогов Аркадий / Язык C# и платформа .NET	1	[{"added": {}}]	7	1
-48	2019-04-16 05:52:12.989542+00	8	Егоров Вячеслав / Будущее за asyncio	1	[{"added": {}}]	7	1
-49	2019-04-16 05:52:40.810732+00	9	Егоров Вячеслав / Быстрое и модное API (django, vue.js)	1	[{"added": {}}]	7	1
-50	2019-04-16 05:53:00.242308+00	10	Егоров Вячеслав / Введение в ASP.NET Core	1	[{"added": {}}]	7	1
-51	2019-04-16 05:53:24.376847+00	11	Егоров Вячеслав / Введение в JavaScript	1	[{"added": {}}]	7	1
-52	2019-04-16 05:53:36.339927+00	12	Егоров Вячеслав / Пример простого API (Flask, JS)	1	[{"added": {}}]	7	1
-53	2019-04-16 05:54:03.310265+00	13	Лаврентьев Ростислав / Язык C# и платформа .NET	1	[{"added": {}}]	7	1
-54	2019-04-16 05:54:27.083169+00	14	Афанасьев Максим / Будущее за asyncio	1	[{"added": {}}]	7	1
-55	2019-04-16 05:54:44.925205+00	15	Афанасьев Максим / Быстрое и модное API (django, vue.js)	1	[{"added": {}}]	7	1
-56	2019-04-16 05:55:00.858616+00	13	Егоров Вячеслав / Язык C# и платформа .NET	2	[{"changed": {"fields": ["author"]}}]	7	1
-57	2019-04-16 05:55:19.036127+00	16	Афанасьев Максим / Введение в ASP.NET Core	1	[{"added": {}}]	7	1
-58	2019-04-16 05:55:41.733788+00	17	Афанасьев Максим / Введение в JavaScript	1	[{"added": {}}]	7	1
-59	2019-04-16 05:56:05.489953+00	18	Афанасьев Максим / Пример простого API (Flask, JS)	1	[{"added": {}}]	7	1
-60	2019-04-16 05:56:21.739346+00	19	Афанасьев Максим / Язык C# и платформа .NET	1	[{"added": {}}]	7	1
-61	2019-04-16 05:56:52.314583+00	20	Никифоров Олег / Будущее за asyncio	1	[{"added": {}}]	7	1
-62	2019-04-16 05:56:54.349539+00	20	Никифоров Олег / Будущее за asyncio	2	[]	7	1
-63	2019-04-16 05:57:16.553529+00	21	Никифоров Олег / Быстрое и модное API (django, vue.js)	1	[{"added": {}}]	7	1
-64	2019-04-16 05:57:33.908157+00	22	Никифоров Олег / Введение в ASP.NET Core	1	[{"added": {}}]	7	1
-65	2019-04-16 05:57:49.08908+00	23	Никифоров Олег / Введение в JavaScript	1	[{"added": {}}]	7	1
-66	2019-04-16 05:57:50.249945+00	23	Никифоров Олег / Введение в JavaScript	2	[]	7	1
-67	2019-04-16 05:58:11.447868+00	24	Никифоров Олег / Пример простого API (Flask, JS)	1	[{"added": {}}]	7	1
-68	2019-04-16 05:59:00.873135+00	25	Никифоров Олег / Язык C# и платформа .NET	1	[{"added": {}}]	7	1
-69	2019-04-16 05:59:12.204005+00	5	Язык C# и платформа .NET	2	[{"changed": {"fields": ["tags"]}}]	8	1
-70	2019-04-16 05:59:39.474935+00	26	Лаврентьев Ростислав / Будущее за asyncio	1	[{"added": {}}]	7	1
-71	2019-04-16 05:59:40.550116+00	26	Лаврентьев Ростислав / Будущее за asyncio	2	[]	7	1
-72	2019-04-16 05:59:58.849369+00	27	Лаврентьев Ростислав / Быстрое и модное API (django, vue.js)	1	[{"added": {}}]	7	1
-73	2019-04-16 06:00:12.570007+00	28	Лаврентьев Ростислав / Введение в ASP.NET Core	1	[{"added": {}}]	7	1
-74	2019-04-16 06:00:35.005679+00	29	Лаврентьев Ростислав / Введение в JavaScript	1	[{"added": {}}]	7	1
-75	2019-04-16 06:00:49.138+00	30	Лаврентьев Ростислав / Пример простого API (Flask, JS)	1	[{"added": {}}]	7	1
-76	2019-04-16 06:01:30.739601+00	31	Лаврентьев Ростислав / Язык C# и платформа .NET	1	[{"added": {}}]	7	1
-77	2019-04-18 06:47:15.99007+00	6	Введение в JavaScript	2	[{"changed": {"fields": ["image"]}}]	8	1
-78	2019-04-18 06:48:35.118183+00	7	Пример простого API (Flask, JS)	2	[{"changed": {"fields": ["image"]}}]	8	1
-79	2019-04-18 06:48:59.760173+00	7	Пример простого API (Flask, vue.js)	2	[{"changed": {"fields": ["title"]}}]	8	1
-80	2019-04-18 06:49:25.50143+00	8	Быстрое и модное API (django, react.js)	2	[{"changed": {"fields": ["title"]}}]	8	1
-81	2019-04-18 06:49:37.59076+00	8	Быстрое и модное API (django, react.js)	2	[{"changed": {"fields": ["tags"]}}]	8	1
-82	2019-04-18 06:49:44.491038+00	7	Пример простого API (Flask, vue.js)	2	[{"changed": {"fields": ["tags"]}}]	8	1
-83	2019-04-18 06:54:40.646357+00	5	Язык C# и платформа .NET	2	[{"changed": {"fields": ["image"]}}]	8	1
-84	2019-04-18 06:56:12.364858+00	4	Введение в ASP.NET Core	2	[{"changed": {"fields": ["image"]}}]	8	1
-85	2019-04-18 06:56:50.860794+00	8	Быстрое и модное API (django, react.js)	2	[{"changed": {"fields": ["image"]}}]	8	1
-86	2019-04-18 06:57:29.218051+00	9	Будущее за asyncio	2	[{"changed": {"fields": ["image"]}}]	8	1
-87	2019-04-18 07:01:21.522969+00	5	Рогов Аркадий	2	[{"changed": {"fields": ["avatar"]}}]	9	1
-88	2019-04-18 07:01:29.25463+00	3	Егоров Вячеслав	2	[{"changed": {"fields": ["avatar"]}}]	9	1
-89	2019-04-18 07:01:37.605855+00	4	Афанасьев Максим	2	[{"changed": {"fields": ["avatar"]}}]	9	1
-90	2019-04-18 07:01:43.108859+00	6	Никифоров Олег	2	[{"changed": {"fields": ["avatar"]}}]	9	1
-91	2019-04-18 07:01:49.080694+00	7	Лаврентьев Ростислав	2	[{"changed": {"fields": ["avatar"]}}]	9	1
-92	2019-04-18 08:57:21.241389+00	8	someprofile6@mail.ru	3		6	1
-93	2019-04-18 08:59:36.998289+00	9	someprofile6@mail.ru	3		6	1
-94	2019-04-18 09:02:51.413827+00	10	Беспалов Даниил	2	[{"changed": {"fields": ["first_name", "last_name"]}}]	9	1
-95	2019-04-18 09:04:14.50461+00	10	Беспалов Даниил	3		9	1
-96	2019-04-18 09:36:04.782346+00	10	someprofile6@mail.ru	3		6	1
-97	2019-04-19 06:34:35.799939+00	11	Зуев Никита	2	[{"changed": {"fields": ["first_name", "last_name"]}}]	9	1
-98	2019-04-20 16:23:22.629487+00	13	Егоров Вячеслав / Язык C# и платформа .NET	3		7	1
-99	2019-04-20 16:24:02.662102+00	4	Рогов Аркадий / Введение в ASP.NET Core	3		7	1
-100	2019-04-20 16:24:19.221695+00	27	Лаврентьев Ростислав / Быстрое и модное API (django, react.js)	3		7	1
-101	2019-04-20 16:24:52.788375+00	24	Никифоров Олег / Пример простого API (Flask, vue.js)	3		7	1
-102	2019-04-20 16:25:10.578978+00	23	Никифоров Олег / Введение в JavaScript	3		7	1
-103	2019-04-20 16:25:32.557012+00	14	Афанасьев Максим / Будущее за asyncio	3		7	1
-104	2019-04-20 16:27:15.967753+00	5	thispersondoesnotexist3@mail.ru	2	[{"changed": {"fields": ["email"]}}]	6	1
-105	2019-04-20 16:27:25.138466+00	3	thispersondoesnotexist1@mail.ru	2	[{"changed": {"fields": ["email"]}}]	6	1
-106	2019-04-20 16:27:30.853097+00	11	thispersondoesnotexist@mail.ru	2	[{"changed": {"fields": ["email"]}}]	6	1
-107	2019-04-20 16:27:36.310992+00	7	thispersondoesnotexist5@mail.ru	2	[{"changed": {"fields": ["email"]}}]	6	1
-108	2019-04-20 16:27:41.781303+00	6	thispersondoesnotexist4@mail.ru	2	[{"changed": {"fields": ["email"]}}]	6	1
-109	2019-04-20 16:27:47.273226+00	4	thispersondoesnotexist2@mail.ru	2	[{"changed": {"fields": ["email"]}}]	6	1
-110	2019-04-20 16:27:59.794755+00	11	thispersondoesnotexist6@mail.ru	2	[{"changed": {"fields": ["email"]}}]	6	1
-111	2019-04-20 16:41:59.637461+00	32	Афанасьев Максим / Язык C# и платформа .NET	3		7	1
-112	2019-04-20 18:46:50.724226+00	35	Егоров Вячеслав / Язык C# и платформа .NET	3		7	1
-113	2019-04-20 18:46:50.730258+00	34	Егоров Вячеслав / Язык C# и платформа .NET	3		7	1
-114	2019-04-20 18:46:50.733173+00	33	Егоров Вячеслав / Язык C# и платформа .NET	3		7	1
-115	2019-04-20 18:51:27.091261+00	10	asdfa	3		8	1
-116	2019-04-20 19:08:38.74448+00	4	Введение в ASP.NET Core	2	[{"changed": {"fields": ["text"]}}]	8	1
-117	2019-04-20 19:08:59.055339+00	4	Введение в ASP.NET Core	2	[{"changed": {"fields": ["text"]}}]	8	1
-118	2019-04-20 20:06:09.970384+00	6	Никифоров Олег	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
-119	2019-04-21 12:38:53.843557+00	12	asdf	3		8	1
-120	2019-04-21 12:38:53.84935+00	11	sdf	3		8	1
-121	2019-04-24 07:25:08.365884+00	36	Рогов Аркадий / Быстрое и модное API (django, react.js)	1	[{"added": {}}]	7	1
-122	2019-04-24 07:25:23.534462+00	36	Рогов Аркадий / Быстрое и модное API (django, react.js)	3		7	1
-123	2019-04-28 10:28:11.615663+00	5	Язык C# и платформа .NET	2	[{"changed": {"fields": ["myimage"]}}]	8	1
-124	2019-04-28 10:31:35.058736+00	9	Будущее за asyncio	2	[{"changed": {"fields": ["myimage"]}}]	8	1
-125	2019-04-28 10:34:49.346175+00	9	Будущее за asyncio	2	[{"changed": {"fields": ["myimage"]}}]	8	1
-126	2019-05-08 08:23:04.693145+00	4	Афанасьев Максим	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
-127	2019-05-08 08:23:18.69389+00	5	Рогов Аркадий	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
-128	2019-05-08 08:23:40.432113+00	6	Никифоров Олег	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
-129	2019-05-08 08:24:02.790535+00	7	Лаврентьев Ростислав	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
-130	2019-05-08 08:24:11.907358+00	11	Зуев Никита	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
-131	2019-05-08 08:24:25.730927+00	3	Егоров Вячеслав	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
 \.
 
 
@@ -904,7 +773,8 @@ hw9vwmiufaceazjj4m0h7ixouor7qqs4	YTM2OTg0ZjAyNTgzZTk5MzI3MjkzM2NjYTExMzhlOTQ4ZGJ
 8jelrrbpw0ana8kojtxv7zz0mgs3ermn	YTM2OTg0ZjAyNTgzZTk5MzI3MjkzM2NjYTExMzhlOTQ4ZGJjMmZkNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzNDE4YTRhYTgwNzEyNjZlZTgwZDE4ZDYzZjE3MTFlYzBkODUzZjliIn0=	2019-05-05 12:38:45.391234+00
 5lktlko9r9e0ct6oh3k4orm2t8vb1omc	Mjg3ZTRlM2QzOTViZDYwYWY0NWZmNTMyNGU1MDliZmM2NmJmOGRhZjp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJlM2Q2ZGYyYmI1NDJmMTQ2NjhhNGIwNzFmMzg1OTIyYWU4OTk3MDg5In0=	2019-05-11 11:09:27.280395+00
 4y5bkbduwxua8wdfts00h1rupj62olut	NWY5Njk3MGY5MjhhNGEyMzRiMGJhN2YyYjAxZDlkMGNhOTUzNzhhNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJhZDYzZjRkMWNmMjA1ODIyYjljOGEzNjMzYzM3MDNmZDY1MzJhODk1In0=	2019-05-12 10:10:03.287304+00
-q66bgtxa2wafyo155r53xmdmryx93mhw	NWY5Njk3MGY5MjhhNGEyMzRiMGJhN2YyYjAxZDlkMGNhOTUzNzhhNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJhZDYzZjRkMWNmMjA1ODIyYjljOGEzNjMzYzM3MDNmZDY1MzJhODk1In0=	2019-05-22 08:17:56.532542+00
+hjeddznnvbx94o1bj0ar8fyyyzsfkxcq	NWY5Njk3MGY5MjhhNGEyMzRiMGJhN2YyYjAxZDlkMGNhOTUzNzhhNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJhZDYzZjRkMWNmMjA1ODIyYjljOGEzNjMzYzM3MDNmZDY1MzJhODk1In0=	2019-05-22 08:40:03.958698+00
+t2krggafqjoq3721srnikb8x5b72v5ql	NWY5Njk3MGY5MjhhNGEyMzRiMGJhN2YyYjAxZDlkMGNhOTUzNzhhNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJhZDYzZjRkMWNmMjA1ODIyYjljOGEzNjMzYzM3MDNmZDY1MzJhODk1In0=	2019-05-22 11:18:28.745721+00
 \.
 
 
@@ -1009,13 +879,13 @@ COPY public.main_tag (id, title) FROM stdin;
 --
 
 COPY public.main_user (id, password, last_login, is_superuser, email, is_active, is_staff) FROM stdin;
-5	pbkdf2_sha256$120000$enG9rm1zijCT$aUqRKIwu2+1xfSE1Pri4ay6EZQ+Y/DSFWCVZbTi5/B4=	\N	f	thispersondoesnotexist3@mail.ru	t	f
 7	pbkdf2_sha256$120000$pTtAExsW26vk$QqQ6EFdPcbVO0jYM6RT3maIyr8WkUuhrOOIHIm6NXpE=	\N	f	thispersondoesnotexist5@mail.ru	t	f
 11	pbkdf2_sha256$120000$gW6EuibsPHOR$FmeSYT+C4EH5YeWF5ss6g0nGlUoc+5VXtOH/1h34Thc=	2019-04-18 09:37:33.130763+00	f	thispersondoesnotexist6@mail.ru	t	f
 6	pbkdf2_sha256$120000$fcNAmUN3rnuJ$nG/k64oivY9QphxLmKgGC5jUm27Rb6NX5c4vglcdy6I=	2019-04-21 09:56:53.818824+00	f	thispersondoesnotexist4@mail.ru	t	f
-3	pbkdf2_sha256$150000$gzIQ1CIXf2f1$GPZVgnpyZxhNYOvw5EaKEdoV+98GXi3+nZM0zQn855Y=	2019-04-27 11:08:47.503875+00	f	thispersondoesnotexist1@mail.ru	t	f
-4	pbkdf2_sha256$150000$DVjpavHJi8st$FGLXWFTufnaWnAxaMp3K7ap+NQIbBLmcmTXL//49uKM=	2019-04-27 11:09:27.276287+00	f	thispersondoesnotexist2@mail.ru	t	f
-1	pbkdf2_sha256$150000$7r8jTZcXXx9D$QMt2OVhKQ7ufOA8FXpLzYCyS+x5c2RT+0LI3NjfMF2k=	2019-05-08 08:17:56.51631+00	t	pechkirill@mail.ru	t	t
+3	pbkdf2_sha256$150000$gzIQ1CIXf2f1$GPZVgnpyZxhNYOvw5EaKEdoV+98GXi3+nZM0zQn855Y=	2019-05-08 08:37:55.438326+00	f	thispersondoesnotexist1@mail.ru	t	f
+4	pbkdf2_sha256$150000$DVjpavHJi8st$FGLXWFTufnaWnAxaMp3K7ap+NQIbBLmcmTXL//49uKM=	2019-05-08 10:58:27.17406+00	f	thispersondoesnotexist2@mail.ru	t	f
+5	pbkdf2_sha256$150000$DBcXNGp6vG82$RP+Vi4O2TrJ3s90Cd8bC0iC3GdE+YmkBbqR86HJRTxc=	2019-05-08 10:58:58.013016+00	f	thispersondoesnotexist3@mail.ru	t	f
+1	pbkdf2_sha256$150000$7r8jTZcXXx9D$QMt2OVhKQ7ufOA8FXpLzYCyS+x5c2RT+0LI3NjfMF2k=	2019-05-08 11:18:28.743362+00	t	blogadmin@mail.ru	t	t
 \.
 
 
@@ -1060,7 +930,7 @@ SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 131, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 168, true);
 
 
 --
@@ -1081,21 +951,21 @@ SELECT pg_catalog.setval('public.django_migrations_id_seq', 40, true);
 -- Name: main_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
 --
 
-SELECT pg_catalog.setval('public.main_comment_id_seq', 36, true);
+SELECT pg_catalog.setval('public.main_comment_id_seq', 62, true);
 
 
 --
 -- Name: main_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
 --
 
-SELECT pg_catalog.setval('public.main_post_id_seq', 12, true);
+SELECT pg_catalog.setval('public.main_post_id_seq', 23, true);
 
 
 --
 -- Name: main_post_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
 --
 
-SELECT pg_catalog.setval('public.main_post_tags_id_seq', 23, true);
+SELECT pg_catalog.setval('public.main_post_tags_id_seq', 40, true);
 
 
 --
