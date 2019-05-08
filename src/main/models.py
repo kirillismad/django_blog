@@ -3,8 +3,11 @@ from time import time
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.core.cache.utils import make_template_fragment_key
 from django.db import models
 from django.db.models import CASCADE
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.utils.timezone import localtime
@@ -12,6 +15,7 @@ from django.utils.translation import gettext_lazy as _
 
 from blog.utils import UploadToFactory
 from main.user_manager import UserManager
+from django.core.cache import cache
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -105,6 +109,12 @@ class Post(models.Model):
         return reverse('main:posts_detail_comment', kwargs={'id': self.pk})
 
 
+# @receiver([post_save, post_delete], sender=Post)
+# def post_invalidate_cache(*args, **kwargs):
+#     key = make_template_fragment_key('main_posts')
+#     cache.delete(key)
+
+
 class Comment(models.Model):
     author = models.ForeignKey(Profile, CASCADE, related_name='comments', verbose_name=_('author'))
     post = models.ForeignKey(Post, CASCADE, related_name='comments', verbose_name=_('post'))
@@ -117,6 +127,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.author} / {self.post}'
+
+
+# @receiver([post_save, post_delete], sender=Comment)
+# def comment_invalidate_cache(instance, **kwargs):
+#     key = make_template_fragment_key('comments', [instance.post_id])
+#     cache.delete(key)
 
 
 class Tag(models.Model):

@@ -119,14 +119,14 @@
                     </form>
                 {% endif %}
             </div>
-
             <div class="comments-list">
                 {% for comment in post.comments.all %}
                     <div class="comment mb-2 d-flex">
                         <div class="image-wrapper h-50px">
-                            <a href="{{ comment.author.get_absolute_url }}"><img src="{{ comment.author.avatar.url }}"
-                                                                                 class="rounded author-avatar h-100"
-                                                                                 alt="author comment"></a>
+                            <a href="{{ comment.author.get_absolute_url }}"><img
+                                    src="{{ comment.author.avatar.url }}"
+                                    class="rounded author-avatar h-100"
+                                    alt="author comment"></a>
                         </div>
                         <div class="comment-info-wrapper">
                             <div class="comment-meta-info ml-2">

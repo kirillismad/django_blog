@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View, generic
+from django.views.decorators.cache import never_cache
 
 from main.forms import SignUpForm, SignInForm, CommentForm, PostForm, ProfileUpdateForm
 from main.models import Post, Profile, Tag, Comment
@@ -42,10 +43,13 @@ class MainView(View):
             post.author_id = request.user.pk
             post.save()
             form.save_m2m()
+            # key = get_cache_key(request, settings.CACHE_MIDDLEWARE_KEY_PREFIX, 'GET', cache)
+            # cache.delete(key)
             return redirect(post)
         return redirect('main:root')
 
 
+@method_decorator(never_cache, 'get')
 class PostDetailView(generic.DetailView):
     pk_url_kwarg = 'id'
     template_name = 'main/post_detail.html'
@@ -120,7 +124,6 @@ class SingOut(View):
         return redirect(reverse('main:root'))
 
 
-# @method_decorator(cache_page(60 * 3), 'get')
 class ProfileView(generic.ListView):
     queryset = Profile.objects.annotate(posts_count=Count('posts'))
     template_name = 'main/profiles.html'
@@ -147,6 +150,7 @@ class ProfileView(generic.ListView):
     #     return render(request, 'main/profiles.html', context={'profiles': profiles, 'user': request.user})
 
 
+@method_decorator(never_cache, 'get')
 class ProfileDetailView(generic.DetailView):
     template_name = 'main/profile_detail.html'
     pk_url_kwarg = 'id'
@@ -165,6 +169,7 @@ class ProfileDetailView(generic.DetailView):
     #     return render(request, 'main/profile_detail.html', context={'profile': profile, 'user': request.user})
 
 
+@method_decorator(never_cache, 'get')
 @method_decorator(login_required, 'dispatch')
 class ProfileUpdateView(View):
     def get(self, request, id):

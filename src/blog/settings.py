@@ -86,11 +86,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'blog.urls'
 MEMCACHE_HOST = os.getenv('CACHE_HOST', 'localhost')
 MEMCACHE_PORT = os.getenv('CACHE_PORT', '11211')
+CACHE_MIDDLEWARE_KEY_PREFIX = 'mw'
+CACHE_MIDDLEWARE_SECONDS = 60
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
