@@ -15,7 +15,7 @@ from pprint import pformat
 
 class TestCaseMeta(type):
     def __new__(mcs, name, bases, attrs):
-        result = super().__new__(name, bases, attrs)
+        result = super().__new__(mcs, name, bases, attrs)
         return override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR, 'test_media'))(result)
 
 

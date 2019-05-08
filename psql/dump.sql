@@ -817,6 +817,12 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 123	2019-04-28 10:28:11.615663+00	5	Язык C# и платформа .NET	2	[{"changed": {"fields": ["myimage"]}}]	8	1
 124	2019-04-28 10:31:35.058736+00	9	Будущее за asyncio	2	[{"changed": {"fields": ["myimage"]}}]	8	1
 125	2019-04-28 10:34:49.346175+00	9	Будущее за asyncio	2	[{"changed": {"fields": ["myimage"]}}]	8	1
+126	2019-05-08 08:23:04.693145+00	4	Афанасьев Максим	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
+127	2019-05-08 08:23:18.69389+00	5	Рогов Аркадий	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
+128	2019-05-08 08:23:40.432113+00	6	Никифоров Олег	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
+129	2019-05-08 08:24:02.790535+00	7	Лаврентьев Ростислав	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
+130	2019-05-08 08:24:11.907358+00	11	Зуев Никита	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
+131	2019-05-08 08:24:25.730927+00	3	Егоров Вячеслав	2	[{"changed": {"fields": ["wallpaper"]}}]	9	1
 \.
 
 
@@ -898,6 +904,7 @@ hw9vwmiufaceazjj4m0h7ixouor7qqs4	YTM2OTg0ZjAyNTgzZTk5MzI3MjkzM2NjYTExMzhlOTQ4ZGJ
 8jelrrbpw0ana8kojtxv7zz0mgs3ermn	YTM2OTg0ZjAyNTgzZTk5MzI3MjkzM2NjYTExMzhlOTQ4ZGJjMmZkNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIzNDE4YTRhYTgwNzEyNjZlZTgwZDE4ZDYzZjE3MTFlYzBkODUzZjliIn0=	2019-05-05 12:38:45.391234+00
 5lktlko9r9e0ct6oh3k4orm2t8vb1omc	Mjg3ZTRlM2QzOTViZDYwYWY0NWZmNTMyNGU1MDliZmM2NmJmOGRhZjp7Il9hdXRoX3VzZXJfaWQiOiI0IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJlM2Q2ZGYyYmI1NDJmMTQ2NjhhNGIwNzFmMzg1OTIyYWU4OTk3MDg5In0=	2019-05-11 11:09:27.280395+00
 4y5bkbduwxua8wdfts00h1rupj62olut	NWY5Njk3MGY5MjhhNGEyMzRiMGJhN2YyYjAxZDlkMGNhOTUzNzhhNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJhZDYzZjRkMWNmMjA1ODIyYjljOGEzNjMzYzM3MDNmZDY1MzJhODk1In0=	2019-05-12 10:10:03.287304+00
+q66bgtxa2wafyo155r53xmdmryx93mhw	NWY5Njk3MGY5MjhhNGEyMzRiMGJhN2YyYjAxZDlkMGNhOTUzNzhhNjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJhZDYzZjRkMWNmMjA1ODIyYjljOGEzNjMzYzM3MDNmZDY1MzJhODk1In0=	2019-05-22 08:17:56.532542+00
 \.
 
 
@@ -972,12 +979,12 @@ COPY public.main_post_tags (id, post_id, tag_id) FROM stdin;
 --
 
 COPY public.main_profile (first_name, last_name, avatar, user_id, wallpaper, birthday) FROM stdin;
-Аркадий	Рогов	main/profile/avatar/3404251a9a424edda5097240582ed73c.jpeg	5	main/profile/wallpaper/b4c11cf9188e42a4ac3cbb4937217cc2.jpg	2019-04-16
-Вячеслав	Егоров	main/profile/avatar/9b20df41c348434ea56ada536f159a76.jpeg	3	main/profile/wallpaper/d2e6b9ecbcad45cab1cc28cd5bccfb5f.jpg	2019-04-15
-Максим	Афанасьев	main/profile/avatar/88e3758cf2ba44c891edda7332708ef7.jpeg	4	main/profile/wallpaper/95eafa2276e746f1bb974f3796be4852.jpg	2019-04-16
-Ростислав	Лаврентьев	main/profile/avatar/3e1c53f9834b4d0996c92928b612f27f.jpeg	7	main/profile/wallpaper/e57a555ad2a347e2abba8957ae6a83cb.jpg	2019-04-16
-Никита	Зуев	main/profile/avatar/a26c95347c6e408db536288f92f7ec30.jpeg	11	main/profile/wallpaper/a957b4aa3a1f4750aeb8dd60f1c2217b.jpg	2019-04-17
-Олег	Никифоров	main/profile/avatar/f10e96985db540d48ce43f834e648c9b.jpeg	6	main/profile/wallpaper/69108e7be66c40649e9d73d2179df7d7.jpg	2019-04-15
+Максим	Афанасьев	main/profile/avatar/88e3758cf2ba44c891edda7332708ef7.jpeg	4	main/profile/wallpaper/104599aaf5d742e3877d9383e2e6b69b.jpg	2019-04-16
+Аркадий	Рогов	main/profile/avatar/3404251a9a424edda5097240582ed73c.jpeg	5	main/profile/wallpaper/7d0c2c4ec17549a2a012bd957c6e0e04.jpg	2019-04-16
+Олег	Никифоров	main/profile/avatar/f10e96985db540d48ce43f834e648c9b.jpeg	6	main/profile/wallpaper/ef53ff9483e34fe28b8025840b0d9b99.jpg	2019-04-15
+Ростислав	Лаврентьев	main/profile/avatar/3e1c53f9834b4d0996c92928b612f27f.jpeg	7	main/profile/wallpaper/9e41a4fa2e0a44e7bf728c2bf9aa8a46.jpg	2019-04-16
+Никита	Зуев	main/profile/avatar/a26c95347c6e408db536288f92f7ec30.jpeg	11	main/profile/wallpaper/d409fe3f40144eb7ad86e29683554c21.jpg	2019-04-17
+Вячеслав	Егоров	main/profile/avatar/9b20df41c348434ea56ada536f159a76.jpeg	3	main/profile/wallpaper/dd0512ae7fac41b99e8a04ca036af4ad.jpg	2019-04-15
 \.
 
 
@@ -1008,7 +1015,7 @@ COPY public.main_user (id, password, last_login, is_superuser, email, is_active,
 6	pbkdf2_sha256$120000$fcNAmUN3rnuJ$nG/k64oivY9QphxLmKgGC5jUm27Rb6NX5c4vglcdy6I=	2019-04-21 09:56:53.818824+00	f	thispersondoesnotexist4@mail.ru	t	f
 3	pbkdf2_sha256$150000$gzIQ1CIXf2f1$GPZVgnpyZxhNYOvw5EaKEdoV+98GXi3+nZM0zQn855Y=	2019-04-27 11:08:47.503875+00	f	thispersondoesnotexist1@mail.ru	t	f
 4	pbkdf2_sha256$150000$DVjpavHJi8st$FGLXWFTufnaWnAxaMp3K7ap+NQIbBLmcmTXL//49uKM=	2019-04-27 11:09:27.276287+00	f	thispersondoesnotexist2@mail.ru	t	f
-1	pbkdf2_sha256$150000$7r8jTZcXXx9D$QMt2OVhKQ7ufOA8FXpLzYCyS+x5c2RT+0LI3NjfMF2k=	2019-04-28 10:10:03.283414+00	t	pechkirill@mail.ru	t	t
+1	pbkdf2_sha256$150000$7r8jTZcXXx9D$QMt2OVhKQ7ufOA8FXpLzYCyS+x5c2RT+0LI3NjfMF2k=	2019-05-08 08:17:56.51631+00	t	pechkirill@mail.ru	t	t
 \.
 
 
@@ -1053,7 +1060,7 @@ SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 125, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 131, true);
 
 
 --

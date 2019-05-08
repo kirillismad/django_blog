@@ -1,9 +1,4 @@
-from pprint import pprint
-from random import choice
-
 from blog.tests_utils import BaseTestCase, patch_storage, ProfileAPITestCase
-
-print = pprint
 
 MULTIPART = 'multipart'
 
@@ -92,7 +87,6 @@ class TestPostView(ProfileAPITestCase):
         self.assert200(r)
         self.assertEqual(len(r.json()['results']), 1)
         self.assertEqual(r.json()['results'][0]['title'], 'zxc')
-        print(r.json())
 
     @patch_storage
     def test_post(self):
