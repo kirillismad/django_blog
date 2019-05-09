@@ -19,7 +19,7 @@ from django_filters import rest_framework as filters
 DEFAULT_PERMS = api_settings.DEFAULT_PERMISSION_CLASSES
 
 
-@smd('post', operation_summary='Sign up')
+@smd('post', operation_summary='Sign up', security=[])
 @method_decorator(transaction.atomic, 'post')
 class SignUpView(MultipartMixin, CreateAPIView):
     authentication_classes = ()
@@ -31,7 +31,7 @@ class SignUpView(MultipartMixin, CreateAPIView):
     #     return super().post(request, *args, **kwargs)
 
 
-@smd('post', operation_summary='Sign in', responses=schemas.sign_in)
+@smd('post', operation_summary='Sign in', responses=schemas.sign_in, security=[])
 class SignInView(JSONWebTokenAPIView):
     authentication_classes = ()
     permission_classes = ()
@@ -49,6 +49,8 @@ class PostFilter(filters.FilterSet):
         fields = ['title']
 
 
+@smd('get', operation_summary='Retrieve list of posts', security=[])
+@smd('post', operation_summary='Create post')
 class PostView(MultipartMixin, ListCreateAPIView):
     queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('-created_at')
     serializer_class = serializers.PostSerializer
@@ -60,6 +62,10 @@ class PostView(MultipartMixin, ListCreateAPIView):
         serializer.save(author_id=self.request.user.pk)
 
 
+@smd('get', operation_summary='Retrieve specific post', security=[])
+@smd('put', operation_summary='Update specific post')
+@smd('patch', operation_summary='Partial update specific post')
+@smd('delete', operation_summary='Delete specific post')
 class PostDetailView(MultipartMixin, RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, PostDetailPermission)
     queryset = Post.objects.all()
@@ -67,6 +73,8 @@ class PostDetailView(MultipartMixin, RetrieveUpdateDestroyAPIView):
     lookup_url_kwarg = 'id'
 
 
+@smd('get', operation_summary='Retrieve list of comments', security=[])
+@smd('post', operation_summary='Create comment')
 class CommentView(FilterQuerysetMixin, OrderingMixin, ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = serializers.CommentSerializer
@@ -83,6 +91,10 @@ class CommentView(FilterQuerysetMixin, OrderingMixin, ListCreateAPIView):
     #     return super().filter_queryset(queryset).filter(post_id=self.kwargs['id'])
 
 
+@smd('get', operation_summary='Retrieve specific comment', security=[])
+@smd('put', operation_summary='Update specific comment')
+@smd('patch', operation_summary='Partial update specific comment')
+@smd('delete', operation_summary='Delete specific comment')
 class CommentDetailView(FilterQuerysetMixin, RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, CommentDetailPermission)
     queryset = Comment.objects.all()
@@ -95,6 +107,7 @@ class CommentDetailView(FilterQuerysetMixin, RetrieveUpdateDestroyAPIView):
     #     return super().filter_queryset(queryset).filter(post_id=self.kwargs['id'])
 
 
+@smd('get', operation_summary='Retrieve list of tags', security=[])
 class TagView(OrderingMixin, ListAPIView):
     queryset = Tag.objects.annotate(posts_count=Count('posts'))
     serializer_class = serializers.TagSerializer
@@ -103,6 +116,7 @@ class TagView(OrderingMixin, ListAPIView):
     ordering_fields = ('pk',)
 
 
+@smd('get', operation_summary='Retrieve list of posts for specific tag', security=[])
 @method_decorator(never_cache, 'get')
 class TagPostsView(FilterQuerysetMixin, OrderingMixin, ListAPIView):
     pagination_class = None
@@ -117,6 +131,7 @@ class TagPostsView(FilterQuerysetMixin, OrderingMixin, ListAPIView):
     #     return super().filter_queryset(queryset).filter(tags__pk=self.kwargs['id'])
 
 
+@smd('get', operation_summary='Retrieve list of profiles', security=[])
 class ProfileView(ListAPIView):
     serializer_class = serializers.ProfileSerializer
     permission_classes = ()
@@ -131,6 +146,9 @@ class ProfileView(ListAPIView):
     #     return super().filter_queryset(queryset).exclude(pk=self.request.user.pk)
 
 
+@smd('get', operation_summary='Retrieve specific profile', security=[])
+@smd('put', operation_summary='Update own profile')
+@smd('patch', operation_summary='Partial update own profile')
 class ProfileDetailView(MultipartMixin, RetrieveUpdateAPIView):
     queryset = Profile.objects.all()
     serializer_class = serializers.ProfileDetailSerializer
@@ -138,9 +156,11 @@ class ProfileDetailView(MultipartMixin, RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, ProfileUpdatePermission)
 
 
+@smd('get', operation_summary='Retrieve list of posts for specific profile', security=[])
 class ProfilePostView(FilterQuerysetMixin, OrderingMixin, ListAPIView):
     queryset = Post.objects.annotate(comments_count=Count('comments'))
     serializer_class = serializers.ProfilePostSerializer
+    permission_classes = ()
 
     filter_kwargs = {'author_id': 'id'}
     ordering_fields = ('-created_at',)

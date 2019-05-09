@@ -64,6 +64,18 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'blog.utils.jwt_response_payload_handler'
 }
 
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'api_key': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    },
+    'DISPLAY_OPERATION_ID': False
+}
+
 # Custom settings
 AUTH_USER_MODEL = 'main.User'
 
