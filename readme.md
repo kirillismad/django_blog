@@ -37,11 +37,15 @@ Web application implements:
   
 ## How to run
 
+[Vagrant](https://www.vagrantup.com/downloads.html)
+
+[Docker Compose](https://docs.docker.com/compose/install/)
+
 ### Vagrant
 ```
 username@pcname:/dir/with/Vagrantfile$ vagrant up && vagrant ssh # up virtual machine
 vagrant@ubuntu-bionic:~$ source v_env/bin/activate # activate virtualenv
-(v_env) vagrant@ubuntu-bionic:/vagrant/src$ cd /vagrant/src/  go to source directory
+(v_env) vagrant@ubuntu-bionic:/vagrant/src$ cd /vagrant/src/  # go to source directory
 (v_env) vagrant@ubuntu-bionic:/vagrant/src$ python manage.py runserver 0.0.0.0:8000  # run server
 ```
 
