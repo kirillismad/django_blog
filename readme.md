@@ -49,10 +49,30 @@ Go to browser: `localhost:8000/`
 
 ### Docker
 ```
-username@pcname:/dir/with/docker-compose.yml$ docker-compoose up --build
+username@pcname:/dir/with/docker-compose.yml$ docker-compose up --build
 ```
 
 Go to browser: `localhost:8080/`
+
+#### Credentials
+- email: blogadmin@main.ru, password: 7890uiop **(admin)**
+- email: thispersondoesnotexist1@mail.ru, password: 7890uiop
+- email: thispersondoesnotexist2@mail.ru, password: 7890uiop
+- email: thispersondoesnotexist3@mail.ru, password: 7890uiop
+- email: thispersondoesnotexist4@mail.ru, password: 7890uiop
+- email: thispersondoesnotexist5@mail.ru, password: 7890uiop
+- email: thispersondoesnotexist6@mail.ru, password: 7890uiop
+
+**All user faces are obtained from thispersondoesnotexist.com.**
+
+
+![main page](https://github.com/kirillismad/django_blog/blob/master/screenshots/main_page.png?raw=true)
+
+
+#### API schema
+Go to browser: `localhost:8080/api/` (for docker run)
+
+![api schema](https://github.com/kirillismad/django_blog/blob/master/screenshots/api.png?raw=true)
 
 
 ## Tests
@@ -62,5 +82,5 @@ Go to browser: `localhost:8080/`
 ```
 ### Docker
 ```
-username@pcname:/dir/with/docker-compose.yml$ docker-compoose run --entrypoint="python manage.py test" web
+username@pcname:/dir/with/docker-compose.yml$ docker-compose run --entrypoint="python manage.py test" web
 ```
