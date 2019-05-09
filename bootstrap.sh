@@ -47,4 +47,5 @@ chown -R vagrant:vagrant /home/vagrant/v_env
 
 ACTIVATE_ENV="/home/vagrant/v_env/bin/activate"
 source $ACTIVATE_ENV
+pip install --upgrade pip
 pip install -r /vagrant/src/requirements.txt
