@@ -67,7 +67,7 @@ Go to browser: `localhost:8080/`
 - email: thispersondoesnotexist5@mail.ru, password: 7890uiop
 - email: thispersondoesnotexist6@mail.ru, password: 7890uiop
 
-**All user faces are obtained from thispersondoesnotexist.com.**
+**All user faces are obtained from [thispersondoesnotexist.com](https://thispersondoesnotexist.com).**
 
 
 ![main page](https://github.com/kirillismad/django_blog/blob/master/screenshots/main_page.png?raw=true)
