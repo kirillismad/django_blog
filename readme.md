@@ -59,7 +59,7 @@ username@pcname:/dir/with/docker-compose.yml$ docker-compose up --build
 Go to browser: `localhost:8080/`
 
 #### Credentials
-- email: blogadmin@main.ru, password: 7890uiop **(admin)**
+- email: blogadmin@mail.ru, password: 7890uiop **(admin)**
 - email: thispersondoesnotexist1@mail.ru, password: 7890uiop
 - email: thispersondoesnotexist2@mail.ru, password: 7890uiop
 - email: thispersondoesnotexist3@mail.ru, password: 7890uiop
