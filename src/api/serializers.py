@@ -1,8 +1,9 @@
-from django.core.exceptions import ValidationError as DjangoValidationError
+import base64
+
+from django.core.files.base import ContentFile
+from drf_writable_nested import UniqueFieldsMixin, NestedCreateMixin
 from drf_yasg.utils import swagger_serializer_method
 from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
-from rest_framework.fields import get_error_detail
 
 from api.validators import validate_password_pair
 from main.models import Profile, User, Post, Tag, Comment
@@ -16,33 +17,42 @@ class PasswordField(serializers.CharField):
         super().__init__(**kwargs)
 
 
-class SingUpSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(source='user.email')
-    password = PasswordField(source='user.password')
-    confirm_password = PasswordField(source='user.confirm_password')
+class Base64ImageField(serializers.ImageField):
+    def to_internal_value(self, data):
+        if isinstance(data, str):
+            data = ContentFile(base64.b64decode(data), name='temp.png')
+
+        return super().to_internal_value(data)
+
+
+class UserSerializer(UniqueFieldsMixin, serializers.ModelSerializer):
+    confirm_password = PasswordField()
+    password = PasswordField()
+
+    class Meta:
+        model = User
+        fields = ('email', 'password', 'confirm_password')
+
+    def validate(self, attrs):
+        confirm_password = attrs.pop('confirm_password')
+        password = attrs['password']
+        validate_password_pair(password, confirm_password)
+
+        return attrs
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
+
+class SingUpSerializer(NestedCreateMixin, serializers.ModelSerializer):
+    user = UserSerializer()
+    avatar = Base64ImageField()
+    wallpaper = Base64ImageField()
 
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'avatar', 'email', 'password', 'confirm_password', 'wallpaper', 'birthday')
-
-    def validate(self, attrs):
-        user_kwargs = attrs.pop('user')
-
-        confirm_password = user_kwargs.pop('confirm_password')
-        validate_password_pair(user_kwargs['password'], confirm_password)
-
-        user = User.objects.create_user(commit=False, **user_kwargs)
-        try:
-            user.full_clean()
-        except DjangoValidationError as e:
-            raise ValidationError(get_error_detail(e), 'user_validation_error')
-
-        return {'user': user, **attrs}
-
-    def create(self, validated_data):
-        user = validated_data.pop('user')
-        user.save()
-        return Profile.objects.create(user=user, **validated_data)
+        fields = ('user', 'first_name', 'last_name', 'avatar', 'wallpaper', 'birthday')
 
 
 class PostSerializer(serializers.ModelSerializer):

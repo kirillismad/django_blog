@@ -1,3 +1,5 @@
+import base64
+
 from blog.tests_utils import BaseTestCase, patch_storage, ProfileAPITestCase
 
 MULTIPART = 'multipart'
@@ -9,18 +11,24 @@ class TestSignUpView(BaseTestCase):
     @patch_storage
     def test_post(self):
         password = self.main_factory.get_password()
+
+        avatar64 = base64.b64encode(self.primitive_factory.get_image().read()).decode('utf-8')
+        wallpaper64 = base64.b64encode(self.primitive_factory.get_image().read()).decode('utf-8')
+
         data = {
-            'email': self.main_factory.get_email(),
-            'password': password,
-            'confirm_password': password,
+            'user': {
+                'email': self.main_factory.get_email(),
+                'password': password,
+                'confirm_password': password,
+            },
             'first_name': self.main_factory.get_name(),
             'last_name': self.main_factory.get_name(),
-            'avatar': self.primitive_factory.get_image(),
-            'wallpaper': self.primitive_factory.get_image(),
+            'avatar': avatar64,
+            'wallpaper': wallpaper64,
             'birthday': self.primitive_factory.get_date()
         }
 
-        r = self.client.post(self.url, data, format=MULTIPART)
+        r = self.client.post(self.url, data)
 
         self.assert201(r)
 

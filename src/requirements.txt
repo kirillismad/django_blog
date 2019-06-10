@@ -10,6 +10,7 @@ Django==2.2
 django-filter==2.1.0
 djangorestframework==3.9.2
 djangorestframework-jwt==1.11.0
+drf-writable-nested==0.5.1
 drf-yasg==1.15.0
 idna==2.8
 inflection==0.3.1
