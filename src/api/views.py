@@ -125,7 +125,7 @@ class ProfileView(ListAPIView):
     permission_classes = ()
 
     filter_backends = [OrderingFilter]
-    ordering = ['user__email']
+    ordering = ['first_name', 'last_name']
 
 
 @smd('get', operation_summary='Retrieve specific profile', security=[])
