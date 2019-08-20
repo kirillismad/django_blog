@@ -1,13 +1,13 @@
-import os
+import pathlib
 from datetime import timedelta
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from django.utils.translation import gettext_lazy as _
+
+BASE_DIR = pathlib.Path(__file__).parent.parent.parent
 
 SECRET_KEY = '9@s)k3#&-aweu*@!pftf&$1p4cf-@(h_s8s+lys7wem377@8-7'
 
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
+CELERY_TASK_IGNORE_RESULT = True
 
 INSTALLED_APPS = [
     'blog.admin.AdminConfig',
@@ -41,9 +41,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2,
-
+    'DEFAULT_PAGINATION_CLASS': 'blog.pagination.DefaultPagination',
+    'PAGE_SIZE': 20,
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 
     'SEARCH_PARAM': 'query',
@@ -78,18 +77,11 @@ SWAGGER_SETTINGS = {
 # Custom settings
 AUTH_USER_MODEL = 'main.User'
 
-# Celery settings
-BROKER_HOST = os.getenv('BROKER_HOST', 'localhost')
-BROKER_PORT = os.getenv('BROKER_PORT', '5672')
-BROKER_USER = os.getenv('BROKER_USER', 'django_blog_user')
-BROKER_PASSWORD = os.getenv('BROKER_PASSWORD', 'password123')
-CELERY_BROKER_URL = f'amqp://{BROKER_USER}:{BROKER_PASSWORD}@{BROKER_HOST}:{BROKER_PORT}/'
-CELERY_TASK_IGNORE_RESULT = True
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',  # cache
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',  # cache
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -99,21 +91,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'blog.urls'
-MEMCACHE_HOST = os.getenv('CACHE_HOST', 'localhost')
-MEMCACHE_PORT = os.getenv('CACHE_PORT', '11211')
-CACHE_MIDDLEWARE_KEY_PREFIX = 'mw'
-CACHE_MIDDLEWARE_SECONDS = 60
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-        'LOCATION': f'{MEMCACHE_HOST}:{MEMCACHE_PORT}',
-    }
-}
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [BASE_DIR.joinpath('templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,24 +109,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'blog.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_blog',
-        'USER': 'django_blog_user',
-        'PASSWORD': 'password123',
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', ''),
-    }
-}
-
-# Password validation
-# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -161,12 +125,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/2.1/topics/i18n/
+LANGUAGE_CODE = 'en-us'
+LANGUAGES = (
+    ('ru', _('Russian')),
+    ('en', _('English')),
+)
 
-LANGUAGE_CODE = 'ru-ru'
-
-TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -176,9 +141,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR.joinpath('static'),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticx')
+
+STATIC_ROOT = BASE_DIR.joinpath('static_root')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR.joinpath('media')

@@ -46,26 +46,27 @@ class MainFactory:
         return Profile.objects.create(**kwargs)
 
     @patch_storage
-    def get_post(self, **kwargs):
+    def get_post(self, tags_count=None, **kwargs):
         if 'author' not in kwargs:
             kwargs['author'] = self.get_profile()
         kwargs.setdefault('title', self.primitive_factory.get_title())
         kwargs.setdefault('image', self.primitive_factory.get_image_file())
         kwargs.setdefault('text', self.primitive_factory.get_text(7))
 
-        tags_count = kwargs.pop('tags_count', 0)
-
         post = Post.objects.create(**kwargs)
 
-        if tags_count:
-            max_tags = tags_count * 2
-            tags_len = Tag.objects.count()
-            if tags_len < max_tags:
-                for _ in range(max_tags - tags_len):
-                    self.get_tag()
-            post.tags.set(sample(list(Tag.objects.all()), tags_count))
+        if tags_count is not None:
+            tags = self._get_tags(tags_count)
+            post.tags.set(tags)
 
         return post
+
+    def _get_tags(self, count):
+        tags = list(Tag.objects.all())
+        for _ in range(count + 2 - len(tags)):
+            tags.append(self.get_tag())
+
+        return sample(tags, count)
 
     def get_comment(self, **kwargs):
         if 'author' not in kwargs:

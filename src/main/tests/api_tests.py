@@ -9,10 +9,6 @@ class TestSignUpView(BaseTestCase):
     @patch_storage
     def test_post(self):
         password = self.main_factory.get_password()
-
-        # avatar64 = base64.b64encode(self.primitive_factory.get_image().read()).decode('utf-8')
-        # wallpaper64 = base64.b64encode(self.primitive_factory.get_image().read()).decode('utf-8')
-
         data = {
             'user': {
                 'email': self.main_factory.get_email(),
@@ -21,8 +17,6 @@ class TestSignUpView(BaseTestCase):
             },
             'first_name': self.main_factory.get_name(),
             'last_name': self.main_factory.get_name(),
-            # 'avatar': avatar64,
-            # 'wallpaper': wallpaper64,
             'birthday': self.primitive_factory.get_date()
         }
 
@@ -50,18 +44,16 @@ class TestSignInView(BaseTestCase):
 
 class TestPostView(ProfileAPITestCase):
     VIEW = 'api:posts'
+    LEN = 2
 
     def arrange(self):
-        AUTHORS = 2
-        self.POSTS = 2
-        COMMENTS = 2
         result = list()
-        for _a in range(AUTHORS):
+        for _a in range(self.LEN):
             author = self.main_factory.get_profile()
-            for _p in range(self.POSTS):
-                post = self.main_factory.get_post(author=author, tags_count=2)
+            for _p in range(self.LEN):
+                post = self.main_factory.get_post(author=author, tags_count=self.LEN)
                 result.append(post)
-                for _c in range(COMMENTS):
+                for _c in range(self.LEN):
                     self.main_factory.get_comment(post=post)
 
         return result
@@ -70,7 +62,6 @@ class TestPostView(ProfileAPITestCase):
         self.arrange()
         r = self.client.get(self.url)
         self.assert200(r)
-        self.assertEqual(len(r.json()['results']), self.POSTS)
 
     def test_get_as_anon(self):
         self.arrange()
@@ -79,25 +70,17 @@ class TestPostView(ProfileAPITestCase):
         r = self.client.get(self.url)
         self.assert200(r)
 
-    def test_get_page_2(self):
-        self.arrange()
-        r = self.client.get(self.url, {'page': 2})
-        self.assert200(r)
-        self.assertEqual(len(r.json()['results']), self.POSTS)
-
     def test_get_query_param_title(self):
         self.main_factory.get_post(title='abc')
         self.main_factory.get_post(title='zxc')
 
         r = self.client.get(self.url, data={'title': 'x'})
         self.assert200(r)
-        self.assertEqual(len(r.json()['results']), 1)
-        self.assertEqual(r.json()['results'][0]['title'], 'zxc')
 
     @patch_storage
     def test_post(self):
         data = {
-            'tags': [self.main_factory.get_tag().pk for _ in range(2)],
+            'tags': [self.main_factory.get_tag().pk for _ in range(self.LEN)],
             'title': self.primitive_factory.get_title(),
             'image': self.primitive_factory.get_image(),
             'text': self.primitive_factory.get_text(5),
@@ -110,10 +93,11 @@ class TestPostView(ProfileAPITestCase):
 
 class TestPostDetailViewAsAuthor(ProfileAPITestCase):
     VIEW = 'api:posts_detail'
+    LEN = 2
 
     def setUp(self):
         super().setUp()
-        self.post = self.main_factory.get_post(author=self.profile, tags_count=2)
+        self.post = self.main_factory.get_post(author=self.profile, tags_count=self.LEN)
 
     def get_reverse_kwargs(self):
         return {'id': self.post.pk}
@@ -125,7 +109,7 @@ class TestPostDetailViewAsAuthor(ProfileAPITestCase):
     @patch_storage
     def test_put(self):
         data = {
-            'tags': [self.main_factory.get_tag().pk for _ in range(2)],
+            'tags': [self.main_factory.get_tag().pk for _ in range(self.LEN)],
             'title': self.primitive_factory.get_title(),
             'image': self.primitive_factory.get_image(),
             'text': self.primitive_factory.get_text(10),
@@ -151,10 +135,11 @@ class TestPostDetailViewAsAuthor(ProfileAPITestCase):
 
 class TestPostDetailViewAsProfile(ProfileAPITestCase):
     VIEW = 'api:posts_detail'
+    LEN = 2
 
     def setUp(self):
         super().setUp()
-        self.post = self.main_factory.get_post(tags_count=2)
+        self.post = self.main_factory.get_post(tags_count=self.LEN)
 
     def get_reverse_kwargs(self):
         return {'id': self.post.pk}
@@ -174,6 +159,7 @@ class TestPostDetailViewAsProfile(ProfileAPITestCase):
 
 class TestCommentView(ProfileAPITestCase):
     VIEW = 'api:comments'
+    LEN = 2
 
     def get_reverse_kwargs(self):
         return {'id': self.post.pk}
@@ -183,8 +169,7 @@ class TestCommentView(ProfileAPITestCase):
         self.post = self.main_factory.get_post()
 
     def test_get(self):
-        COMMENTS = 2
-        for _ in range(COMMENTS):
+        for _ in range(self.LEN):
             self.main_factory.get_comment(post=self.post)
 
         r = self.client.get(self.url)
@@ -291,13 +276,11 @@ class TestCommentDetailViewAsProfile(ProfileAPITestCase):
 
 class TestTagView(ProfileAPITestCase):
     VIEW = 'api:tags'
+    LEN = 2
 
     def test_get(self):
-        # tags = [self.main_factory.get_tag() for _ in range(5)]
-        POSTS = 3
-        for _ in range(POSTS):
-            self.main_factory.get_post(tags_count=3)
-            # post.tags.set(sample(tags, 3))
+        for _ in range(self.LEN):
+            self.main_factory.get_post(tags_count=self.LEN)
 
         r = self.client.get(self.url)
         self.assert200(r)
@@ -305,6 +288,7 @@ class TestTagView(ProfileAPITestCase):
 
 class TestTagPostsView(ProfileAPITestCase):
     VIEW = 'api:tags_detail_posts'
+    LEN = 2
 
     def get_reverse_kwargs(self):
         return {'id': self.tag.pk}
@@ -314,8 +298,7 @@ class TestTagPostsView(ProfileAPITestCase):
         self.tag = self.main_factory.get_tag()
 
     def test_get(self):
-        POSTS = 3
-        for _ in range(POSTS):
+        for _ in range(self.LEN):
             post = self.main_factory.get_post()
             post.tags.add(self.tag)
 
@@ -325,10 +308,10 @@ class TestTagPostsView(ProfileAPITestCase):
 
 class TestProfileView(ProfileAPITestCase):
     VIEW = 'api:profiles'
+    LEN = 2
 
     def test_get(self):
-        PROFILES = 3
-        for _ in range(PROFILES):
+        for _ in range(self.LEN):
             self.main_factory.get_profile()
 
         r = self.client.get(self.url)
@@ -407,6 +390,7 @@ class TestTestProfileDetailViewAsSelf(ProfileAPITestCase):
 
 class TestProfilePostView(ProfileAPITestCase):
     VIEW = 'api:profiles_detail_posts'
+    LEN = 2
 
     def get_reverse_kwargs(self):
         return {'id': self.target_profile.pk}
@@ -416,9 +400,8 @@ class TestProfilePostView(ProfileAPITestCase):
         self.target_profile = self.main_factory.get_profile()
 
     def test_get(self):
-        POSTS = 3
-        for _ in range(POSTS):
-            self.main_factory.get_post(author=self.target_profile, tags_count=2)
+        for _ in range(self.LEN):
+            self.main_factory.get_post(author=self.target_profile, tags_count=self.LEN)
 
         r = self.client.get(self.url)
         self.assert200(r)

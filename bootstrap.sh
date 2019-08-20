@@ -2,7 +2,7 @@
 
 YQ="-y -q"
 export DEBIAN_FRONTEND=noninteractive
-
+apt update $YQ
 # prerequirements
 apt install $YQ software-properties-common python-software-properties build-essential libssl-dev libffi-dev wget ca-certificates
 

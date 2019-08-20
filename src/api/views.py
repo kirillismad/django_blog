@@ -2,7 +2,6 @@ from django.db import transaction
 from django.db.models import Count
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
-from django_filters import rest_framework as filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from rest_framework.generics import CreateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404, \
@@ -13,6 +12,7 @@ from rest_framework_jwt.views import JSONWebTokenAPIView
 
 from api import schemas
 from api import serializers
+from api.filters import PostFilter
 from blog.utils import MultipartMixin, schema_method_decorator as smd
 from blog.utils import PathKwargsFilterBackend
 from main.models import Post, Comment, Tag, Profile
@@ -34,22 +34,17 @@ class SignInView(JSONWebTokenAPIView):
     serializer_class = JSONWebTokenSerializer
 
 
-class PostFilter(filters.FilterSet):
-    title = filters.CharFilter(field_name='title', lookup_expr='icontains')
-
-    class Meta:
-        fields = ['title']
-
-
 @smd('get', operation_summary='Retrieve list of posts', security=[])
 @smd('post', operation_summary='Create post')
 class PostView(MultipartMixin, ListCreateAPIView):
-    queryset = Post.objects.annotate(comments_count=Count('comments')).order_by('-created_at')
-    serializer_class = serializers.PostSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    queryset = Post.objects.annotate(comments_count=Count('comments'))
+    serializer_class = serializers.PostSerializer
 
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = PostFilter
+    ordering_fields = ['created_at', 'title']
+    ordering = ['-created_at']
 
     def perform_create(self, serializer):
         serializer.save(author_id=self.request.user.pk)
@@ -99,9 +94,9 @@ class CommentDetailView(RetrieveUpdateDestroyAPIView):
 
 @smd('get', operation_summary='Retrieve list of tags', security=[])
 class TagView(ListAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Tag.objects.annotate(posts_count=Count('posts'))
     serializer_class = serializers.TagSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     filter_backends = [OrderingFilter]
     ordering = ['title']
@@ -125,24 +120,22 @@ class TagPostsView(ListAPIView):
 
 @smd('get', operation_summary='Retrieve list of profiles', security=[])
 class ProfileView(ListAPIView):
+    queryset = Profile.objects.annotate(posts_count=Count('posts'), comments_count=Count('comments'))
     serializer_class = serializers.ProfileSerializer
     permission_classes = ()
 
-    def get_queryset(self):
-        return Profile.objects.annotate(
-            posts_count=Count('posts'),
-            comments_count=Count('comments'),
-        ).order_by('user__email')
+    filter_backends = [OrderingFilter]
+    ordering = ['user__email']
 
 
 @smd('get', operation_summary='Retrieve specific profile', security=[])
 @smd('put', operation_summary='Update own profile')
 @smd('patch', operation_summary='Partial update own profile')
 class ProfileDetailView(MultipartMixin, RetrieveUpdateAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly, ProfileUpdatePermission)
     queryset = Profile.objects.all()
     serializer_class = serializers.ProfileDetailSerializer
     lookup_url_kwarg = 'id'
-    permission_classes = (IsAuthenticatedOrReadOnly, ProfileUpdatePermission)
 
 
 @smd('get', operation_summary='Retrieve list of posts for specific profile', security=[])
