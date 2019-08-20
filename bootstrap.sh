@@ -3,6 +3,7 @@
 YQ="-y -q"
 export DEBIAN_FRONTEND=noninteractive
 apt update $YQ
+
 # prerequirements
 apt install $YQ software-properties-common python-software-properties build-essential libssl-dev libffi-dev wget ca-certificates
 
@@ -39,9 +40,11 @@ chmod 0600 /root/.pgpass
 
 psql -U django_blog_user -h localhost django_blog -w < /vagrant/psql/dump.sql
 
+# gettext
+apt install gettext
+
 # memcached
 apt install $YQ memcached
-
 
 # rabbitmq
 apt install $YQ rabbitmq-server
@@ -53,9 +56,11 @@ sudo systemctl restart rabbitmq-server
 
 # install dependencies
 python -m venv /home/vagrant/v_env
-chown -R vagrant:vagrant /home/vagrant/v_env
 
 ACTIVATE_ENV="/home/vagrant/v_env/bin/activate"
 source $ACTIVATE_ENV
 pip install --upgrade pip
 pip install -r /vagrant/src/requirements.txt
+printf "export DJANGO_SETTINGS_MODULE=blog.settings.dev" > $ACTIVATE_ENV
+
+chown -R vagrant:vagrant /home/vagrant/v_env
