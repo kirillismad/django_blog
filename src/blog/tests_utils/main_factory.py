@@ -53,15 +53,15 @@ class MainFactory:
         kwargs.setdefault('image', self.primitive_factory.get_image_file())
         kwargs.setdefault('text', self.primitive_factory.get_text(7))
 
-        tags_count = kwargs.pop('tags_count', None)
+        tags_count = kwargs.pop('tags_count', 0)
 
         post = Post.objects.create(**kwargs)
 
         if tags_count:
-            MAX_TAG = tags_count * 2
+            max_tags = tags_count * 2
             tags_len = Tag.objects.count()
-            if tags_len < MAX_TAG:
-                for _ in range(MAX_TAG - tags_len):
+            if tags_len < max_tags:
+                for _ in range(max_tags - tags_len):
                     self.get_tag()
             post.tags.set(sample(list(Tag.objects.all()), tags_count))
 

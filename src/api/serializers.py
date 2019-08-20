@@ -1,6 +1,3 @@
-import base64
-
-from django.core.files.base import ContentFile
 from drf_writable_nested import UniqueFieldsMixin, NestedCreateMixin
 from drf_yasg.utils import swagger_serializer_method
 from rest_framework import serializers
@@ -15,14 +12,6 @@ class PasswordField(serializers.CharField):
         kwargs.setdefault('min_length', 8)
         kwargs.setdefault('max_length', 128)
         super().__init__(**kwargs)
-
-
-class Base64ImageField(serializers.ImageField):
-    def to_internal_value(self, data):
-        if isinstance(data, str):
-            data = ContentFile(base64.b64decode(data), name='temp.png')
-
-        return super().to_internal_value(data)
 
 
 class UserSerializer(UniqueFieldsMixin, serializers.ModelSerializer):
@@ -47,12 +36,10 @@ class UserSerializer(UniqueFieldsMixin, serializers.ModelSerializer):
 
 class SingUpSerializer(NestedCreateMixin, serializers.ModelSerializer):
     user = UserSerializer()
-    avatar = Base64ImageField()
-    wallpaper = Base64ImageField()
 
     class Meta:
         model = Profile
-        fields = ('user', 'first_name', 'last_name', 'avatar', 'wallpaper', 'birthday')
+        fields = ('user', 'first_name', 'last_name', 'birthday')
 
 
 class PostSerializer(serializers.ModelSerializer):

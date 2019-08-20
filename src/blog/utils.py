@@ -1,8 +1,10 @@
+from typing import Mapping
 from uuid import uuid4
 
 from django.utils.deconstruct import deconstructible
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.filters import BaseFilterBackend
 from rest_framework.parsers import MultiPartParser
 from rest_framework.settings import api_settings
 
@@ -52,23 +54,25 @@ class MultipartMixin:
         }
 
 
-class FilterQuerysetMixin:
-    filter_kwargs = {}
+class RequestUserFilterBackend(BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        assert hasattr(view, 'user_pk_lookup') and isinstance(view.user_pk_lookup, str)
 
-    def filter_queryset(self, queryset):
+        return queryset.filter(**{view.user_pk_lookup: request.user.pk})
+
+
+class PathKwargsFilterBackend(BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        assert hasattr(view, 'filter_kwargs') and isinstance(view.filter_kwargs, Mapping)
+
         filter_kwargs = {
-            lookup: self.kwargs[kwarg]
-            for lookup, kwarg in
-            self.filter_kwargs.items()
+            lookup: view.kwargs[kwarg_name]
+            for lookup, kwarg_name in
+            view.filter_kwargs.items()
         }
-        return super().filter_queryset(queryset).filter(**filter_kwargs)
 
+        return queryset.filter(**filter_kwargs)
 
-class OrderingMixin:
-    ordering_fields = ()
-
-    def get_queryset(self):
-        return super().get_queryset().order_by(*self.ordering_fields)
 
 
 def jwt_response_payload_handler(token, user=None, request=None):

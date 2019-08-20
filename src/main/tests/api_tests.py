@@ -1,5 +1,3 @@
-import base64
-
 from blog.tests_utils import BaseTestCase, patch_storage, ProfileAPITestCase
 
 MULTIPART = 'multipart'
@@ -12,8 +10,8 @@ class TestSignUpView(BaseTestCase):
     def test_post(self):
         password = self.main_factory.get_password()
 
-        avatar64 = base64.b64encode(self.primitive_factory.get_image().read()).decode('utf-8')
-        wallpaper64 = base64.b64encode(self.primitive_factory.get_image().read()).decode('utf-8')
+        # avatar64 = base64.b64encode(self.primitive_factory.get_image().read()).decode('utf-8')
+        # wallpaper64 = base64.b64encode(self.primitive_factory.get_image().read()).decode('utf-8')
 
         data = {
             'user': {
@@ -23,8 +21,8 @@ class TestSignUpView(BaseTestCase):
             },
             'first_name': self.main_factory.get_name(),
             'last_name': self.main_factory.get_name(),
-            'avatar': avatar64,
-            'wallpaper': wallpaper64,
+            # 'avatar': avatar64,
+            # 'wallpaper': wallpaper64,
             'birthday': self.primitive_factory.get_date()
         }
 
