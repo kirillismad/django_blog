@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form enctype="multipart/form-data" method="post" action="{% url 'main:posts_create' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.title.id_for_label }}" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" id="{{ form.title.id_for_label }}"
+                   name="{{ form.title.name }}">
+        </div>
+        <div class="form-group">
+            <label for="{{ form.text.id_for_label }}" class="col-form-label">Text:</label>
+            <textarea rows="10" class="form-control" id="{{ form.text.id_for_label }}"
+                      name="{{ form.text.name }}"></textarea>
+        </div>
+        <div class="custom-file mb-3">
+            <input type="file" class="custom-file-input" id="{{ form.image.id_for_label }}"
+                   name="{{ form.image.name }}">
+            <label class="custom-file-label" for="{{ form.image.id_for_label }}">Avatar</label>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.tags.id_for_label }}">Tags:</label>
+            <select id="{{ form.tags.id_for_label }}" name="{{ form.tags.name }}"
+                    class="custom-select" multiple>
+                {% for choice in form.tags %}
+                    {{ choice }}
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mx-auto d-block">Submit</button>
+    </form>
+{% endblock content %}
+
+{% block extra_js %}
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+{% endblock %}

@@ -14,16 +14,16 @@ DATABASES = {
     }
 }
 
-MEMCACHE_HOST = 'localhost'
-MEMCACHE_PORT = '11211'
-CACHE_MIDDLEWARE_KEY_PREFIX = 'mw'
-CACHE_MIDDLEWARE_SECONDS = 60
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-        'LOCATION': f'{MEMCACHE_HOST}:{MEMCACHE_PORT}',
-    }
-}
+# MEMCACHE_HOST = 'localhost'
+# MEMCACHE_PORT = '11211'
+# CACHE_MIDDLEWARE_KEY_PREFIX = 'mw'
+# CACHE_MIDDLEWARE_SECONDS = 60
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+#         'LOCATION': f'{MEMCACHE_HOST}:{MEMCACHE_PORT}',
+#     }
+# }
 
 BROKER_USER = 'django_blog_user'
 BROKER_PASSWORD = 'password123'

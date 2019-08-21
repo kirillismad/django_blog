@@ -2,15 +2,16 @@ from functools import wraps
 
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.db.models import Count, Prefetch, Q
+from django.db.models import Count, Prefetch
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View, generic
 from django.views.decorators.cache import never_cache
 
-from main.forms import SignUpForm, SignInForm, CommentForm, PostForm, ProfileUpdateForm
+from main.forms import SignUpForm, SignInForm, CommentForm, ProfileUpdateForm, PostForm
 from main.models import Post, Profile, Tag, Comment
 
 
@@ -24,27 +25,26 @@ def method_login_required(method):
     return wrapper
 
 
-class MainView(View):
-    def get(self, request):
-        posts = Post.objects.select_related('author').prefetch_related('tags') \
+class MainView(generic.ListView):
+    template_name = 'main/main.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        # TODO add search filter
+        return Post.objects.select_related('author').prefetch_related('tags') \
             .annotate(comments_count=Count('comments')).order_by('-created_at')
 
-        q = request.GET.get('q')
-        if q is not None:
-            posts = posts.filter(Q(text__search=q) | Q(title__icontains=q))
 
-        return render(request, 'main/main.html', {'posts': posts, 'user': request.user, 'form': PostForm()})
+class PostCreateView(LoginRequiredMixin, generic.CreateView):
+    login_url = reverse_lazy('main:sign_in')
 
-    @method_login_required
-    def post(self, request):
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author_id = request.user.pk
-            post.save()
-            form.save_m2m()
-            return redirect(post)
-        return redirect('main:root')
+    template_name = 'main/post_create.html'
+    form_class = PostForm
+    success_url = reverse_lazy('main:root')
+
+    def form_valid(self, form):
+        form.instance.author_id = self.request.user.pk
+        return super().form_valid(form)
 
 
 @method_decorator(never_cache, 'get')
@@ -116,18 +116,11 @@ class SingOut(View):
         return redirect(reverse('main:root'))
 
 
+# TODO add search filter
 class ProfileView(generic.ListView):
     queryset = Profile.objects.annotate(posts_count=Count('posts'))
     template_name = 'main/profiles.html'
     context_object_name = 'profiles'
-
-    def get_queryset(self):
-        profiles = super().get_queryset()
-        q = self.request.GET.get('q')
-        if q is not None:
-            profiles = profiles.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q))
-
-        return profiles
 
 
 @method_decorator(never_cache, 'get')
@@ -171,8 +164,8 @@ class TagsView(generic.ListView):
     context_object_name = 'tags'
 
 
-@method_decorator(login_required, 'dispatch')
-class ProfileSelfView(generic.RedirectView):
+class ProfileSelfView(LoginRequiredMixin, generic.RedirectView):
+    login_url = reverse_lazy('main:sign_in')
 
     def get_redirect_url(self, *args, **kwargs):
         return reverse('main:profiles_detail', kwargs={'id': self.request.user.pk})
