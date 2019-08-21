@@ -119,6 +119,7 @@ class SingOut(View):
 class ProfileView(generic.ListView):
     queryset = Profile.objects.annotate(posts_count=Count('posts'))
     template_name = 'main/profiles.html'
+    context_object_name = 'profiles'
 
     def get_queryset(self):
         profiles = super().get_queryset()
@@ -128,23 +129,16 @@ class ProfileView(generic.ListView):
 
         return profiles
 
-    def get_context_data(self, *args, **kwargs):
-        return {
-            'profiles': self.object_list, 'user': self.request.user
-        }
-
 
 @method_decorator(never_cache, 'get')
 class ProfileDetailView(generic.DetailView):
     template_name = 'main/profile_detail.html'
     pk_url_kwarg = 'id'
+    context_object_name = 'profile'
 
     def get_queryset(self):
         pfr_posts = Prefetch('posts', Post.objects.annotate(comments_count=Count('comments')))
         return Profile.objects.prefetch_related(pfr_posts)
-
-    def get_context_data(self, **kwargs):
-        return {'profile': self.object, 'user': self.request.user}
 
 
 @method_decorator(never_cache, 'get')
@@ -172,11 +166,9 @@ class ProfileUpdateView(View):
 
 
 class TagsView(generic.ListView):
-    queryset = Tag.objects.all()
     template_name = 'main/tags.html'
-
-    def get_context_data(self, *args, **kwargs):
-        return {'tags': self.object_list, 'user': self.request.user}
+    model = Tag
+    context_object_name = 'tags'
 
 
 @method_decorator(login_required, 'dispatch')
