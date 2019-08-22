@@ -1,5 +1,3 @@
-from functools import wraps
-
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,19 +8,10 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View, generic
 from django.views.decorators.cache import never_cache
+from django.views.generic.edit import FormMixin
 
 from main.forms import SignUpForm, SignInForm, CommentForm, ProfileUpdateForm, PostForm
 from main.models import Post, Profile, Tag, Comment
-
-
-def method_login_required(method):
-    @wraps(method)
-    def wrapper(self, request, *args, **kwargs):
-        if request.user.is_anonymous:
-            return redirect('main:sign_in')
-        return method(self, request, *args, **kwargs)
-
-    return wrapper
 
 
 class MainView(generic.ListView):
@@ -31,8 +20,9 @@ class MainView(generic.ListView):
 
     def get_queryset(self):
         # TODO add search filter
-        return Post.objects.select_related('author').prefetch_related('tags') \
-            .annotate(comments_count=Count('comments')).order_by('-created_at')
+        qs = Post.objects.select_related('author').prefetch_related('tags')
+        qs = qs.annotate(comments_count=Count('comments'))
+        return qs
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
@@ -51,30 +41,28 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 class PostDetailView(generic.DetailView):
     pk_url_kwarg = 'id'
     template_name = 'main/post_detail.html'
+    context_object_name = 'post'
 
     def get_queryset(self):
-        pfr_comments = Prefetch('comments', Comment.objects.select_related('author').order_by('-created_at'))
-        return Post.objects.select_related('author').prefetch_related('tags', pfr_comments)
+        return Post.objects.select_related('author').prefetch_related(
+            'tags', Prefetch('comments', Comment.objects.select_related('author').order_by('-created_at'))
+        )
 
     def get_context_data(self, **kwargs):
-        return {
-            'post': self.object,
-            'user': self.request.user,
-            'form': CommentForm()
-        }
+        return {'form': CommentForm(), **super().get_context_data(**kwargs)}
 
 
-class CommentView(View):
-    @method_login_required
-    def post(self, request, id):
-        post = get_object_or_404(Post, pk=id)
+class CommentView(LoginRequiredMixin, FormMixin, View):
+    login_url = reverse_lazy('main:sign_in')
+    form_class = CommentForm
 
-        form = CommentForm(request.POST)
+    def post(self, request, *args, **kwargs):
+        post = get_object_or_404(Post, pk=kwargs['id'])
+        form = self.get_form()
         if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author_id = request.user.pk
-            comment.save()
+            form.instance.post = post
+            form.instance.author_id = request.user.pk
+            form.save()
         return redirect(post)
 
 
@@ -130,8 +118,9 @@ class ProfileDetailView(generic.DetailView):
     context_object_name = 'profile'
 
     def get_queryset(self):
-        pfr_posts = Prefetch('posts', Post.objects.annotate(comments_count=Count('comments')))
-        return Profile.objects.prefetch_related(pfr_posts)
+        return Profile.objects.prefetch_related(
+            Prefetch('posts', Post.objects.annotate(comments_count=Count('comments')))
+        )
 
 
 @method_decorator(never_cache, 'get')
