@@ -7,6 +7,8 @@ from django.utils.translation import gettext_lazy as _
 from main.models import Profile, User, Comment, Post, Tag
 
 
+# from rest_framework.validators import UniqueValidator
+
 class SignUpForm(forms.ModelForm):
     email = forms.EmailField()
     password = forms.CharField(
@@ -33,28 +35,28 @@ class SignUpForm(forms.ModelForm):
 
         confirm_password = user_data.pop('confirm_password')
         if user_data['password'] != confirm_password:
-            self.add_error('confirm_password',
-                           ValidationError(_("The two password fields didn't match."), 'password_mismatch'))
+            self.add_error(
+                'confirm_password',
+                ValidationError(_("The two password fields didn't match."), 'password_mismatch')
+            )
 
-        user = User.objects.create_user(**user_data, commit=False)
+        user = User(email=user_data['email'])
 
         try:
-            user.full_clean()
+            user.validate_unique()
         except ValidationError as e:
             for field, er in e.error_dict.items():
                 self.add_error(field, er)
-        return {'user': user, **self.cleaned_data}
+        return {'user': user_data, **self.cleaned_data}
 
     def _post_clean(self):
         pass
 
     def save(self, commit=True):
-        user = self.cleaned_data.pop('user')
+        user = User.objects.create_user(**self.cleaned_data.pop('user'))
         self.instance = Profile(user=user, **self.cleaned_data)
 
         if commit:
-            user.save()
-            self.instance.user_id = user.pk
             self.instance.save()
 
         return self.instance

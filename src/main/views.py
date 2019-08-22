@@ -101,7 +101,7 @@ class SignInView(View):
 class SingOut(View):
     def get(self, request):
         logout(request)
-        return redirect(reverse('main:root'))
+        return redirect('main:root')
 
 
 # TODO add search filter
@@ -153,6 +153,7 @@ class TagsView(generic.ListView):
     context_object_name = 'tags'
 
 
+@method_decorator(never_cache, 'get')
 class ProfileSelfView(LoginRequiredMixin, generic.RedirectView):
     login_url = reverse_lazy('main:sign_in')
 
