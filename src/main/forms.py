@@ -7,8 +7,6 @@ from django.utils.translation import gettext_lazy as _
 from main.models import Profile, User, Comment, Post, Tag
 
 
-# from rest_framework.validators import UniqueValidator
-
 class SignUpForm(forms.ModelForm):
     email = forms.EmailField()
     password = forms.CharField(
@@ -76,7 +74,7 @@ class SignInForm(forms.Form):
         user = authenticate(email=email, password=password)
 
         if user is None:
-            raise ValidationError(_('There is no user with such credentials'), 'invalid credentials')
+            raise ValidationError(_('There is no user with such credentials'), 'invalid_credentials')
 
         return {'user': user}
 
