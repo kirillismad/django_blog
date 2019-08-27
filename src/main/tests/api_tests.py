@@ -10,11 +10,9 @@ class TestSignUpView(BaseTestCase):
     def test_post(self):
         password = self.main_factory.get_password()
         data = {
-            'user': {
-                'email': self.main_factory.get_email(),
-                'password': password,
-                'confirm_password': password,
-            },
+            'email': self.main_factory.get_email(),
+            'password': password,
+            'confirm_password': password,
             'first_name': self.main_factory.get_name(),
             'last_name': self.main_factory.get_name(),
             'birthday': self.primitive_factory.get_date()

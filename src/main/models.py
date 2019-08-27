@@ -66,10 +66,6 @@ class Profile(models.Model):
     def get_update_url(self):
         return reverse('main:profiles_update', kwargs={'id': self.pk})
 
-    def clean(self):
-        self.first_name = self.first_name.capitalize()
-        self.last_name = self.last_name.capitalize()
-
 
 class Post(models.Model):
     author = models.ForeignKey(Profile, CASCADE, related_name='posts', verbose_name=_('author'))

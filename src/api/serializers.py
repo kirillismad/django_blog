@@ -1,6 +1,6 @@
-from drf_writable_nested import UniqueFieldsMixin, NestedCreateMixin
 from drf_yasg.utils import swagger_serializer_method
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from api.validators import validate_password_pair
 from main.models import Profile, User, Post, Tag, Comment
@@ -14,32 +14,32 @@ class PasswordField(serializers.CharField):
         super().__init__(**kwargs)
 
 
-class UserSerializer(UniqueFieldsMixin, serializers.ModelSerializer):
-    confirm_password = PasswordField()
-    password = PasswordField()
+class SingUpSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        source='user.email',
+        validators=[UniqueValidator(User.objects.all(), lookup='iexact')]
+    )
+    password = PasswordField(source='user.password')
+    confirm_password = PasswordField(source='user.confirm_password')
 
     class Meta:
-        model = User
-        fields = ('email', 'password', 'confirm_password')
+        model = Profile
+        fields = ('email', 'password', 'confirm_password', 'first_name', 'last_name', 'birthday', 'avatar')
 
     def validate(self, attrs):
-        confirm_password = attrs.pop('confirm_password')
-        password = attrs['password']
+        user_data = attrs['user']
+        password = user_data['password']
+        confirm_password = user_data.pop('confirm_password')
         validate_password_pair(password, confirm_password)
 
         return attrs
 
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        return user
-
-
-class SingUpSerializer(NestedCreateMixin, serializers.ModelSerializer):
-    user = UserSerializer()
-
-    class Meta:
-        model = Profile
-        fields = ('user', 'first_name', 'last_name', 'birthday')
+        user_data = validated_data.pop('user')
+        return Profile.objects.create(
+            user=User.objects.create(**user_data),
+            **validated_data
+        )
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -134,7 +134,7 @@ class TagPostAuthorSerializer(serializers.ModelSerializer):
             'id': {'source': 'pk'}
         }
 
-    @swagger_serializer_method(serializer_or_field=serializers.CharField)
+    @swagger_serializer_method(serializer_or_field=serializers.URLField)
     def get_source_url(self, profile):
         return profile.get_absolute_url()
 
@@ -149,6 +149,6 @@ class TagPostsSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'title', 'created_at', 'tags', 'comments_count', 'author', 'image', 'source_url')
 
-    @swagger_serializer_method(serializer_or_field=serializers.CharField)
+    @swagger_serializer_method(serializer_or_field=serializers.URLField)
     def get_source_url(self, post):
         return post.get_absolute_url()
