@@ -1,6 +1,9 @@
 # Django blog
 Blog example using **Django** backend stack
 
+## TODO
+- Slug for urls
+
 ## Overview
 Web application implements:
 - Sign up/sign in
