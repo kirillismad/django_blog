@@ -25,6 +25,12 @@ DATABASES = {
 #     }
 # }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
 BROKER_USER = 'django_blog_user'
 BROKER_PASSWORD = 'password123'
 BROKER_HOST = 'localhost'

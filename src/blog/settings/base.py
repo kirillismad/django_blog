@@ -46,6 +46,10 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 
     'SEARCH_PARAM': 'query',
+
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    'DEFAULT_VERSION': 'v2',
+    'ALLOWED_VERSIONS': ('v1', 'v2'),
 }
 
 JWT_AUTH = {

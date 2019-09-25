@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from blog.tests_utils import BaseTestCase, patch_storage, ProfileAPITestCase
 
 MULTIPART = 'multipart'

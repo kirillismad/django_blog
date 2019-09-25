@@ -61,10 +61,13 @@ class Profile(models.Model):
         return f'{self.last_name} {self.first_name}'
 
     def get_absolute_url(self):
-        return reverse('main:profiles_detail', kwargs={'id': self.pk})
+        return reverse('main:profiles_detail', kwargs=self.get_reverse_kwargs())
 
     def get_update_url(self):
-        return reverse('main:profiles_update', kwargs={'id': self.pk})
+        return reverse('main:profiles_update', kwargs=self.get_reverse_kwargs())
+
+    def get_reverse_kwargs(self):
+        return {'id': self.pk}
 
 
 class Post(models.Model):
@@ -95,10 +98,13 @@ class Post(models.Model):
     tags_join.short_description = _('tags')
 
     def get_absolute_url(self):
-        return reverse('main:posts_detail', kwargs={'id': self.pk})
+        return reverse('main:posts_detail', kwargs=self.get_reverse_kwargs())
 
     def get_comment_url(self):
-        return reverse('main:posts_detail_comment', kwargs={'id': self.pk})
+        return reverse('main:posts_detail_comment', kwargs=self.get_reverse_kwargs())
+
+    def get_reverse_kwargs(self):
+        return {'id': self.pk}
 
 
 class Comment(models.Model):

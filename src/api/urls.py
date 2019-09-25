@@ -1,8 +1,9 @@
 from django.urls import path
+from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-from drf_yasg import openapi
 from rest_framework_jwt.views import refresh_jwt_token
+
 from api import views
 
 app_name = 'api'
@@ -17,7 +18,6 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-# 'api:<name>'
 urlpatterns = [
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='swagger'),
     path('sign_up/', views.SignUpView.as_view(), name='sign_up'),

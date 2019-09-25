@@ -74,7 +74,6 @@ class PathKwargsFilterBackend(BaseFilterBackend):
         return queryset.filter(**filter_kwargs)
 
 
-
 def jwt_response_payload_handler(token, user=None, request=None):
     return {
         'token': token,
@@ -87,3 +86,8 @@ def schema_method_decorator(name, **kwargs):
         return method_decorator(decorator=swagger_auto_schema(**kwargs), name=name)(cls)
 
     return wrapper
+
+
+class VersioningSerializerMixin:
+    def get_serializer_class(self):
+        return self.versioning_serializers[self.request.version]

@@ -55,12 +55,38 @@ class PostSerializer(serializers.ModelSerializer):
         }
 
 
+class PostHyperlinkedSerializer(serializers.HyperlinkedModelSerializer):
+    comments_count = serializers.IntegerField(read_only=True)
+    tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True)
+
+    class Meta:
+        model = Post
+        fields = ('url', 'author', 'tags', 'title', 'image', 'text', 'created_at', 'comments_count')
+        extra_kwargs = {
+            'image': {'write_only': True},
+            'text': {'write_only': True},
+            'author': {'view_name': 'profiles_detail', 'lookup_url_kwarg': 'id', 'read_only': True},
+            'url': {'view_name': 'posts_detail', 'lookup_url_kwarg': 'id', 'read_only': True}
+        }
+
+
 class PostDetailSerializer(serializers.ModelSerializer):
     tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True)
 
     class Meta:
         model = Post
-        fields = ('author_id', 'tags', 'title', 'image', 'text', 'created_at')
+        fields = ('author', 'tags', 'title', 'image', 'text', 'created_at')
+
+
+class PostDetailHyperlinkedSerializer(serializers.HyperlinkedModelSerializer):
+    tags = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
+    class Meta:
+        model = Post
+        fields = ('author', 'tags', 'title', 'image', 'text', 'created_at')
+        extra_kwargs = {
+            'author': {'view_name': 'profiles_detail', 'lookup_url_kwarg': 'id', 'read_only': True},
+        }
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -69,10 +95,28 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('id', 'author_id', 'message', 'created_at')
 
 
+class CommentHyperlinkSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id', 'author', 'message', 'created_at')
+        extra_kwargs = {
+            'author': {'view_name': 'profiles_detail', 'lookup_url_kwarg': 'id', 'read_only': True}
+        }
+
+
 class CommentDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('author_id', 'message')
+
+
+class CommentDetailHyperlinkSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('author', 'message')
+        extra_kwargs = {
+            'author': {'view_name': 'profiles_detail', 'lookup_url_kwarg': 'id', 'read_only': True}
+        }
 
 
 class TagSerializer(serializers.ModelSerializer):

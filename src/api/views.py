@@ -13,7 +13,7 @@ from rest_framework_jwt.views import JSONWebTokenAPIView
 from api import schemas
 from api import serializers
 from api.filters import PostFilter
-from blog.utils import MultipartMixin, schema_method_decorator as smd
+from blog.utils import MultipartMixin, schema_method_decorator as smd, VersioningSerializerMixin
 from blog.utils import PathKwargsFilterBackend
 from main.models import Post, Comment, Tag, Profile
 from main.permissions import CommentDetailPermission, PostDetailPermission, ProfileUpdatePermission
@@ -36,15 +36,19 @@ class SignInView(JSONWebTokenAPIView):
 
 @smd('get', operation_summary='Retrieve list of posts', security=[])
 @smd('post', operation_summary='Create post')
-class PostView(MultipartMixin, ListCreateAPIView):
+class PostView(VersioningSerializerMixin, MultipartMixin, ListCreateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Post.objects.annotate(comments_count=Count('comments'))
-    serializer_class = serializers.PostSerializer
 
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = PostFilter
     ordering_fields = ['created_at', 'title']
     ordering = ['-created_at']
+
+    versioning_serializers = {
+        'v1': serializers.PostSerializer,
+        'v2': serializers.PostHyperlinkedSerializer,
+    }
 
     def perform_create(self, serializer):
         serializer.save(author_id=self.request.user.pk)
@@ -54,24 +58,32 @@ class PostView(MultipartMixin, ListCreateAPIView):
 @smd('put', operation_summary='Update specific post')
 @smd('patch', operation_summary='Partial update specific post')
 @smd('delete', operation_summary='Delete specific post')
-class PostDetailView(MultipartMixin, RetrieveUpdateDestroyAPIView):
+class PostDetailView(VersioningSerializerMixin, MultipartMixin, RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, PostDetailPermission)
     queryset = Post.objects.all()
-    serializer_class = serializers.PostDetailSerializer
     lookup_url_kwarg = 'id'
+
+    versioning_serializers = {
+        'v1': serializers.PostHyperlinkedSerializer,
+        'v2': serializers.PostDetailHyperlinkedSerializer
+    }
 
 
 @smd('get', operation_summary='Retrieve list of comments', security=[])
 @smd('post', operation_summary='Create comment')
-class CommentView(ListCreateAPIView):
+class CommentView(VersioningSerializerMixin, ListCreateAPIView):
     queryset = Comment.objects.all()
-    serializer_class = serializers.CommentSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     filter_backends = [PathKwargsFilterBackend, OrderingFilter]
     filter_kwargs = {'post_id': 'id'}
     ordering_fields = ['pk', 'created_at']
     ordering = ['-created_at']
+
+    versioning_serializers = {
+        'v1': serializers.CommentSerializer,
+        'v2': serializers.CommentHyperlinkSerializer
+    }
 
     def perform_create(self, serializer):
         post = get_object_or_404(Post, pk=self.kwargs['id'])
@@ -82,14 +94,18 @@ class CommentView(ListCreateAPIView):
 @smd('put', operation_summary='Update specific comment')
 @smd('patch', operation_summary='Partial update specific comment')
 @smd('delete', operation_summary='Delete specific comment')
-class CommentDetailView(RetrieveUpdateDestroyAPIView):
+class CommentDetailView(VersioningSerializerMixin, RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, CommentDetailPermission)
     queryset = Comment.objects.all()
-    serializer_class = serializers.CommentDetailSerializer
     lookup_url_kwarg = 'comment_id'
 
     filter_backends = [PathKwargsFilterBackend]
     filter_kwargs = {'post_id': 'id'}
+
+    versioning_serializers = {
+        'v1': serializers.CommentDetailSerializer,
+        'v2': serializers.CommentDetailHyperlinkSerializer,
+    }
 
 
 @smd('get', operation_summary='Retrieve list of tags', security=[])
