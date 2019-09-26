@@ -28,8 +28,8 @@ apt install $YQ python3.7-venv
 # postgresql
 su -c "printf 'deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main' >> /etc/apt/sources.list.d/pgdg.list"
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-sudo apt update $YQ
-sudo apt install $YQ postgresql postgresql-contrib
+apt update $YQ
+apt install $YQ postgresql postgresql-contrib
 
 while IFS='' read -r line || [[ -n "$line" ]]; do
     su postgres -c "psql -c \"$line\" "
@@ -61,6 +61,6 @@ ACTIVATE_ENV="/home/vagrant/v_env/bin/activate"
 source $ACTIVATE_ENV
 pip install --upgrade pip
 pip install -r /vagrant/src/requirements.txt
-printf "export DJANGO_SETTINGS_MODULE=blog.settings.dev" > $ACTIVATE_ENV
+printf "export DJANGO_SETTINGS_MODULE=blog.settings.dev" >> $ACTIVATE_ENV
 
 chown -R vagrant:vagrant /home/vagrant/v_env
