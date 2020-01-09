@@ -2,7 +2,7 @@ import os
 from celery import Celery
 from celery.schedules import crontab
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blog.settings')
+assert 'DJANGO_SETTINGS_MODULE' in os.environ
 
 app = Celery('blog')
 app.config_from_object('django.conf:settings', namespace='CELERY')
@@ -10,8 +10,8 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'rm_ghost_files': {
-        'task': 'main.tasks.rm_ghost_files',
+    'background_task': {
+        'task': 'main.tasks.background_task',
         'schedule': crontab()
     }
 }

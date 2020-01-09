@@ -24,8 +24,7 @@ RUN apk update \
     jpeg-dev \
     zlib-dev \
     libmemcached-dev \
-    && pip install --no-cache-dir --disable-pip-version-check --requirement requirements.txt \
-    && pip install --no-cache-dir --disable-pip-version-check --requirement requirements.prod.txt \
+    && pip install --no-cache-dir --disable-pip-version-check --requirement requirements.txt --requirement requirements.prod.txt \
     && apk del .build-deps
 
 COPY src ${SRC_DIR}
