@@ -3,3 +3,5 @@
 /Vagrantfile
 /bootstrap.sh
 psql/
+nginx/
+screenshots/

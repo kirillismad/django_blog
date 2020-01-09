@@ -84,10 +84,8 @@ AUTH_USER_MODEL = 'main.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',  # cache
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',  # cache
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -148,7 +146,5 @@ STATICFILES_DIRS = [
     BASE_DIR.joinpath('static'),
 ]
 
-# STATIC_ROOT = BASE_DIR.joinpath('static_root')
-
 MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR.joinpath('media')
+

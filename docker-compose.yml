@@ -1,9 +1,9 @@
-version: '3'
+version: "3"
 
 services:
   postgres:
-    build: ./psql
-    env_file: 
+    image: postgres:11
+    env_file:
       - .env
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -12,6 +12,7 @@ services:
     build: .
     env_file:
       - .env
+    entrypoint: /entrypoints/blog.sh
     volumes:
       - ./src:/app/src
       - shared:/app/shared
@@ -28,7 +29,7 @@ services:
       - 80:80
     depends_on:
       - web
-  
+
   memcached:
     image: memcached:1.5
     command: -m ${CACHE_SIZE}
@@ -38,6 +39,35 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${BROKER_USER}
       RABBITMQ_DEFAULT_PASS: ${BROKER_PASSWORD}
+
+  celery:
+    build: .
+    entrypoint: /entrypoints/celery.sh
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+      - shared:/app/shared
+
+    depends_on:
+      - postgres
+      - memcached
+      - rabbitmq
+
+  celerybeat:
+    build: .
+    entrypoint: /entrypoints/celery_beat.sh
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+      - shared:/app/shared
+
+    depends_on:
+      - postgres
+      - memcached
+      - rabbitmq
+
 volumes:
   pgdata:
   shared:

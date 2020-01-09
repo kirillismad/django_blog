@@ -9,12 +9,10 @@ ENV SRC_DIR=${APP_DIR}/src
 ENV SHARED_DIR=${APP_DIR}/shared
 ENV STATIC_ROOT=${SHARED_DIR}/static_root
 ENV MEDIA_ROOT=${SHARED_DIR}/media_root
-ENV LOG_DIR=${SHARED_DIR}/logs
 
 
 COPY src/requirements.txt .
 COPY src/requirements.prod.txt .
-COPY data/media_root ${MEDIA_ROOT}
 
 RUN apk update \
     && apk add --no-cache --virtual .build-deps \
@@ -47,13 +45,11 @@ RUN addgroup \
     && chown -R ${APP_USER}:${APP_GROUP} ${APP_DIR}
 
 
-COPY /entrypoints/blog.sh .
+COPY entrypoints /entrypoints
 
 WORKDIR ${SRC_DIR}
 
 EXPOSE 8000
 
 USER ${APP_USER}
-
-ENTRYPOINT ["/blog.sh"]
 

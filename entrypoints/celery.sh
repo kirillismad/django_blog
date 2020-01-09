@@ -1,4 +1,3 @@
-#!/bin/bash
+#!/bin/sh
 
-set -e 
-celery -A blog worker -l info --pidfile=/celery/celery_%n.pid
+celery -A blog worker -l info --pidfile=

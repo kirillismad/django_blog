@@ -3,7 +3,7 @@ import os
 # noinspection PyUnresolvedReferences
 from .base import *
 
-DEBUG = True
+DEBUG = False
 
 SECRET_KEY= os.environ['SECRET_KEY']
 ALLOWED_HOSTS = ['*']
@@ -24,8 +24,6 @@ DATABASES = {
 
 CACHE_HOST = os.environ['CACHE_HOST']
 CACHE_PORT = os.environ['CACHE_PORT']
-CACHE_MIDDLEWARE_KEY_PREFIX = os.environ['CACHE_MIDDLEWARE_KEY_PREFIX']
-CACHE_MIDDLEWARE_SECONDS = int(os.environ['CACHE_MIDDLEWARE_SECONDS'])
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
