@@ -61,17 +61,6 @@ username@pcname:/dir/with/docker-compose.yml$ docker-compose up --build
 
 Go to browser: `localhost:8080/`
 
-#### Credentials
-- email: blogadmin@mail.ru, password: 7890uiop **(admin)**
-- email: thispersondoesnotexist1@mail.ru, password: 7890uiop
-- email: thispersondoesnotexist2@mail.ru, password: 7890uiop
-- email: thispersondoesnotexist3@mail.ru, password: 7890uiop
-- email: thispersondoesnotexist4@mail.ru, password: 7890uiop
-- email: thispersondoesnotexist5@mail.ru, password: 7890uiop
-- email: thispersondoesnotexist6@mail.ru, password: 7890uiop
-
-**All user faces are obtained from [thispersondoesnotexist.com](https://thispersondoesnotexist.com).**
-
 
 ![main page](https://github.com/kirillismad/django_blog/blob/master/screenshots/main_page.png?raw=true)
 

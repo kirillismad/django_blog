@@ -6,8 +6,8 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_blog',
-        'USER': 'django_blog_user',
+        'NAME': 'db',
+        'USER': 'db_user',
         'PASSWORD': 'password123',
         'HOST': 'localhost',
         'PORT': '',
@@ -16,8 +16,6 @@ DATABASES = {
 
 # MEMCACHE_HOST = 'localhost'
 # MEMCACHE_PORT = '11211'
-# CACHE_MIDDLEWARE_KEY_PREFIX = 'mw'
-# CACHE_MIDDLEWARE_SECONDS = 60
 # CACHES = {
 #     'default': {
 #         'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
@@ -31,7 +29,7 @@ CACHES = {
     }
 }
 
-BROKER_USER = 'django_blog_user'
+BROKER_USER = 'broker_user'
 BROKER_PASSWORD = 'password123'
 BROKER_HOST = 'localhost'
 BROKER_PORT = '5672'
