@@ -41,7 +41,7 @@ chmod 0600 /root/.pgpass
 psql -U django_blog_user -h localhost django_blog -w < /vagrant/psql/dump.sql
 
 # gettext
-apt install gettext
+apt install $YQ gettext
 
 # memcached
 apt install $YQ memcached

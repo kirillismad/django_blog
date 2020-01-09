@@ -9,4 +9,3 @@ urlpatterns = [
     path('api/v1/', include('api.urls', namespace='v1')),
     path('api/v2/', include('api.urls', namespace='v2')),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

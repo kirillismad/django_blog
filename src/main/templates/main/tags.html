@@ -106,7 +106,7 @@
         }
 
         $('#tag_select').on('change', function () {
-            $.getJSON(`/api/tags/${this.value}/posts/`, success);
+            $.getJSON(`/api/v1/tags/${this.value}/posts/`, success);
         });
 
 

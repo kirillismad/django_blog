@@ -148,7 +148,7 @@ STATICFILES_DIRS = [
     BASE_DIR.joinpath('static'),
 ]
 
-STATIC_ROOT = BASE_DIR.joinpath('static_root')
+# STATIC_ROOT = BASE_DIR.joinpath('static_root')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR.joinpath('media')
+# MEDIA_ROOT = BASE_DIR.joinpath('media')

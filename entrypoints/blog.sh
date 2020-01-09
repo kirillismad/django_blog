@@ -1,18 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
-/wait
+python manage.py collectstatic --no-input
+# python manage.py migrate --no-input
 
-if [ "$ENV" = 'DEV' ]; then
-    echo "Running Development Server"
-    python /src/manage.py runserver 0.0.0.0:8000
-    
-    elif [ "$ENV" = 'PROD' ]; then
-    echo "Running Production Server"
-    gunicorn -b 0.0.0.0:8000 blog.wsgi:application
-    
-else
-    echo "Invalid ENV"
-    exit 3
-fi
+gunicorn --bind 0.0.0.0:8000 --workers 1 --timeout 30 --graceful-timeout 30 blog.wsgi:application

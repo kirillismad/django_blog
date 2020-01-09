@@ -3,23 +3,29 @@ import os
 # noinspection PyUnresolvedReferences
 from .base import *
 
-DEBUG = False
+DEBUG = True
+
+SECRET_KEY= os.environ['SECRET_KEY']
+ALLOWED_HOSTS = ['*']
+
+MEDIA_ROOT=pathlib.Path(os.environ['MEDIA_ROOT'])
+STATIC_ROOT=pathlib.Path(os.environ['STATIC_ROOT'])
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
+        'NAME': os.environ['POSTGRES_DB'],
+        'USER': os.environ['POSTGRES_USER'],
+        'PASSWORD': os.environ['POSTGRES_PASSWORD'],
+        'HOST': os.environ['POSTGRES_HOST'],
+        'PORT': os.environ['POSTGRES_PORT'],
     }
 }
 
 CACHE_HOST = os.environ['CACHE_HOST']
 CACHE_PORT = os.environ['CACHE_PORT']
 CACHE_MIDDLEWARE_KEY_PREFIX = os.environ['CACHE_MIDDLEWARE_KEY_PREFIX']
-CACHE_MIDDLEWARE_SECONDS = os.environ['CACHE_MIDDLEWARE_SECONDS']
+CACHE_MIDDLEWARE_SECONDS = int(os.environ['CACHE_MIDDLEWARE_SECONDS'])
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',

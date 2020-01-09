@@ -34,7 +34,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: auth_group; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.auth_group (
@@ -43,10 +43,10 @@ CREATE TABLE public.auth_group (
 );
 
 
-ALTER TABLE public.auth_group OWNER TO django_blog_user;
+ALTER TABLE public.auth_group OWNER TO db_user;
 
 --
--- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.auth_group_id_seq
@@ -58,17 +58,17 @@ CREATE SEQUENCE public.auth_group_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_group_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.auth_group_id_seq OWNER TO db_user;
 
 --
--- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
 
 
 --
--- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.auth_group_permissions (
@@ -78,10 +78,10 @@ CREATE TABLE public.auth_group_permissions (
 );
 
 
-ALTER TABLE public.auth_group_permissions OWNER TO django_blog_user;
+ALTER TABLE public.auth_group_permissions OWNER TO db_user;
 
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.auth_group_permissions_id_seq
@@ -93,17 +93,17 @@ CREATE SEQUENCE public.auth_group_permissions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_group_permissions_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO db_user;
 
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
 
 
 --
--- Name: auth_permission; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.auth_permission (
@@ -114,10 +114,10 @@ CREATE TABLE public.auth_permission (
 );
 
 
-ALTER TABLE public.auth_permission OWNER TO django_blog_user;
+ALTER TABLE public.auth_permission OWNER TO db_user;
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.auth_permission_id_seq
@@ -129,17 +129,17 @@ CREATE SEQUENCE public.auth_permission_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.auth_permission_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.auth_permission_id_seq OWNER TO db_user;
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
 
 
 --
--- Name: django_admin_log; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.django_admin_log (
@@ -155,10 +155,10 @@ CREATE TABLE public.django_admin_log (
 );
 
 
-ALTER TABLE public.django_admin_log OWNER TO django_blog_user;
+ALTER TABLE public.django_admin_log OWNER TO db_user;
 
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.django_admin_log_id_seq
@@ -170,17 +170,17 @@ CREATE SEQUENCE public.django_admin_log_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_admin_log_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.django_admin_log_id_seq OWNER TO db_user;
 
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
 
 
 --
--- Name: django_content_type; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.django_content_type (
@@ -190,10 +190,10 @@ CREATE TABLE public.django_content_type (
 );
 
 
-ALTER TABLE public.django_content_type OWNER TO django_blog_user;
+ALTER TABLE public.django_content_type OWNER TO db_user;
 
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.django_content_type_id_seq
@@ -205,17 +205,17 @@ CREATE SEQUENCE public.django_content_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_content_type_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.django_content_type_id_seq OWNER TO db_user;
 
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
 
 
 --
--- Name: django_migrations; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.django_migrations (
@@ -226,10 +226,10 @@ CREATE TABLE public.django_migrations (
 );
 
 
-ALTER TABLE public.django_migrations OWNER TO django_blog_user;
+ALTER TABLE public.django_migrations OWNER TO db_user;
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.django_migrations_id_seq
@@ -241,17 +241,17 @@ CREATE SEQUENCE public.django_migrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.django_migrations_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.django_migrations_id_seq OWNER TO db_user;
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
 
 
 --
--- Name: django_session; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: django_session; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.django_session (
@@ -261,10 +261,10 @@ CREATE TABLE public.django_session (
 );
 
 
-ALTER TABLE public.django_session OWNER TO django_blog_user;
+ALTER TABLE public.django_session OWNER TO db_user;
 
 --
--- Name: main_comment; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: main_comment; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.main_comment (
@@ -276,10 +276,10 @@ CREATE TABLE public.main_comment (
 );
 
 
-ALTER TABLE public.main_comment OWNER TO django_blog_user;
+ALTER TABLE public.main_comment OWNER TO db_user;
 
 --
--- Name: main_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: main_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.main_comment_id_seq
@@ -291,17 +291,17 @@ CREATE SEQUENCE public.main_comment_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.main_comment_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.main_comment_id_seq OWNER TO db_user;
 
 --
--- Name: main_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: main_comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.main_comment_id_seq OWNED BY public.main_comment.id;
 
 
 --
--- Name: main_post; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: main_post; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.main_post (
@@ -314,10 +314,10 @@ CREATE TABLE public.main_post (
 );
 
 
-ALTER TABLE public.main_post OWNER TO django_blog_user;
+ALTER TABLE public.main_post OWNER TO db_user;
 
 --
--- Name: main_post_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: main_post_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.main_post_id_seq
@@ -329,17 +329,17 @@ CREATE SEQUENCE public.main_post_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.main_post_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.main_post_id_seq OWNER TO db_user;
 
 --
--- Name: main_post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: main_post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.main_post_id_seq OWNED BY public.main_post.id;
 
 
 --
--- Name: main_post_tags; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.main_post_tags (
@@ -349,10 +349,10 @@ CREATE TABLE public.main_post_tags (
 );
 
 
-ALTER TABLE public.main_post_tags OWNER TO django_blog_user;
+ALTER TABLE public.main_post_tags OWNER TO db_user;
 
 --
--- Name: main_post_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.main_post_tags_id_seq
@@ -364,17 +364,17 @@ CREATE SEQUENCE public.main_post_tags_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.main_post_tags_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.main_post_tags_id_seq OWNER TO db_user;
 
 --
--- Name: main_post_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.main_post_tags_id_seq OWNED BY public.main_post_tags.id;
 
 
 --
--- Name: main_profile; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: main_profile; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.main_profile (
@@ -387,10 +387,10 @@ CREATE TABLE public.main_profile (
 );
 
 
-ALTER TABLE public.main_profile OWNER TO django_blog_user;
+ALTER TABLE public.main_profile OWNER TO db_user;
 
 --
--- Name: main_tag; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: main_tag; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.main_tag (
@@ -399,10 +399,10 @@ CREATE TABLE public.main_tag (
 );
 
 
-ALTER TABLE public.main_tag OWNER TO django_blog_user;
+ALTER TABLE public.main_tag OWNER TO db_user;
 
 --
--- Name: main_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: main_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.main_tag_id_seq
@@ -414,17 +414,17 @@ CREATE SEQUENCE public.main_tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.main_tag_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.main_tag_id_seq OWNER TO db_user;
 
 --
--- Name: main_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: main_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.main_tag_id_seq OWNED BY public.main_tag.id;
 
 
 --
--- Name: main_user; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: main_user; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.main_user (
@@ -438,10 +438,10 @@ CREATE TABLE public.main_user (
 );
 
 
-ALTER TABLE public.main_user OWNER TO django_blog_user;
+ALTER TABLE public.main_user OWNER TO db_user;
 
 --
--- Name: main_user_groups; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.main_user_groups (
@@ -451,10 +451,10 @@ CREATE TABLE public.main_user_groups (
 );
 
 
-ALTER TABLE public.main_user_groups OWNER TO django_blog_user;
+ALTER TABLE public.main_user_groups OWNER TO db_user;
 
 --
--- Name: main_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.main_user_groups_id_seq
@@ -466,17 +466,17 @@ CREATE SEQUENCE public.main_user_groups_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.main_user_groups_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.main_user_groups_id_seq OWNER TO db_user;
 
 --
--- Name: main_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.main_user_groups_id_seq OWNED BY public.main_user_groups.id;
 
 
 --
--- Name: main_user_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: main_user_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.main_user_id_seq
@@ -488,17 +488,17 @@ CREATE SEQUENCE public.main_user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.main_user_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.main_user_id_seq OWNER TO db_user;
 
 --
--- Name: main_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: main_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.main_user_id_seq OWNED BY public.main_user.id;
 
 
 --
--- Name: main_user_user_permissions; Type: TABLE; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions; Type: TABLE; Schema: public; Owner: db_user
 --
 
 CREATE TABLE public.main_user_user_permissions (
@@ -508,10 +508,10 @@ CREATE TABLE public.main_user_user_permissions (
 );
 
 
-ALTER TABLE public.main_user_user_permissions OWNER TO django_blog_user;
+ALTER TABLE public.main_user_user_permissions OWNER TO db_user;
 
 --
--- Name: main_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: db_user
 --
 
 CREATE SEQUENCE public.main_user_user_permissions_id_seq
@@ -523,108 +523,108 @@ CREATE SEQUENCE public.main_user_user_permissions_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.main_user_user_permissions_id_seq OWNER TO django_blog_user;
+ALTER TABLE public.main_user_user_permissions_id_seq OWNER TO db_user;
 
 --
--- Name: main_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: db_user
 --
 
 ALTER SEQUENCE public.main_user_user_permissions_id_seq OWNED BY public.main_user_user_permissions.id;
 
 
 --
--- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
 
 
 --
--- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
 
 
 --
--- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
 
 
 --
--- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
 
 
 --
--- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
 
 
 --
--- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
 
 
 --
--- Name: main_comment id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: main_comment id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_comment ALTER COLUMN id SET DEFAULT nextval('public.main_comment_id_seq'::regclass);
 
 
 --
--- Name: main_post id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: main_post id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_post ALTER COLUMN id SET DEFAULT nextval('public.main_post_id_seq'::regclass);
 
 
 --
--- Name: main_post_tags id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_post_tags ALTER COLUMN id SET DEFAULT nextval('public.main_post_tags_id_seq'::regclass);
 
 
 --
--- Name: main_tag id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: main_tag id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_tag ALTER COLUMN id SET DEFAULT nextval('public.main_tag_id_seq'::regclass);
 
 
 --
--- Name: main_user id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: main_user id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user ALTER COLUMN id SET DEFAULT nextval('public.main_user_id_seq'::regclass);
 
 
 --
--- Name: main_user_groups id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user_groups ALTER COLUMN id SET DEFAULT nextval('public.main_user_groups_id_seq'::regclass);
 
 
 --
--- Name: main_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.main_user_user_permissions_id_seq'::regclass);
 
 
 --
--- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.auth_group (id, name) FROM stdin;
@@ -632,7 +632,7 @@ COPY public.auth_group (id, name) FROM stdin;
 
 
 --
--- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
@@ -640,7 +640,7 @@ COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 
 
 --
--- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
@@ -688,7 +688,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 
 
 --
--- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
@@ -696,7 +696,7 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 
 
 --
--- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.django_content_type (id, app_label, model) FROM stdin;
@@ -714,7 +714,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 
 
 --
--- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
@@ -762,7 +762,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 
 
 --
--- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
@@ -779,7 +779,7 @@ t2krggafqjoq3721srnikb8x5b72v5ql	NWY5Njk3MGY5MjhhNGEyMzRiMGJhN2YyYjAxZDlkMGNhOTU
 
 
 --
--- Data for Name: main_comment; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: main_comment; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.main_comment (id, message, author_id, post_id, created_at) FROM stdin;
@@ -811,7 +811,7 @@ COPY public.main_comment (id, message, author_id, post_id, created_at) FROM stdi
 
 
 --
--- Data for Name: main_post; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: main_post; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.main_post (id, image, text, author_id, title, created_at) FROM stdin;
@@ -825,7 +825,7 @@ COPY public.main_post (id, image, text, author_id, title, created_at) FROM stdin
 
 
 --
--- Data for Name: main_post_tags; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: main_post_tags; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.main_post_tags (id, post_id, tag_id) FROM stdin;
@@ -845,7 +845,7 @@ COPY public.main_post_tags (id, post_id, tag_id) FROM stdin;
 
 
 --
--- Data for Name: main_profile; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: main_profile; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.main_profile (first_name, last_name, avatar, user_id, wallpaper, birthday) FROM stdin;
@@ -859,7 +859,7 @@ COPY public.main_profile (first_name, last_name, avatar, user_id, wallpaper, bir
 
 
 --
--- Data for Name: main_tag; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: main_tag; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.main_tag (id, title) FROM stdin;
@@ -875,7 +875,7 @@ COPY public.main_tag (id, title) FROM stdin;
 
 
 --
--- Data for Name: main_user; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: main_user; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.main_user (id, password, last_login, is_superuser, email, is_active, is_staff) FROM stdin;
@@ -890,7 +890,7 @@ COPY public.main_user (id, password, last_login, is_superuser, email, is_active,
 
 
 --
--- Data for Name: main_user_groups; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: main_user_groups; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.main_user_groups (id, user_id, group_id) FROM stdin;
@@ -898,7 +898,7 @@ COPY public.main_user_groups (id, user_id, group_id) FROM stdin;
 
 
 --
--- Data for Name: main_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: django_blog_user
+-- Data for Name: main_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: db_user
 --
 
 COPY public.main_user_user_permissions (id, user_id, permission_id) FROM stdin;
@@ -906,98 +906,98 @@ COPY public.main_user_user_permissions (id, user_id, permission_id) FROM stdin;
 
 
 --
--- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
 
 
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
 
 
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.django_admin_log_id_seq', 168, true);
 
 
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.django_content_type_id_seq', 10, true);
 
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.django_migrations_id_seq', 40, true);
 
 
 --
--- Name: main_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: main_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.main_comment_id_seq', 62, true);
 
 
 --
--- Name: main_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: main_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.main_post_id_seq', 23, true);
 
 
 --
--- Name: main_post_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.main_post_tags_id_seq', 40, true);
 
 
 --
--- Name: main_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: main_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.main_tag_id_seq', 9, true);
 
 
 --
--- Name: main_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.main_user_groups_id_seq', 1, false);
 
 
 --
--- Name: main_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: main_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.main_user_id_seq', 11, true);
 
 
 --
--- Name: main_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: db_user
 --
 
 SELECT pg_catalog.setval('public.main_user_user_permissions_id_seq', 1, false);
 
 
 --
--- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_group
@@ -1005,7 +1005,7 @@ ALTER TABLE ONLY public.auth_group
 
 
 --
--- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -1013,7 +1013,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -1021,7 +1021,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_group
@@ -1029,7 +1029,7 @@ ALTER TABLE ONLY public.auth_group
 
 
 --
--- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_permission
@@ -1037,7 +1037,7 @@ ALTER TABLE ONLY public.auth_permission
 
 
 --
--- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_permission
@@ -1045,7 +1045,7 @@ ALTER TABLE ONLY public.auth_permission
 
 
 --
--- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.django_admin_log
@@ -1053,7 +1053,7 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.django_content_type
@@ -1061,7 +1061,7 @@ ALTER TABLE ONLY public.django_content_type
 
 
 --
--- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.django_content_type
@@ -1069,7 +1069,7 @@ ALTER TABLE ONLY public.django_content_type
 
 
 --
--- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.django_migrations
@@ -1077,7 +1077,7 @@ ALTER TABLE ONLY public.django_migrations
 
 
 --
--- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.django_session
@@ -1085,7 +1085,7 @@ ALTER TABLE ONLY public.django_session
 
 
 --
--- Name: main_comment main_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_comment main_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_comment
@@ -1093,7 +1093,7 @@ ALTER TABLE ONLY public.main_comment
 
 
 --
--- Name: main_post main_post_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_post main_post_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_post
@@ -1101,7 +1101,7 @@ ALTER TABLE ONLY public.main_post
 
 
 --
--- Name: main_post_tags main_post_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags main_post_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_post_tags
@@ -1109,7 +1109,7 @@ ALTER TABLE ONLY public.main_post_tags
 
 
 --
--- Name: main_post_tags main_post_tags_post_id_tag_id_2698eb4f_uniq; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags main_post_tags_post_id_tag_id_2698eb4f_uniq; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_post_tags
@@ -1117,7 +1117,7 @@ ALTER TABLE ONLY public.main_post_tags
 
 
 --
--- Name: main_profile main_profile_user_id_b40d720a_pk; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_profile main_profile_user_id_b40d720a_pk; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_profile
@@ -1125,7 +1125,7 @@ ALTER TABLE ONLY public.main_profile
 
 
 --
--- Name: main_tag main_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_tag main_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_tag
@@ -1133,7 +1133,7 @@ ALTER TABLE ONLY public.main_tag
 
 
 --
--- Name: main_tag main_tag_title_6daaa0fa_uniq; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_tag main_tag_title_6daaa0fa_uniq; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_tag
@@ -1141,7 +1141,7 @@ ALTER TABLE ONLY public.main_tag
 
 
 --
--- Name: main_user main_user_email_key; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_user main_user_email_key; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user
@@ -1149,7 +1149,7 @@ ALTER TABLE ONLY public.main_user
 
 
 --
--- Name: main_user_groups main_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups main_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user_groups
@@ -1157,7 +1157,7 @@ ALTER TABLE ONLY public.main_user_groups
 
 
 --
--- Name: main_user_groups main_user_groups_user_id_group_id_ae195797_uniq; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups main_user_groups_user_id_group_id_ae195797_uniq; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user_groups
@@ -1165,7 +1165,7 @@ ALTER TABLE ONLY public.main_user_groups
 
 
 --
--- Name: main_user main_user_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_user main_user_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user
@@ -1173,7 +1173,7 @@ ALTER TABLE ONLY public.main_user
 
 
 --
--- Name: main_user_user_permissions main_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions main_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user_user_permissions
@@ -1181,7 +1181,7 @@ ALTER TABLE ONLY public.main_user_user_permissions
 
 
 --
--- Name: main_user_user_permissions main_user_user_permissions_user_id_permission_id_96b9fadf_uniq; Type: CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions main_user_user_permissions_user_id_permission_id_96b9fadf_uniq; Type: CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user_user_permissions
@@ -1189,189 +1189,189 @@ ALTER TABLE ONLY public.main_user_user_permissions
 
 
 --
--- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
 
 
 --
--- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
 
 
 --
--- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
 
 
 --
--- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
 
 
 --
--- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
 
 
 --
--- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
 
 
 --
--- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
 
 
 --
--- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
 
 
 --
--- Name: main_comment_author_id_c7372add; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_comment_author_id_c7372add; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_comment_author_id_c7372add ON public.main_comment USING btree (author_id);
 
 
 --
--- Name: main_comment_post_id_8158f528; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_comment_post_id_8158f528; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_comment_post_id_8158f528 ON public.main_comment USING btree (post_id);
 
 
 --
--- Name: main_post_author_id_b6fbb16a; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_post_author_id_b6fbb16a; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_post_author_id_b6fbb16a ON public.main_post USING btree (author_id);
 
 
 --
--- Name: main_post_created_at2_077f904c; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_post_created_at2_077f904c; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_post_created_at2_077f904c ON public.main_post USING btree (created_at);
 
 
 --
--- Name: main_post_tags_post_id_ac6b2fba; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags_post_id_ac6b2fba; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_post_tags_post_id_ac6b2fba ON public.main_post_tags USING btree (post_id);
 
 
 --
--- Name: main_post_tags_tag_id_2e693427; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags_tag_id_2e693427; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_post_tags_tag_id_2e693427 ON public.main_post_tags USING btree (tag_id);
 
 
 --
--- Name: main_post_title_5e807736; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_post_title_5e807736; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_post_title_5e807736 ON public.main_post USING btree (title);
 
 
 --
--- Name: main_post_title_5e807736_like; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_post_title_5e807736_like; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_post_title_5e807736_like ON public.main_post USING btree (title varchar_pattern_ops);
 
 
 --
--- Name: main_profile_first_name_8e61c136; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_profile_first_name_8e61c136; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_profile_first_name_8e61c136 ON public.main_profile USING btree (first_name);
 
 
 --
--- Name: main_profile_first_name_8e61c136_like; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_profile_first_name_8e61c136_like; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_profile_first_name_8e61c136_like ON public.main_profile USING btree (first_name varchar_pattern_ops);
 
 
 --
--- Name: main_profile_last_name_70683eab; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_profile_last_name_70683eab; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_profile_last_name_70683eab ON public.main_profile USING btree (last_name);
 
 
 --
--- Name: main_profile_last_name_70683eab_like; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_profile_last_name_70683eab_like; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_profile_last_name_70683eab_like ON public.main_profile USING btree (last_name varchar_pattern_ops);
 
 
 --
--- Name: main_tag_title_6daaa0fa_like; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_tag_title_6daaa0fa_like; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_tag_title_6daaa0fa_like ON public.main_tag USING btree (title varchar_pattern_ops);
 
 
 --
--- Name: main_user_email_2597293b_like; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_user_email_2597293b_like; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_user_email_2597293b_like ON public.main_user USING btree (email varchar_pattern_ops);
 
 
 --
--- Name: main_user_groups_group_id_a337ba62; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups_group_id_a337ba62; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_user_groups_group_id_a337ba62 ON public.main_user_groups USING btree (group_id);
 
 
 --
--- Name: main_user_groups_user_id_df502602; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups_user_id_df502602; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_user_groups_user_id_df502602 ON public.main_user_groups USING btree (user_id);
 
 
 --
--- Name: main_user_user_permissions_permission_id_cd2b56a3; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions_permission_id_cd2b56a3; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_user_user_permissions_permission_id_cd2b56a3 ON public.main_user_user_permissions USING btree (permission_id);
 
 
 --
--- Name: main_user_user_permissions_user_id_451ce57f; Type: INDEX; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions_user_id_451ce57f; Type: INDEX; Schema: public; Owner: db_user
 --
 
 CREATE INDEX main_user_user_permissions_user_id_451ce57f ON public.main_user_user_permissions USING btree (user_id);
 
 
 --
--- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -1379,7 +1379,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -1387,7 +1387,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.auth_permission
@@ -1395,7 +1395,7 @@ ALTER TABLE ONLY public.auth_permission
 
 
 --
--- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.django_admin_log
@@ -1403,7 +1403,7 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_main_user_id; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_main_user_id; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.django_admin_log
@@ -1411,7 +1411,7 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- Name: main_comment main_comment_post_id_8158f528_fk_main_post_id; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_comment main_comment_post_id_8158f528_fk_main_post_id; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_comment
@@ -1419,7 +1419,7 @@ ALTER TABLE ONLY public.main_comment
 
 
 --
--- Name: main_post_tags main_post_tags_post_id_ac6b2fba_fk_main_post_id; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags main_post_tags_post_id_ac6b2fba_fk_main_post_id; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_post_tags
@@ -1427,7 +1427,7 @@ ALTER TABLE ONLY public.main_post_tags
 
 
 --
--- Name: main_post_tags main_post_tags_tag_id_2e693427_fk_main_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_post_tags main_post_tags_tag_id_2e693427_fk_main_tag_id; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_post_tags
@@ -1435,7 +1435,7 @@ ALTER TABLE ONLY public.main_post_tags
 
 
 --
--- Name: main_profile main_profile_user_id_b40d720a_fk_main_user_id; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_profile main_profile_user_id_b40d720a_fk_main_user_id; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_profile
@@ -1443,7 +1443,7 @@ ALTER TABLE ONLY public.main_profile
 
 
 --
--- Name: main_user_groups main_user_groups_group_id_a337ba62_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups main_user_groups_group_id_a337ba62_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user_groups
@@ -1451,7 +1451,7 @@ ALTER TABLE ONLY public.main_user_groups
 
 
 --
--- Name: main_user_groups main_user_groups_user_id_df502602_fk_main_user_id; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_user_groups main_user_groups_user_id_df502602_fk_main_user_id; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user_groups
@@ -1459,7 +1459,7 @@ ALTER TABLE ONLY public.main_user_groups
 
 
 --
--- Name: main_user_user_permissions main_user_user_permi_permission_id_cd2b56a3_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions main_user_user_permi_permission_id_cd2b56a3_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user_user_permissions
@@ -1467,7 +1467,7 @@ ALTER TABLE ONLY public.main_user_user_permissions
 
 
 --
--- Name: main_user_user_permissions main_user_user_permissions_user_id_451ce57f_fk_main_user_id; Type: FK CONSTRAINT; Schema: public; Owner: django_blog_user
+-- Name: main_user_user_permissions main_user_user_permissions_user_id_451ce57f_fk_main_user_id; Type: FK CONSTRAINT; Schema: public; Owner: db_user
 --
 
 ALTER TABLE ONLY public.main_user_user_permissions
