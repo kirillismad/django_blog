@@ -12,17 +12,22 @@ from django.views.generic.edit import FormMixin
 
 from main.forms import SignUpForm, SignInForm, CommentForm, ProfileUpdateForm, PostForm
 from main.models import Post, Profile, Tag, Comment
+from .filters import SearchFilter
 
 
 class MainView(generic.ListView):
     template_name = 'main/main.html'
     context_object_name = 'posts'
+    queryset = Post.objects.select_related('author').prefetch_related('tags')
+    search_fields = ['author__first_name', 'author__last_name', 'title', 'text', 'tags__title']
 
     def get_queryset(self):
-        # TODO add search filter
-        qs = Post.objects.select_related('author').prefetch_related('tags')
-        qs = qs.annotate(comments_count=Count('comments'))
-        return qs
+        queryset = super(MainView, self).get_queryset()
+        queryset = queryset.annotate(comments_count=Count('comments'))
+        return self.filter_queryset(queryset)
+
+    def filter_queryset(self, queryset):
+        return SearchFilter().filter_queryset(self.request, queryset, self)
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
@@ -45,7 +50,8 @@ class PostDetailView(generic.DetailView):
 
     def get_queryset(self):
         return Post.objects.select_related('author').prefetch_related(
-            'tags', Prefetch('comments', Comment.objects.select_related('author').order_by('-created_at'))
+            'tags',
+            Prefetch('comments', Comment.objects.select_related('author').order_by('-created_at'))
         )
 
     def get_context_data(self, **kwargs):
@@ -104,11 +110,19 @@ class SingOut(View):
         return redirect('main:root')
 
 
-# TODO add search filter
 class ProfileView(generic.ListView):
     queryset = Profile.objects.annotate(posts_count=Count('posts'))
     template_name = 'main/profiles.html'
     context_object_name = 'profiles'
+
+    search_fields = ['first_name', 'last_name']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return self.filter_queryset(queryset)
+
+    def filter_queryset(self, queryset):
+        return SearchFilter().filter_queryset(self.request, queryset, self)
 
 
 @method_decorator(never_cache, 'get')
@@ -133,7 +147,8 @@ class ProfileUpdateView(View):
 
         form = ProfileUpdateForm(instance=profile)
 
-        return render(request, 'main/profile_update.html', context={'form': form, 'user': request.user})
+        return render(request, 'main/profile_update.html',
+                      context={'form': form, 'user': request.user})
 
     def post(self, request, id):
         profile = get_object_or_404(Profile, pk=id)
@@ -144,7 +159,8 @@ class ProfileUpdateView(View):
         if form.is_valid():
             form.save()
             return redirect(profile)
-        return render(request, 'main/profile_update.html', context={'form': form, 'user': request.user})
+        return render(request, 'main/profile_update.html',
+                      context={'form': form, 'user': request.user})
 
 
 class TagsView(generic.ListView):
