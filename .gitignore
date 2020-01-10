@@ -11,7 +11,8 @@ idea/
 .vagrant
 __pycache__/
 src/test_media/
-src/staticx/
+src/media_root/
+src/static_root/
 # media/
 # src/static/
 # Sensitive or high-churn files:

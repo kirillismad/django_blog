@@ -14,18 +14,17 @@ DATABASES = {
     }
 }
 
-# MEMCACHE_HOST = 'localhost'
-# MEMCACHE_PORT = '11211'
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
-#         'LOCATION': f'{MEMCACHE_HOST}:{MEMCACHE_PORT}',
-#     }
-# }
+MEDIA_ROOT = BASE_DIR.joinpath('media_root')
+STATIC_ROOT = BASE_DIR.joinpath('static_root')
 
+MEMCACHE_HOST = 'localhost'
+MEMCACHE_PORT = '11211'
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        # 'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+        'LOCATION': f'{MEMCACHE_HOST}:{MEMCACHE_PORT}',
+        'TIMEOUT': 5,
     }
 }
 

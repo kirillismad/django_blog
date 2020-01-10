@@ -5,11 +5,11 @@ from .base import *
 
 DEBUG = False
 
-SECRET_KEY= os.environ['SECRET_KEY']
+SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = ['*']
 
-MEDIA_ROOT=pathlib.Path(os.environ['MEDIA_ROOT'])
-STATIC_ROOT=pathlib.Path(os.environ['STATIC_ROOT'])
+MEDIA_ROOT = pathlib.Path(os.environ['MEDIA_ROOT'])
+STATIC_ROOT = pathlib.Path(os.environ['STATIC_ROOT'])
 
 DATABASES = {
     'default': {
