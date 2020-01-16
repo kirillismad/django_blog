@@ -1,7 +1,7 @@
 FROM python:3.7-alpine
 
 ENV PYTHONUNBUFFERED 1
-ENV DJANGO_SETTINGS_MODULE=blog.settings.prod
+ENV DJANGO_SETTINGS_MODULE=blog.settings.dev
 ENV APP_USER=app
 ENV APP_GROUP=app_group
 ENV APP_DIR=/app
@@ -12,7 +12,6 @@ ENV MEDIA_ROOT=${SHARED_DIR}/media_root
 
 
 COPY src/requirements.txt .
-COPY src/requirements.prod.txt .
 
 RUN apk update \
     && apk add --no-cache --virtual .build-deps \
@@ -26,7 +25,6 @@ RUN apk update \
     libmemcached-dev \
     && pip install --no-cache-dir --disable-pip-version-check \ 
     --requirement requirements.txt \
-    --requirement requirements.prod.txt \
     && apk del .build-deps
 
 COPY src ${SRC_DIR}

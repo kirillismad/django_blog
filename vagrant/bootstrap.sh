@@ -54,7 +54,7 @@ sudo systemctl restart rabbitmq-server
 
 
 # install dependencies
-V_ENV="/home/vagrant/v_env"
+V_ENV="/home/vagrant/venv"
 ACTIVATE_ENV=$V_ENV/bin/activate
 
 python -m venv $V_ENV

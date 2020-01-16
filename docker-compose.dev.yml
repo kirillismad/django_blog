@@ -1,0 +1,70 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:11
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+
+    env_file:
+      - .env
+    entrypoint: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./src:/app/src
+      - shared:/app/shared
+    depends_on:
+      - postgres
+      - memcached
+      - rabbitmq
+
+    ports:
+      - 8000:8000
+
+  memcached:
+    image: memcached:1.5
+    command: -m ${CACHE_SIZE}
+
+  rabbitmq:
+    image: rabbitmq:3.7
+    environment:
+      RABBITMQ_DEFAULT_USER: ${BROKER_USER}
+      RABBITMQ_DEFAULT_PASS: ${BROKER_PASSWORD}
+
+  celery:
+    build: .
+    entrypoint: /entrypoints/celery.sh
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+      - shared:/app/shared
+
+    depends_on:
+      - postgres
+      - memcached
+      - rabbitmq
+
+  celerybeat:
+    build: .
+    entrypoint: /entrypoints/celery_beat.sh
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+      - shared:/app/shared
+
+    depends_on:
+      - postgres
+      - memcached
+      - rabbitmq
+
+volumes:
+  pgdata:
+  shared:
